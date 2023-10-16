@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/start_color"
+    android:id="@+id/selected"
+    android:layout_height="wrap_content">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_margin="@dimen/_3sdp"
+        android:layout_height="wrap_content">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:id="@+id/imageview_"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_launcher_background"
+        android:layout_height="@dimen/_130sdp"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/center_shadow"
+        android:layout_height="@dimen/_130sdp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:text="Surat"
+        android:id="@+id/cityname"
+        android:textColor="@color/white"
+        android:fontFamily="@font/robotobold"
+        android:textSize="@dimen/_18sdp"
+        android:layout_height="wrap_content"/>
+    </FrameLayout>
+
+</FrameLayout>

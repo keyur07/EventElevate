@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/container"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/robotobold"
+            android:text="CONTACT US"
+            android:textColor="@color/Grey"
+            android:textSize="30sp"></TextView>
+
+        <View
+            android:layout_width="60dp"
+            android:layout_height="5dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:background="@color/start_color"></View>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"
+            android:fontFamily="@font/robotobold"
+            android:text="ADDRESS"
+            android:textColor="@color/Grey"
+            android:textSize="20dp"></TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/robotoregular"
+            android:text="A-786, Royal Amroli\nSurat-395007, Gujarat, India"
+            android:textAlignment="center"
+            android:textColor="@color/Grey"
+            android:textSize="15dp"></TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"
+            android:fontFamily="@font/robotobold"
+            android:text="PHONE NUMBER"
+            android:textColor="@color/Grey"
+            android:textSize="20dp"></TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/robotoregular"
+            android:text="+91 12345678900"
+            android:textAlignment="center"
+            android:textColor="#3C59FF"
+            android:textSize="15dp"></TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"
+            android:fontFamily="@font/robotobold"
+            android:text="EMAIL"
+            android:textColor="@color/Grey"
+            android:textSize="20dp"></TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/robotoregular"
+            android:text="info@example.com"
+            android:textAlignment="center"
+            android:textColor="#3C59FF"
+            android:textSize="15dp"></TextView>
+
+
+        <EditText
+            android:id="@+id/emailField3"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/poppins_regular"
+            android:textSize="@dimen/_11sdp"
+            android:background="@drawable/edittextbackground"
+            android:hint="subject"
+            android:textColorHint="@color/start_color"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp" />
+
+        <EditText
+            android:id="@+id/textArea"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/edittextbackground"
+            android:drawablePadding="12dp"
+            android:gravity="top|left"
+            android:textSize="@dimen/_11sdp"
+            android:textColorHint="@color/start_color"
+            android:hint="Message"
+            android:inputType="textMultiLine"
+            android:lines="8"
+            android:overScrollMode="always"
+            android:paddingStart="12dp"
+            android:paddingTop="10dp"
+            android:scrollbarStyle="insideInset"
+            android:scrollbars="vertical"
+            android:scrollHorizontally="false"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+
+        <Button
+            android:id="@+id/senddata"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="SEND MESSAGE"
+            android:layout_marginHorizontal="@dimen/_40sdp"
+            android:background="@drawable/button_round"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="20dp"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="15dp"></Button>
+
+
+    </LinearLayout>
+</ScrollView>

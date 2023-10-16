@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_margin="@dimen/_10sdp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@drawable/border"
+    android:gravity="center">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        app:cardCornerRadius="10dp"
+        android:layout_margin="@dimen/_10sdp"
+        android:elevation="@dimen/_7sdp"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:gravity="center">
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:layout_width="170dp"
+                    android:layout_height="170dp"
+                    app:lottie_autoPlay="true"
+                    app:lottie_rawRes="@raw/completed"
+                    android:layout_gravity="center"
+                    app:lottie_loop="false"
+                    tools:ignore="ResourceCycle" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/robotobold"
+                    android:gravity="center"
+                    android:text="Message Successfully Received"
+                    android:textColor="#00933B"
+                    android:textSize="17sp" />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:layout_height="wrap_content">
+
+
+
+                    <Button
+                        android:id="@+id/ok"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginHorizontal="@dimen/_40sdp"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:background="@drawable/rounded_button"
+                        android:fontFamily="@font/robotobold"
+                        android:text="OK"
+                        android:textColor="@color/white"
+                        android:textSize="18sp" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

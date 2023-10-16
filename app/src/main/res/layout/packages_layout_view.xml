@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:background="@color/white"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/events_card_border"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/eventPhotoImageView"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:contentDescription="Event Photo"
+            android:scaleType="centerCrop"
+            android:src="@drawable/demo2" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/eventNameTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/robotobold"
+                android:text="TechXpo 2023"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/eventLocationTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Convention Center, City Name"
+                android:textColor="@color/start_color"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/eventDescriptionTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="TechXpo 2023 is a premier technology conference that brings together industry leaders, innovators, and tech enthusiasts from around the world. The event features keynote speeches, panel discussions, hands-on workshops, and an expo showcasing the latest advancements in technology. Attendees will have the opportunity to network with experts, gain insights into emerging trends, and explore cutting-edge technologies"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/organizerNameTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Organized by: TechXpo"
+                android:textColor="@color/black"
+                android:textSize="13sp" />
+
+            <Button
+                android:id="@+id/viewMoreButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="@color/start_color"
+                android:text="View More"
+                android:layout_marginRight="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:textColor="@color/white" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

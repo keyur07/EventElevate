@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/login_back_image"
+    tools:context=".Activity.LoginScreen">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#80000000">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"/>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
+
+            <TextView
+                android:id="@+id/icon_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:fontFamily="@font/grandhotelregular"
+                android:text="Beautiful Places\nto book around you"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="30dp" />
+
+            <TextView
+                android:id="@+id/sub_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/icon_text"
+                android:layout_centerHorizontal="true"
+                android:fontFamily="@font/poppins_regular"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:text="Choose your dream destination,\n arena and much more for your event"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="18dp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_login"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_below="@id/sub_text"
+                android:layout_marginHorizontal="@dimen/_30sdp"
+                android:layout_marginTop="@dimen/_25sdp"
+                android:background="@drawable/button_round"
+                android:text="LOGIN"
+                android:textColor="@color/white" />
+
+            <RelativeLayout
+                android:id="@+id/btn_login_with_google"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_below="@id/btn_login"
+                android:layout_marginHorizontal="@dimen/_30sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:background="@drawable/button_round_transparent">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true">
+
+                    <ImageView
+                        android:id="@+id/btn_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/_5sdp"
+                        android:padding="@dimen/_2sdp"
+                        android:src="@drawable/google" />
+
+                    <TextView
+                        android:id="@+id/btn_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_toRightOf="@id/btn_icon"
+                        android:text="CONTINUE WITH GOOGLE"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_11sdp" />
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/btn_sign_up"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btn_login_with_google"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/robotoregular"
+                android:text="Sign Up"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12sdp" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

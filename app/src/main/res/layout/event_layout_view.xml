@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:id="@+id/event_items"
+    android:paddingHorizontal="@dimen/_20sdp"
+    android:background="@color/white"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp">
+
+    <ImageView
+        android:id="@+id/eventPhotoImageView"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:contentDescription="Event Photo"
+        android:scaleType="centerCrop"
+        android:src="@drawable/demo" />
+    <ImageView
+        android:layout_width="match_parent"
+        android:src="@drawable/bottom_shadow"
+        android:layout_height="match_parent"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/eventNameTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/rubik_bold"
+            android:text="Wedding"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/eventLocationTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/eventNameTextView"
+            android:text="Convention Center, City Name"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>
