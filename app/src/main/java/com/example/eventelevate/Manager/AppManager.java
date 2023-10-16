@@ -183,7 +183,7 @@ public  class AppManager {
     public static String getSaveShareData(Context context,String key){
 
         SharedPreferences preferences = context.getSharedPreferences(String.valueOf(R.string.user_session_key),Context.MODE_PRIVATE);
-       return preferences.getString(key,null);
+       return preferences.getString(key,"");
     }
 
     public static String getDeviceID(Context context){

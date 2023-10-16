@@ -34,7 +34,6 @@ public class LoginScreen extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
        binding = ActivityLoginScreenBinding.inflate(getLayoutInflater());
        setContentView(binding.getRoot());
-        AppManager.changeStatusBarandBottomColor(LoginScreen.this);
 
        googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
        signInClient = GoogleSignIn.getClient(LoginScreen.this,googleSignInOptions);
@@ -43,11 +42,8 @@ public class LoginScreen extends AppCompatActivity {
            @Override
            public void onClick(View v) {
                signIn();
-
            }
        });
-
-
 
        binding.btnLogin.setOnClickListener(new View.OnClickListener() {
            @Override
