@@ -33,7 +33,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/_30sdp"
-        app:lottie_rawRes="@raw/loader"
+        app:lottie_rawRes="@raw/loader2"
         android:layout_height="@dimen/_100sdp"/>
 
 

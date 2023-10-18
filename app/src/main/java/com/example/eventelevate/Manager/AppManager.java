@@ -42,7 +42,7 @@ public  class AppManager {
     public static LoginModel.User user;
     public static SettingModel.Setting setting;
     private static ProgressRound progressBar;
-    public static String SelectedLocation="Demo";
+    public static String SelectedLocation="Surat";
 
     public static void changeActivity(Context context, Class<? extends Activity> targetActivity) {
         Intent intent = new Intent(context, targetActivity);

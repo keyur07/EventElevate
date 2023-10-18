@@ -1,5 +1,6 @@
 package com.example.eventelevate.Interfaces;
 
+import com.example.eventelevate.Model.AboutUsModel;
 import com.example.eventelevate.Model.ContactModel;
 import com.example.eventelevate.Model.LocationModel;
 import com.example.eventelevate.Model.LoginModel;
@@ -35,6 +36,9 @@ public interface APIInterface {
 
     @GET("admin/setting")
     Call<SettingModel> GetApplicationSetting();
+
+    @GET("admin/aboutus")
+    Call<AboutUsModel> GetAboutDetails();
 
     @FormUrlEncoded
     @POST("admin/contactus")

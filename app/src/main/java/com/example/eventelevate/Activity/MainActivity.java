@@ -193,6 +193,9 @@ public class MainActivity extends AppCompatActivity {
                 }else if(itemId == R.id.contactus){
                     drawerLayout.closeDrawer(GravityCompat.START);
                     AppManager.changeActivity(MainActivity.this,ContactUs.class);
+                }else if(itemId == R.id.about_app){
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                    AppManager.changeActivity(MainActivity.this,AboutUs.class);
                 }
                 return true;
             }

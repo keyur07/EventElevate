@@ -84,7 +84,7 @@ public class Location extends AppCompatActivity {
                     Log.e("Error", "Request for page " + number + " failed.");
                 }
 
-                if(page==3){
+                if(page==5){
                     binding.locationList.setLayoutManager(new GridLayoutManager(Location.this,2));
                     LocationListAdapter eventsListAdapter = new LocationListAdapter(Location.this,list);
                     binding.locationList.setAdapter(eventsListAdapter);
