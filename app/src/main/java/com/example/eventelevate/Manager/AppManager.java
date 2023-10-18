@@ -31,6 +31,7 @@ import com.example.eventelevate.Activity.MainActivity;
 import com.example.eventelevate.Activity.SplashScreen;
 import com.example.eventelevate.Components.ProgressRound;
 import com.example.eventelevate.Model.LoginModel;
+import com.example.eventelevate.Model.SettingModel;
 import com.example.eventelevate.R;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -39,6 +40,7 @@ import org.apache.http.params.CoreConnectionPNames;
 public  class AppManager {
 
     public static LoginModel.User user;
+    public static SettingModel.Setting setting;
     private static ProgressRound progressBar;
     public static String SelectedLocation="Demo";
 

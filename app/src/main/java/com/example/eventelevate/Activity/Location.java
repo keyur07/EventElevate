@@ -72,7 +72,7 @@ public class Location extends AppCompatActivity {
 
     private void getLocationList(int number) {
         APIInterface apiInterface = RetrofitClient.getRetrofitInstanceforlocation().create(APIInterface.class);
-        Call<LocationModel> call = apiInterface.GetLocationList(number,"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk3MTc4NzA2LCJpYXQiOjE2OTcxNTcxMDYsImp0aSI6IjZjYzVkNjFkYjQ0ZDRhMDI5NjNlYzQ3ZTlhZDA1NjA4IiwidXNlcl9pZCI6NTMwODkzNjJ9.OmmAKvwiLYWx_5jBBxzTriv1U4K4Nc5jq9VzRaezV7U");
+        Call<LocationModel> call = apiInterface.GetLocationList(number,"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk3Njg0Mjc5LCJpYXQiOjE2OTczODM1MDQsImp0aSI6ImFlMWZlOTA5Y2E2ZDQzMWE5OGQ1MjQxNDAzNzI4NTIzIiwidXNlcl9pZCI6NTMxNjY3MTN9.N_5aRps7HVVUV-D6hw5YT4Kbl_66cRzpIwB8YzI_NAI");
         call.enqueue(new Callback<LocationModel>() {
             @Override
             public void onResponse(Call<LocationModel> call, Response<LocationModel> response) {

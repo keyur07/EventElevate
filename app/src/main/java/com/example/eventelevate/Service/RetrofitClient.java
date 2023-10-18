@@ -44,7 +44,7 @@ public class RetrofitClient {
                     public Response intercept(@NotNull Chain chain) throws IOException {
                         Request originalRequest = chain.request();
                         Request newRequest = originalRequest.newBuilder()
-                                .header("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk3MjUyMjYzLCJpYXQiOjE2OTcyMDM1MjAsImp0aSI6IjU4YjE0ZjNhODliNDRhNzc4MGRkODU3YzNjYmE5NjkzIiwidXNlcl9pZCI6NTMwODkzNjJ9.PbSSDMKpXc6rrlOI1EzZfmCRZttekraLJ_3nkmSsbzo")
+                                .header("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk3Njg0Mjc5LCJpYXQiOjE2OTczODM1MDQsImp0aSI6ImFlMWZlOTA5Y2E2ZDQzMWE5OGQ1MjQxNDAzNzI4NTIzIiwidXNlcl9pZCI6NTMxNjY3MTN9.N_5aRps7HVVUV-D6hw5YT4Kbl_66cRzpIwB8YzI_NAI")
                                 .build();
                         return chain.proceed(newRequest);
                     }

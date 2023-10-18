@@ -3,6 +3,7 @@ package com.example.eventelevate.Interfaces;
 import com.example.eventelevate.Model.ContactModel;
 import com.example.eventelevate.Model.LocationModel;
 import com.example.eventelevate.Model.LoginModel;
+import com.example.eventelevate.Model.SettingModel;
 import com.example.eventelevate.Model.SignupModel;
 
 import retrofit2.Call;
@@ -31,6 +32,9 @@ public interface APIInterface {
 
     @GET("cities")
     Call<LocationModel> GetLocationList(@Query("page") Integer number, @Header("Authorization") String authHeader);
+
+    @GET("admin/setting")
+    Call<SettingModel> GetApplicationSetting();
 
     @FormUrlEncoded
     @POST("admin/contactus")

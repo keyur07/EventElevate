@@ -2,21 +2,25 @@ package com.example.eventelevate.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.eventelevate.Interfaces.APIInterface;
 import com.example.eventelevate.Manager.AppManager;
 import com.example.eventelevate.Model.LoginModel;
+import com.example.eventelevate.Model.SettingModel;
 import com.example.eventelevate.R;
 import com.example.eventelevate.Service.RetrofitClient;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -58,6 +62,50 @@ public class SplashScreen extends AppCompatActivity {
         }
     }
 
+    public void showunderMaintenanceDialog(){
+
+        final Dialog dialog = new Dialog(SplashScreen.this);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+        dialog.requestWindowFeature(1);
+        dialog.setContentView(R.layout.maintenance_dialog);
+        dialog.setCancelable(false);
+        final RatingBar ratingBar = (RatingBar) dialog.findViewById(R.id.rating);
+        dialog.findViewById(R.id.exit).setOnClickListener(new View.OnClickListener() { // from class: m.a.a.b.c0
+            @Override // android.view.View.OnClickListener
+            public final void onClick(View view) {
+                finish();
+            }
+        });
+        dialog.show();
+    }
+
+    private void getApplicationSetting(){
+        APIInterface apiInterface = RetrofitClient.getRetrofitInstance().create(APIInterface.class);
+        Call<SettingModel> call = apiInterface.GetApplicationSetting();
+        call.enqueue(new Callback<SettingModel>() {
+            @Override
+            public void onResponse(Call<SettingModel> call, Response<SettingModel> response) {
+                if(response.body().getStatusCode()==200){
+                    if (response.body().getMessage().equals("Success")){
+                        AppManager.setting = response.body().getSetting();
+
+                        if(response.body().getSetting().getMaintenance()==1){
+                            showunderMaintenanceDialog();
+                        }else {
+                            init();
+                        }
+
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SettingModel> call, Throwable t) {
+
+            }
+        });
+    }
+
 
     public void CheckInternet(){
 
@@ -66,7 +114,7 @@ public class SplashScreen extends AppCompatActivity {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    init();
+                    getApplicationSetting();
                 }
             }, 2000);
 
