@@ -2,6 +2,7 @@ package com.example.eventelevate.Interfaces;
 
 import com.example.eventelevate.Model.AboutUsModel;
 import com.example.eventelevate.Model.ContactModel;
+import com.example.eventelevate.Model.EventtypeModel;
 import com.example.eventelevate.Model.LocationModel;
 import com.example.eventelevate.Model.LoginModel;
 import com.example.eventelevate.Model.SettingModel;
@@ -36,6 +37,13 @@ public interface APIInterface {
 
     @GET("admin/setting")
     Call<SettingModel> GetApplicationSetting();
+
+    @GET("event/eventtype")
+    Call<EventtypeModel> GetEventType();
+
+    @GET("event/service")
+    Call<SettingModel> GetServiceType();
+
 
     @GET("admin/aboutus")
     Call<AboutUsModel> GetAboutDetails();

@@ -2,11 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:title="For You"
-        android:id="@+id/events"
+        android:id="@+id/foryou"
         android:icon="@drawable/baseline_home_24"/>
-    <item android:title="Search"
-        android:id="@+id/search"
-        android:icon="@drawable/baseline_search_24"/>
+    <item android:title="Events"
+        android:id="@+id/event"
+        android:icon="@drawable/round_event_24"/>
 
     <item android:title="Create"
         android:id="@+id/create"
