@@ -1,6 +1,7 @@
 package com.example.eventelevate.Adapter;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,18 +15,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.eventelevate.Activity.Location;
+import com.example.eventelevate.Model.Location.CityName;
 import com.example.eventelevate.Model.LocationModel;
 import com.example.eventelevate.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LocationListAdapter extends RecyclerView.Adapter<LocationListAdapter.ViewHolder> {
 
-    private Location location;
-    private List<LocationModel.Result> list;
+    private Context location;
+    private ArrayList<CityName> list;
     int selectedPosition = -1;
     int lastSelectedPosition = -1;
-    public LocationListAdapter(Location location, List<LocationModel.Result> body) {
+    public LocationListAdapter(Context location,ArrayList<CityName> body) {
         this.list = body;
         this.location = location;
     }
@@ -37,33 +40,36 @@ public class LocationListAdapter extends RecyclerView.Adapter<LocationListAdapte
         return new LocationListAdapter.ViewHolder(view);
     }
 
-    @SuppressLint("ResourceAsColor")
     @Override
-    public void onBindViewHolder(@NonNull LocationListAdapter.ViewHolder holder, int position) {
-        Glide.with(location).load(list.get(position).getPhoto()).into(holder.imageView);
-        holder.textView.setText(list.get(position).getName());
-        holder.frameLayout.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("ResourceAsColor")
-            @Override
-            public void onClick(View v) {
-                Location.position = position;
-                lastSelectedPosition = selectedPosition;
-                selectedPosition = holder.getAdapterPosition();
-                notifyItemChanged(lastSelectedPosition);
-                notifyItemChanged(selectedPosition);
-                holder.frameLayout.setBackgroundColor(R.color.start_color);
-            }
-        });
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        CityName cityName = (CityName)  list.get(position);
 
-        if (selectedPosition == holder.getAdapterPosition()) {
-            holder.frameLayout.setBackgroundColor(Color.BLACK);
-        } else {
-            holder.frameLayout.setBackgroundColor(Color.WHITE);
+        Glide.with(location).load(cityName.getImg()).into(holder.imageView);
+        holder.textView.setText(cityName.getName());
+          /*  holder.frameLayout.setOnClickListener(new View.OnClickListener() {
 
-        }
+                @Override
+                public void onClick(View v) {
+                    Location.position = position;
+                    lastSelectedPosition = selectedPosition;
+                    selectedPosition = holder.getAdapterPosition();
+                    notifyItemChanged(lastSelectedPosition);
+                    notifyItemChanged(selectedPosition);
+                    holder.frameLayout.setBackgroundColor(R.color.start_color);
+                }
+            });
+
+            if (selectedPosition == holder.getAdapterPosition()) {
+                holder.frameLayout.setBackgroundColor(Color.BLACK);
+            } else {
+                holder.frameLayout.setBackgroundColor(Color.WHITE);
+
+            }*/
+
 
 
     }
+
 
     @Override
     public int getItemCount() {

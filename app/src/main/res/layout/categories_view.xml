@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="@dimen/_10sdp"
     android:layout_margin="@dimen/_8sdp"
+    android:id="@+id/cv_Service"
     android:layout_height="wrap_content">
 
     <RelativeLayout
@@ -19,16 +20,22 @@
             android:layout_height="@dimen/_40sdp"/>
 
         <TextView
+            android:id="@+id/name"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="Food"
             android:textColor="@color/start_color"
             android:textStyle="bold"
+            android:textAlignment="center"
             android:fontFamily="@font/poppins_regular"
             android:layout_marginTop="@dimen/_10sdp"
-            android:textSize="@dimen/_14sdp"
+            android:autoSizeMinTextSize="@dimen/_6sdp"
+            android:autoSizeMaxTextSize="@dimen/_12sdp"
             android:layout_below="@id/icon"
             android:layout_centerHorizontal="true"
-            android:layout_height="wrap_content"/>
+            android:maxLines="1"
+            android:ellipsize="end"
+            />
 
     </RelativeLayout>
 

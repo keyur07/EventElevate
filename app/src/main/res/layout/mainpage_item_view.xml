@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/_130sdp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="@dimen/_10sdp"
+    android:elevation="0dp"
+android:layout_marginHorizontal="@dimen/_5sdp"
+    android:layout_marginVertical="@dimen/_5sdp"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:id="@+id/icon"
+            android:scaleType="centerCrop"
+            android:layout_height="@dimen/_100sdp"/>
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Hello This is demo"
+            android:textColor="@color/start_color"
+            android:textStyle="bold"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:fontFamily="@font/poppins_regular"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:autoSizeMinTextSize="@dimen/_6sdp"
+            android:autoSizeMaxTextSize="@dimen/_12sdp"
+            android:layout_below="@id/icon"
+            android:layout_centerHorizontal="true"
+            android:maxLines="2"
+            android:ellipsize="end" />
+
+        <TextView
+            android:id="@+id/price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="$100.00"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:textColor="@color/start_color"
+            android:textStyle="bold"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:fontFamily="@font/poppins_regular"
+            android:autoSizeMinTextSize="@dimen/_6sdp"
+            android:autoSizeMaxTextSize="@dimen/_12sdp"
+            android:layout_below="@id/name"
+            android:maxLines="1"
+            android:ellipsize="end" />
+
+    </RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>

@@ -7,4 +7,5 @@
     <string name="user_session_key_username">username</string>
     <string name="user_session_key_password">username</string>
     <string name="user_session_key">User</string>
+    <string name="create_pravacy">Service items are public and can be seen by anyone on or off EventPeck. Listings also may be featured on other Meta platforms, such as google. \n\nAll listings go through a quick standard review when published to make sure they follow our Commerce policies before they are visible to others. Items like animals, drugs, weapons, counterfeits and more are not allowed. \n\n Service listings must not discriminate. See our Discrimination</string>
 </resources>

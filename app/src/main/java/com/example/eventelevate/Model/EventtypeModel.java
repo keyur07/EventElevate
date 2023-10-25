@@ -3,52 +3,53 @@ package com.example.eventelevate.Model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class EventtypeModel {
 
-@SerializedName("status_code")
-@Expose
-private Integer statusCode;
-@SerializedName("message")
-@Expose
-private String message;
-@SerializedName("EventTypes")
-@Expose
-private List<EventType> eventTypes;
+    @SerializedName("status_code")
+    @Expose
+    private Integer statusCode;
+    @SerializedName("message")
+    @Expose
+    private String message;
+    @SerializedName("EventTypes")
+    @Expose
+    private ArrayList<EventType> eventTypes;
 
-public Integer getStatusCode() {
-return statusCode;
-}
+    public Integer getStatusCode() {
+        return statusCode;
+    }
 
-public void setStatusCode(Integer statusCode) {
-this.statusCode = statusCode;
-}
+    public void setStatusCode(Integer statusCode) {
+        this.statusCode = statusCode;
+    }
 
-public String getMessage() {
-return message;
-}
+    public String getMessage() {
+        return message;
+    }
 
-public void setMessage(String message) {
-this.message = message;
-}
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
-public List<EventType> getEventTypes() {
-return eventTypes;
-}
+    public ArrayList<EventType> getEventTypes() {
+        return eventTypes;
+    }
 
-public void setEventTypes(List<EventType> eventTypes) {
-this.eventTypes = eventTypes;
-}
+    public void setEventTypes(ArrayList<EventType> eventTypes) {
+        this.eventTypes = eventTypes;
+    }
 
     public class EventType {
 
-        @SerializedName("serviceId")
+        @SerializedName("eventTypeId")
         @Expose
-        private Integer serviceId;
-        @SerializedName("serviceName")
+        private Integer eventTypeId;
+        @SerializedName("eventTypeName")
         @Expose
-        private String serviceName;
+        private String eventTypeName;
         @SerializedName("description")
         @Expose
         private String description;
@@ -59,20 +60,30 @@ this.eventTypes = eventTypes;
         @Expose
         private String image;
 
-        public Integer getServiceId() {
-            return serviceId;
+
+        public EventType(Integer eventTypeId, String eventTypeName, String description, Integer status, String image) {
+            super();
+            this.eventTypeId = eventTypeId;
+            this.eventTypeName = eventTypeName;
+            this.description = description;
+            this.status = status;
+            this.image = image;
         }
 
-        public void setServiceId(Integer serviceId) {
-            this.serviceId = serviceId;
+        public Integer getEventTypeId() {
+            return eventTypeId;
         }
 
-        public String getServiceName() {
-            return serviceName;
+        public void setEventTypeId(Integer eventTypeId) {
+            this.eventTypeId = eventTypeId;
         }
 
-        public void setServiceName(String serviceName) {
-            this.serviceName = serviceName;
+        public String getEventTypeName() {
+            return eventTypeName;
+        }
+
+        public void setEventTypeName(String eventTypeName) {
+            this.eventTypeName = eventTypeName;
         }
 
         public String getDescription() {
@@ -98,7 +109,7 @@ this.eventTypes = eventTypes;
         public void setImage(String image) {
             this.image = image;
         }
-    }
 
+    }
 
 }

@@ -7,207 +7,207 @@ import com.google.gson.annotations.SerializedName;
 
 public class LocationModel {
 
-@SerializedName("count")
-@Expose
-private Integer count;
-@SerializedName("next")
-@Expose
-private String next;
-@SerializedName("previous")
-@Expose
-private Object previous;
-@SerializedName("results")
-@Expose
-private List<Result> results;
-
-public Integer getCount() {
-return count;
-}
-
-public void setCount(Integer count) {
-this.count = count;
-}
-
-public String getNext() {
-return next;
-}
-
-public void setNext(String next) {
-this.next = next;
-}
-
-public Object getPrevious() {
-return previous;
-}
-
-public void setPrevious(Object previous) {
-this.previous = previous;
-}
-
-public List<Result> getResults() {
-return results;
-}
-
-public void setResults(List<Result> results) {
-this.results = results;
-}
-
-
-public class Result {
-
-    @SerializedName("id")
+    @SerializedName("count")
     @Expose
-    private Integer id;
-    @SerializedName("code")
+    private Integer count;
+    @SerializedName("next")
     @Expose
-    private String code;
-    @SerializedName("name")
+    private String next;
+    @SerializedName("previous")
     @Expose
-    private String name;
-    @SerializedName("slug")
+    private Object previous;
+    @SerializedName("results")
     @Expose
-    private String slug;
-    @SerializedName("slug_language")
-    @Expose
-    private String slugLanguage;
-    @SerializedName("country")
-    @Expose
-    private String country;
-    @SerializedName("latitude")
-    @Expose
-    private Double latitude;
-    @SerializedName("longitude")
-    @Expose
-    private Double longitude;
-    @SerializedName("radius")
-    @Expose
-    private Integer radius;
-    @SerializedName("photo")
-    @Expose
-    private String photo;
-    @SerializedName("telephone")
-    @Expose
-    private String telephone;
-    @SerializedName("currency")
-    @Expose
-    private String currency;
-    @SerializedName("locale")
-    @Expose
-    private String locale;
-    @SerializedName("loyalty_type")
-    @Expose
-    private String loyaltyType;
+    private List<Result> results;
 
-    public Integer getId() {
-        return id;
+    public Integer getCount() {
+        return count;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setCount(Integer count) {
+        this.count = count;
     }
 
-    public String getCode() {
-        return code;
+    public String getNext() {
+        return next;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setNext(String next) {
+        this.next = next;
     }
 
-    public String getName() {
-        return name;
+    public Object getPrevious() {
+        return previous;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setPrevious(Object previous) {
+        this.previous = previous;
     }
 
-    public String getSlug() {
-        return slug;
+    public List<Result> getResults() {
+        return results;
     }
 
-    public void setSlug(String slug) {
-        this.slug = slug;
+    public void setResults(List<Result> results) {
+        this.results = results;
     }
 
-    public String getSlugLanguage() {
-        return slugLanguage;
-    }
 
-    public void setSlugLanguage(String slugLanguage) {
-        this.slugLanguage = slugLanguage;
-    }
+    public class Result {
 
-    public String getCountry() {
-        return country;
-    }
+        @SerializedName("id")
+        @Expose
+        private Integer id;
+        @SerializedName("code")
+        @Expose
+        private String code;
+        @SerializedName("name")
+        @Expose
+        private String name;
+        @SerializedName("slug")
+        @Expose
+        private String slug;
+        @SerializedName("slug_language")
+        @Expose
+        private String slugLanguage;
+        @SerializedName("country")
+        @Expose
+        private String country;
+        @SerializedName("latitude")
+        @Expose
+        private Double latitude;
+        @SerializedName("longitude")
+        @Expose
+        private Double longitude;
+        @SerializedName("radius")
+        @Expose
+        private Integer radius;
+        @SerializedName("photo")
+        @Expose
+        private String photo;
+        @SerializedName("telephone")
+        @Expose
+        private String telephone;
+        @SerializedName("currency")
+        @Expose
+        private String currency;
+        @SerializedName("locale")
+        @Expose
+        private String locale;
+        @SerializedName("loyalty_type")
+        @Expose
+        private String loyaltyType;
 
-    public void setCountry(String country) {
-        this.country = country;
-    }
+        public Integer getId() {
+            return id;
+        }
 
-    public Double getLatitude() {
-        return latitude;
-    }
+        public void setId(Integer id) {
+            this.id = id;
+        }
 
-    public void setLatitude(Double latitude) {
-        this.latitude = latitude;
-    }
+        public String getCode() {
+            return code;
+        }
 
-    public Double getLongitude() {
-        return longitude;
-    }
+        public void setCode(String code) {
+            this.code = code;
+        }
 
-    public void setLongitude(Double longitude) {
-        this.longitude = longitude;
-    }
+        public String getName() {
+            return name;
+        }
 
-    public Integer getRadius() {
-        return radius;
-    }
+        public void setName(String name) {
+            this.name = name;
+        }
 
-    public void setRadius(Integer radius) {
-        this.radius = radius;
-    }
+        public String getSlug() {
+            return slug;
+        }
 
-    public String getPhoto() {
-        return photo;
-    }
+        public void setSlug(String slug) {
+            this.slug = slug;
+        }
 
-    public void setPhoto(String photo) {
-        this.photo = photo;
-    }
+        public String getSlugLanguage() {
+            return slugLanguage;
+        }
 
-    public String getTelephone() {
-        return telephone;
-    }
+        public void setSlugLanguage(String slugLanguage) {
+            this.slugLanguage = slugLanguage;
+        }
 
-    public void setTelephone(String telephone) {
-        this.telephone = telephone;
-    }
+        public String getCountry() {
+            return country;
+        }
 
-    public String getCurrency() {
-        return currency;
-    }
+        public void setCountry(String country) {
+            this.country = country;
+        }
 
-    public void setCurrency(String currency) {
-        this.currency = currency;
-    }
+        public Double getLatitude() {
+            return latitude;
+        }
 
-    public String getLocale() {
-        return locale;
-    }
+        public void setLatitude(Double latitude) {
+            this.latitude = latitude;
+        }
 
-    public void setLocale(String locale) {
-        this.locale = locale;
-    }
+        public Double getLongitude() {
+            return longitude;
+        }
 
-    public String getLoyaltyType() {
-        return loyaltyType;
-    }
+        public void setLongitude(Double longitude) {
+            this.longitude = longitude;
+        }
 
-    public void setLoyaltyType(String loyaltyType) {
-        this.loyaltyType = loyaltyType;
+        public Integer getRadius() {
+            return radius;
+        }
+
+        public void setRadius(Integer radius) {
+            this.radius = radius;
+        }
+
+        public String getPhoto() {
+            return photo;
+        }
+
+        public void setPhoto(String photo) {
+            this.photo = photo;
+        }
+
+        public String getTelephone() {
+            return telephone;
+        }
+
+        public void setTelephone(String telephone) {
+            this.telephone = telephone;
+        }
+
+        public String getCurrency() {
+            return currency;
+        }
+
+        public void setCurrency(String currency) {
+            this.currency = currency;
+        }
+
+        public String getLocale() {
+            return locale;
+        }
+
+        public void setLocale(String locale) {
+            this.locale = locale;
+        }
+
+        public String getLoyaltyType() {
+            return loyaltyType;
+        }
+
+        public void setLoyaltyType(String loyaltyType) {
+            this.loyaltyType = loyaltyType;
+        }
     }
-}
 }

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:id="@+id/txt_organizer"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:text="Top Organizer"
+        android:textSize="@dimen/_14sdp"
+        android:fontFamily="@font/robotobold"
+        android:textColor="@color/start_color"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:id="@+id/txt_categories_see_all_"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_alignParentRight="true"
+        android:text="See all"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:textSize="@dimen/_10sdp"
+        android:fontFamily="@font/robotobold"
+        android:textColor="#7C7C7C"
+        android:layout_height="wrap_content"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:id="@+id/item_list"
+        android:paddingVertical="@dimen/_10sdp"
+        android:layout_below="@+id/txt_organizer"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_height="wrap_content"/>
+
+</RelativeLayout>

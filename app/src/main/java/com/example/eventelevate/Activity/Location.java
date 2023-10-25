@@ -18,6 +18,9 @@ import com.example.eventelevate.Adapter.EventsListAdapter;
 import com.example.eventelevate.Adapter.LocationListAdapter;
 import com.example.eventelevate.Interfaces.APIInterface;
 import com.example.eventelevate.Manager.AppManager;
+import com.example.eventelevate.Model.Location.CityName;
+import com.example.eventelevate.Model.Location.Loaction;
+import com.example.eventelevate.Model.Location.MainLoction;
 import com.example.eventelevate.Model.LocationModel;
 import com.example.eventelevate.R;
 import com.example.eventelevate.Service.RetrofitClient;
@@ -72,12 +75,31 @@ public class Location extends AppCompatActivity {
 
     private void getLocationList(int number) {
         APIInterface apiInterface = RetrofitClient.getRetrofitInstanceforlocation().create(APIInterface.class);
-        Call<LocationModel> call = apiInterface.GetLocationList(number,"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk3Njg0Mjc5LCJpYXQiOjE2OTczODM1MDQsImp0aSI6ImFlMWZlOTA5Y2E2ZDQzMWE5OGQ1MjQxNDAzNzI4NTIzIiwidXNlcl9pZCI6NTMxNjY3MTN9.N_5aRps7HVVUV-D6hw5YT4Kbl_66cRzpIwB8YzI_NAI");
-        call.enqueue(new Callback<LocationModel>() {
+        Call<MainLoction> call = apiInterface.GetLocationList();
+        call.enqueue(new Callback<MainLoction>() {
             @Override
-            public void onResponse(Call<LocationModel> call, Response<LocationModel> response) {
+            public void onResponse(Call<MainLoction> call, Response<MainLoction> response) {
 
-                if (response.isSuccessful() && response.body() != null) {
+                if (response.body().getStatusCode()==200) {
+                    Toast.makeText(Location.this, "success....", Toast.LENGTH_SHORT).show();
+                    ArrayList<CityName> cityNames = new ArrayList<>();
+                    List<Loaction> location = response.body().getLoactions();
+                    AppManager.hideProgress();
+                    for (int i = 0; i < location.size(); i++) {
+                        for (int j = 0; j < location.get(i).getResults().size(); j++) {
+                            cityNames.add(new CityName(location.get(i).getResults().get(j).getName().toString(), location.get(i).getResults().get(j).getPhoto().toString()));
+                        }
+                    }
+
+
+                    LocationListAdapter eventsListAdapter = new LocationListAdapter(Location.this, cityNames);
+                    binding.locationList.setAdapter(eventsListAdapter);
+                } else {
+
+                    Toast.makeText(Location.this, "faile....", Toast.LENGTH_SHORT).show();
+                }
+
+              /*  if (response.isSuccessful() && response.body() != null) {
                     list.addAll(response.body().getResults());
                     Log.e("CombinedResponse", ""+list.size());
                 } else {
@@ -85,22 +107,20 @@ public class Location extends AppCompatActivity {
                 }
 
                 if(page==5){
-                    binding.locationList.setLayoutManager(new GridLayoutManager(Location.this,2));
-                    LocationListAdapter eventsListAdapter = new LocationListAdapter(Location.this,list);
-                    binding.locationList.setAdapter(eventsListAdapter);
-                    AppManager.hideProgress();
+
+
                 }else {
                     page++;
                     getLocationList(page);
                 }
-
+*/
 
             }
 
             @Override
-            public void onFailure(Call<LocationModel> call, Throwable t) {
+            public void onFailure(Call<MainLoction> call, Throwable t) {
 
-                Log.e("errrororo",t.getMessage().toString());
+                Log.e("errrororo", t.getMessage().toString());
 
             }
         });

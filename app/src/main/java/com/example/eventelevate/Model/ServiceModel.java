@@ -3,46 +3,57 @@ package com.example.eventelevate.Model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ServiceModel {
 
-@SerializedName("status_code")
-@Expose
-private Integer statusCode;
-@SerializedName("message")
-@Expose
-private String message;
-@SerializedName("EventTypes")
-@Expose
-private List<servicetype> eventTypes;
 
-public Integer getStatusCode() {
-return statusCode;
-}
 
-public void setStatusCode(Integer statusCode) {
-this.statusCode = statusCode;
-}
+    @SerializedName("status_code")
+    @Expose
+    private Integer statusCode;
+    @SerializedName("message")
+    @Expose
+    private String message;
+    @SerializedName("servicetype")
+    @Expose
+    private ArrayList<Servicetype> servicetype;
 
-public String getMessage() {
-return message;
-}
 
-public void setMessage(String message) {
-this.message = message;
-}
 
-public List<servicetype> getEventTypes() {
-return eventTypes;
-}
 
-public void setEventTypes(List<servicetype> eventTypes) {
-this.eventTypes = eventTypes;
-}
+    public ServiceModel(Integer statusCode, String message, ArrayList<Servicetype> servicetype) {
+        this.statusCode = statusCode;
+        this.message = message;
+        this.servicetype = servicetype;
+    }
 
-    public class servicetype {
+    public Integer getStatusCode() {
+        return statusCode;
+    }
 
+    public void setStatusCode(Integer statusCode) {
+        this.statusCode = statusCode;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public ArrayList<Servicetype> getServicetype() {
+        return servicetype;
+    }
+
+    public void setServicetype(ArrayList<Servicetype> servicetype) {
+        this.servicetype = servicetype;
+    }
+
+    public class Servicetype {
         @SerializedName("serviceId")
         @Expose
         private Integer serviceId;
@@ -58,6 +69,16 @@ this.eventTypes = eventTypes;
         @SerializedName("image")
         @Expose
         private String image;
+
+
+        public Servicetype(Integer serviceId, String serviceName, String description, Integer status, String image) {
+            this.serviceId = serviceId;
+            this.serviceName = serviceName;
+            this.description = description;
+            this.status = status;
+            this.image = image;
+        }
+
 
         public Integer getServiceId() {
             return serviceId;
@@ -98,7 +119,6 @@ this.eventTypes = eventTypes;
         public void setImage(String image) {
             this.image = image;
         }
-
     }
 
 }

@@ -74,17 +74,41 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
                 int itemId = item.getItemId();
+                Fragment selectedFragment = null;
+                String fragmentTag = null;
+
                 if (itemId == R.id.event) {
-                    selectedFragment = new ForYouFragment();
+                    selectedFragment = getSupportFragmentManager().findFragmentByTag("ForYouFragment");
+                    fragmentTag = "ForYouFragment";
+                    if (selectedFragment == null) {
+                        selectedFragment = new ForYouFragment();
+                    }
                 } else if (itemId == R.id.foryou) {
-                    selectedFragment = new EventsFragment();
-                }else if (itemId == R.id.create) {
-                    selectedFragment = new CreateFragment();
+                    selectedFragment = getSupportFragmentManager().findFragmentByTag("EventsFragment");
+                    fragmentTag = "EventsFragment";
+                    if (selectedFragment == null) {
+                        selectedFragment = new EventsFragment();
+                    }
+                } else if (itemId == R.id.create) {
+                    selectedFragment = getSupportFragmentManager().findFragmentByTag("CreateFragment");
+                    fragmentTag = "CreateFragment";
+                    if (selectedFragment == null) {
+                        selectedFragment = new CreateFragment();
+                    }
                 } else if (itemId == R.id.profile) {
-                    selectedFragment = new ProfileFragment();
+                    selectedFragment = getSupportFragmentManager().findFragmentByTag("ProfileFragment");
+                    fragmentTag = "ProfileFragment";
+                    if (selectedFragment == null) {
+                        selectedFragment = new ProfileFragment();
+                    }
                 }
+
                 if (selectedFragment != null) {
-                    getSupportFragmentManager().beginTransaction().replace(R.id.framelayout, selectedFragment).commit();
+                    if (!selectedFragment.isAdded()) {
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.framelayout, selectedFragment, fragmentTag)
+                                .commit();
+                    }
                 }
 
                 return true;

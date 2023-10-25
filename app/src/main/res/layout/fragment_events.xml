@@ -98,7 +98,7 @@
                     android:layout_below="@id/editTextSearch"
                     android:layout_marginStart="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:text="Categories"
+                    android:text="Top Organiser"
                     android:textSize="@dimen/_14sdp"
                     android:fontFamily="@font/robotobold"
                     android:textColor="@color/start_color"
@@ -125,58 +125,12 @@
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_height="@dimen/_100sdp"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:id="@+id/txt_organizer"
-                    android:layout_below="@id/categories_list"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:text="Top Organizer"
-                    android:textSize="@dimen/_14sdp"
-                    android:fontFamily="@font/robotobold"
-                    android:textColor="@color/start_color"
-                    android:layout_height="wrap_content"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:id="@+id/txt_categories_see_all_"
-                    android:layout_below="@id/categories_list"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_alignParentRight="true"
-                    android:text="See all"
-                    android:layout_marginEnd="@dimen/_10sdp"
-                    android:textSize="@dimen/_10sdp"
-                    android:fontFamily="@font/robotobold"
-                    android:textColor="#7C7C7C"
-                    android:layout_height="wrap_content"/>
-
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
-                    android:id="@+id/location_list_"
-                    android:layout_below="@+id/txt_organizer"
+                    android:id="@+id/categories_list_items"
+                    android:layout_below="@+id/categories_list"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_height="@dimen/_130sdp"/>
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:id="@+id/txt_organizer_"
-                    android:layout_below="@id/location_list_"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:text="Recently Listed"
-                    android:textSize="@dimen/_14sdp"
-                    android:fontFamily="@font/robotobold"
-                    android:textColor="@color/start_color"
-                    android:layout_height="wrap_content"/>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:id="@+id/recently_listed"
-                    android:layout_below="@+id/txt_organizer_"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="match_parent"/>
 
 
             </RelativeLayout>

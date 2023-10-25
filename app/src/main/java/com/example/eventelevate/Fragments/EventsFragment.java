@@ -15,6 +15,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,22 +25,35 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.eventelevate.Activity.AboutUs;
+import com.example.eventelevate.Activity.CategoriesActivity;
 import com.example.eventelevate.Activity.ContactUs;
 import com.example.eventelevate.Activity.Location;
 import com.example.eventelevate.Activity.LoginActivity;
 import com.example.eventelevate.Activity.MainActivity;
+import com.example.eventelevate.Adapter.BestOrganiserAdapter;
 import com.example.eventelevate.Adapter.CategoriesListAdapter;
 import com.example.eventelevate.Adapter.EventsListAdapter;
 import com.example.eventelevate.Adapter.RecentlyListedAdapter;
+import com.example.eventelevate.Adapter.ServiceListAdapter;
 import com.example.eventelevate.Adapter.ViewPagerAdapter;
+import com.example.eventelevate.Interfaces.APIInterface;
 import com.example.eventelevate.Manager.AppManager;
+import com.example.eventelevate.Model.ServiceModel;
 import com.example.eventelevate.R;
+import com.example.eventelevate.Service.RetrofitClient;
 import com.example.eventelevate.databinding.FragmentEventBinding;
 import com.example.eventelevate.databinding.FragmentEventsBinding;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayoutMediator;
+
+import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class EventsFragment extends Fragment {
 
@@ -137,7 +151,6 @@ public class EventsFragment extends Fragment {
 
     public void init(){
         LoadCategories();
-        LoadRecentlyListedItem();
     }
 
     private void LoadCategories() {
@@ -145,23 +158,46 @@ public class EventsFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         binding.categoriesList.setLayoutManager(layoutManager);
-        CategoriesListAdapter eventsListAdapter = new CategoriesListAdapter(this);
-        binding.categoriesList.setAdapter(eventsListAdapter);
+        BestOrganiserAdapter bestOrganiserAdapter = new BestOrganiserAdapter(this);
+        binding.categoriesList.setAdapter(bestOrganiserAdapter);
 
-        LinearLayoutManager layoutManagerr = new LinearLayoutManager(getActivity());
-        layoutManagerr.setOrientation(LinearLayoutManager.HORIZONTAL);
-        binding.locationList.setLayoutManager(layoutManagerr);
-        binding.locationList.setAdapter(eventsListAdapter);
 
+        getListofAllService();
     }
 
-    private void LoadRecentlyListedItem(){
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        binding.recentlyListed.setLayoutManager(layoutManager);
-        RecentlyListedAdapter listAdapter = new RecentlyListedAdapter(this);
-        binding.recentlyListed.setAdapter(listAdapter);
+    private void getListofAllService() {
+        APIInterface apiInterface = RetrofitClient.getRetrofitInstance().create(APIInterface.class);
+        Call<ServiceModel> call = apiInterface.GetServiceType();
+        call.enqueue(new Callback<ServiceModel>() {
+            @Override
+            public void onResponse(Call<ServiceModel> call, Response<ServiceModel> response) {
 
+                AppManager.hideProgress();
+                if(response.body().getStatusCode()==200){
+                    ArrayList<ServiceModel.Servicetype> servicetypes = response.body().getServicetype();
+
+                    LinearLayoutManager layoutManager1 = new LinearLayoutManager(getActivity());
+                    layoutManager1.setOrientation(LinearLayoutManager.VERTICAL);
+                    binding.categoriesListItems.setLayoutManager(layoutManager1);
+                    CategoriesListAdapter eventsListAdapter = new CategoriesListAdapter(EventsFragment.this,servicetypes);
+                    binding.categoriesListItems.setAdapter(eventsListAdapter);
+
+
+                }else if(response.body().getStatusCode()==201){
+                    Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ServiceModel> call, Throwable t) {
+                AppManager.hideProgress();
+                // Snackbar snackbar = Snackbar.make(binding.container, "Something Went Wrong", 0);
+                //snackbar.show();
+            }
+        });
     }
+
 
     public void openCloseNavigationDrawer(){
         if(binding.drawerLayout.isDrawerOpen(GravityCompat.START)){
