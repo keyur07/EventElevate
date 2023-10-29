@@ -32,9 +32,9 @@
             android:textSize="@dimen/_12sdp" />
 
         <TextView
-            android:id="@+id/btn_publish"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/btn_publish"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:fontFamily="@font/robotobold"
@@ -77,59 +77,59 @@
                         android:id="@+id/horizontal"
                         android:scrollbars="none">
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:paddingEnd="@dimen/_20sdp"
-                        android:layout_height="wrap_content">
-
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="8dp"
-                        android:layout_toEndOf="@id/imageView_create_add"
-                        android:visibility="visible" />
-
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/imageView_create_add"
-                        android:layout_width="95dp"
-                        android:layout_marginStart="@dimen/_10sdp"
-                        android:layout_marginEnd="@dimen/_3sdp"
-                        android:layout_height="95dp"
-                        android:layout_centerVertical="true"
-                        app:cardCornerRadius="@dimen/_5sdp">
-
-                        <LinearLayout
+                        <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:background="@drawable/add_images_border"
-                            android:layout_centerInParent="true"
-                            android:orientation="vertical"
-                            android:padding="8dp">
+                            android:paddingEnd="@dimen/_20sdp"
+                            android:layout_height="wrap_content">
 
-                            <ImageView
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/recyclerView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center_horizontal"
-                                android:scaleType="centerCrop"
-                                android:src="@drawable/baseline_add_to_photos_24"
-                                app:tint="#7E7E7E" />
+                                android:padding="8dp"
+                                android:layout_toEndOf="@id/imageView_create_add"
+                                android:visibility="visible" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_horizontal"
-                                android:fontFamily="@font/robotobold"
-                                android:text="Add photos"
-                                android:textColor="#7E7E7E" />
-                        </LinearLayout>
+                            <androidx.cardview.widget.CardView
+                                android:id="@+id/imageView_create_add"
+                                android:layout_width="95dp"
+                                android:layout_marginStart="@dimen/_10sdp"
+                                android:layout_marginEnd="@dimen/_3sdp"
+                                android:layout_height="95dp"
+                                android:layout_centerVertical="true"
+                                app:cardCornerRadius="@dimen/_5sdp">
 
-                    </androidx.cardview.widget.CardView>
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:background="@drawable/add_images_border"
+                                    android:layout_centerInParent="true"
+                                    android:orientation="vertical"
+                                    android:padding="8dp">
 
-                    </RelativeLayout>
+                                    <ImageView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center_horizontal"
+                                        android:scaleType="centerCrop"
+                                        android:src="@drawable/baseline_add_to_photos_24"
+                                        app:tint="#7E7E7E" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center_horizontal"
+                                        android:fontFamily="@font/robotobold"
+                                        android:text="Add photos"
+                                        android:textColor="#7E7E7E" />
+                                </LinearLayout>
+
+                            </androidx.cardview.widget.CardView>
+
+                        </RelativeLayout>
                     </HorizontalScrollView>
                 </androidx.core.widget.NestedScrollView>
 
@@ -202,6 +202,7 @@
                 android:spinnerMode="dropdown"
                 android:fontFamily="@font/robotoregular"
                 android:paddingStart="16dp" />
+
 
 
             <EditText

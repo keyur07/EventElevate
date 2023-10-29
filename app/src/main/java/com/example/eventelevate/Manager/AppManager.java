@@ -43,6 +43,7 @@ public  class AppManager {
     public static SettingModel.Setting setting;
     private static ProgressRound progressBar;
     public static String SelectedLocation="Surat";
+    public static String selectedService;
 
     public static void changeActivity(Context context, Class<? extends Activity> targetActivity) {
         Intent intent = new Intent(context, targetActivity);

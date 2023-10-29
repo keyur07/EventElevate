@@ -6,6 +6,8 @@ import com.example.eventelevate.Model.EventtypeModel;
 import com.example.eventelevate.Model.Location.MainLoction;
 import com.example.eventelevate.Model.LocationModel;
 import com.example.eventelevate.Model.LoginModel;
+import com.example.eventelevate.Model.PackageModel;
+import com.example.eventelevate.Model.ProviderProfileModel;
 import com.example.eventelevate.Model.ServiceModel;
 import com.example.eventelevate.Model.ServiceProviderModel;
 import com.example.eventelevate.Model.SettingModel;
@@ -50,6 +52,9 @@ public interface APIInterface {
     @GET("event/eventtype/getalleventtype")
     Call<EventtypeModel> GetEventType();
 
+    @GET("event/eventtype/getallpackages")
+    Call<PackageModel> GetAllPackages();
+
     @GET("event/service/getallservices")
     Call<ServiceModel> GetServiceType();
 
@@ -57,9 +62,16 @@ public interface APIInterface {
     @POST("event/service/getservicebytablename")
     Call<ServiceProviderModel> GetServicelistbytable(@Field("table_name") String tablename);
 
+    @FormUrlEncoded
+    @POST("event/service/getproviderdata")
+    Call<ProviderProfileModel> GetAllDetailsOfProvider(@Field("user_id") String  userID,
+                                                       @Field("service_id") String serviceId,
+                                                       @Field("servicename") String ServiceName);
+
     @Multipart
     @POST("event/service/additem")
     Call<SignupModel> CreatePost(
+            @Part("userid") RequestBody userID,
             @Part("title") RequestBody title,
             @Part("paymenttype") RequestBody paymentType,
             @Part("price") RequestBody price,
@@ -67,6 +79,21 @@ public interface APIInterface {
             @Part("terms") RequestBody terms,
             @Part("location") RequestBody location,
             @Part("servicename") RequestBody servicename,
+            @Part List<MultipartBody.Part> images
+    );
+
+
+    @Multipart
+    @POST("event/eventtype/addnewpackage")
+    Call<SignupModel> CreatePackage(
+            @Part("userid") RequestBody userID,
+            @Part("title") RequestBody title,
+            @Part("paymenttype") RequestBody paymentType,
+            @Part("price") RequestBody price,
+            @Part("description") RequestBody description,
+            @Part("terms") RequestBody terms,
+            @Part("location") RequestBody location,
+            @Part("eventtype") RequestBody servicename,
             @Part List<MultipartBody.Part> images
     );
 

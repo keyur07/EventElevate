@@ -41,6 +41,8 @@ public class SignUp extends AppCompatActivity {
             public void onClick(View v) {
 
                 if(validateInputFields()){
+
+                    AppManager.showProgress(SignUp.this);
                     String firstName = binding.edtFirstname.getText().toString();
                     String lastName = binding.edtLastname.getText().toString();
                     String email = binding.edtEmail.getText().toString();
@@ -50,7 +52,7 @@ public class SignUp extends AppCompatActivity {
                     call.enqueue(new Callback<SignupModel>() {
                         @Override
                         public void onResponse(Call<SignupModel> call, Response<SignupModel> response) {
-
+                            AppManager.hideProgress();
                             if(response.body().getStatusCode()==200){
                                 if(response.body().getMessage().equals("User Created Successfully")){
                                     APIInterface apiInterface = RetrofitClient.getRetrofitInstance().create(APIInterface.class);
@@ -102,7 +104,8 @@ public class SignUp extends AppCompatActivity {
 
                         @Override
                         public void onFailure(Call<SignupModel> call, Throwable t) {
-
+                            AppManager.hideProgress();
+                            Toast.makeText(SignUp.this, "Something went wrong", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }else {

@@ -39,11 +39,15 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
         Uri imageUri = imageUris.get(position);
         try {
             InputStream imageStream = context.getContentResolver().openInputStream(imageUri);
-            Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inSampleSize = 2; // You can adjust the inSampleSize as needed
+
+            Bitmap selectedImage = BitmapFactory.decodeStream(imageStream, null, options);
             holder.imageView.setImageBitmap(selectedImage);
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
     @Override

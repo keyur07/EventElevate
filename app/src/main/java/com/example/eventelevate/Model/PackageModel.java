@@ -1,12 +1,10 @@
 package com.example.eventelevate.Model;
 
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
-
-public class ServiceProviderModel {
+public class PackageModel {
 
     @SerializedName("status_code")
     @Expose
@@ -14,9 +12,9 @@ public class ServiceProviderModel {
     @SerializedName("message")
     @Expose
     private String message;
-    @SerializedName("servicetype")
+    @SerializedName("EventTypes")
     @Expose
-    private List<Servicetype> servicetype;
+    private List<EventType> eventTypes;
 
     public Integer getStatusCode() {
         return statusCode;
@@ -34,16 +32,15 @@ public class ServiceProviderModel {
         this.message = message;
     }
 
-    public List<Servicetype> getServicetype() {
-        return servicetype;
+    public List<EventType> getEventTypes() {
+        return eventTypes;
     }
 
-    public void setServicetype(List<Servicetype> servicetype) {
-        this.servicetype = servicetype;
+    public void setEventTypes(List<EventType> eventTypes) {
+        this.eventTypes = eventTypes;
     }
 
-
-    public class Servicetype {
+    public class EventType {
 
         @SerializedName("id")
         @Expose
@@ -72,6 +69,9 @@ public class ServiceProviderModel {
         @SerializedName("userid")
         @Expose
         private Integer userid;
+        @SerializedName("eventype")
+        @Expose
+        private String eventype;
         @SerializedName("images")
         @Expose
         private List<Image> images;
@@ -148,6 +148,14 @@ public class ServiceProviderModel {
             this.userid = userid;
         }
 
+        public String getEventype() {
+            return eventype;
+        }
+
+        public void setEventype(String eventype) {
+            this.eventype = eventype;
+        }
+
         public List<Image> getImages() {
             return images;
         }
@@ -155,7 +163,6 @@ public class ServiceProviderModel {
         public void setImages(List<Image> images) {
             this.images = images;
         }
-
         public class Image {
 
             @SerializedName("id")
@@ -166,7 +173,7 @@ public class ServiceProviderModel {
             private String images;
             @SerializedName("photographer_id")
             @Expose
-            private Integer photographerId;
+            private Object photographerId;
             @SerializedName("food_id")
             @Expose
             private Object foodId;
@@ -193,11 +200,11 @@ public class ServiceProviderModel {
                 this.images = images;
             }
 
-            public Integer getPhotographerId() {
+            public Object getPhotographerId() {
                 return photographerId;
             }
 
-            public void setPhotographerId(Integer photographerId) {
+            public void setPhotographerId(Object photographerId) {
                 this.photographerId = photographerId;
             }
 
@@ -226,5 +233,8 @@ public class ServiceProviderModel {
             }
 
         }
+
+
     }
+
 }

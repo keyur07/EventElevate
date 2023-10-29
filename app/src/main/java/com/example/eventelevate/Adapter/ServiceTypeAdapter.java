@@ -1,29 +1,30 @@
 package com.example.eventelevate.Adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.eventelevate.Model.ServiceModel;
+import com.example.eventelevate.Activity.ProfileActivity;
 import com.example.eventelevate.Model.ServiceProviderModel;
 import com.example.eventelevate.R;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class ServiceTypeAdapter extends RecyclerView.Adapter<ServiceTypeAdapter.ViewHolder> {
     private Activity activity;
-    private ArrayList<ServiceProviderModel.Servicetype> servicetypes;
-    public ServiceTypeAdapter(FragmentActivity activity, ArrayList<ServiceProviderModel.Servicetype> servicetypes) {
+    private ServiceProviderModel servicetypes;
+    public ServiceTypeAdapter(FragmentActivity activity, ServiceProviderModel servicetypes) {
         this.activity = activity;
         this.servicetypes = servicetypes;
     }
@@ -37,25 +38,43 @@ public class ServiceTypeAdapter extends RecyclerView.Adapter<ServiceTypeAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ServiceTypeAdapter.ViewHolder holder, int position) {
-        holder.name.setText(servicetypes.get(position).getTitle());
-        holder.price.setText(servicetypes.get(position).getPrice());
-        Glide.with(activity).load(servicetypes.get(position).getImages().get(0).getImages()).into(holder.imageView);
+        List<ServiceProviderModel.Servicetype> servicetypes1 = this.servicetypes.getServicetype();
+        holder.name.setText(servicetypes1.get(position).getTitle());
+        holder.price.setText(servicetypes1.get(position).getPrice());
+        Glide.with(activity).load(servicetypes1.get(position).getImages().get(0).getImages()).into(holder.imageView);
+
+        holder.container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("datadata",""+servicetypes1.get(position).getUserid());
+                Log.e("datadata",""+servicetypes1.get(position).getId());
+                Intent intent = new Intent(activity, ProfileActivity.class);
+                intent.putExtra("user_id",servicetypes1.get(position).getUserid().toString());
+                intent.putExtra("service_id",servicetypes1.get(position).getId().toString());
+                intent.putExtra("serviceName", servicetypes.getMessage());
+                activity.startActivity(intent);
+            }
+        });
+
+
     }
 
     @Override
     public int getItemCount() {
-        return servicetypes.size();
+        return servicetypes.getServicetype().size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView name,price;
         private ImageView imageView;
+        private CardView container;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.name);
             price = itemView.findViewById(R.id.price);
             imageView =itemView.findViewById(R.id.icon);
+            container = itemView.findViewById(R.id.container);
 
         }
     }

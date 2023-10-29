@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -57,12 +58,13 @@ public class LoginActivity extends AppCompatActivity {
 
     private void getuserVerified(String username, String password) {
 
+        AppManager.showProgress(this);
         APIInterface apiInterface = RetrofitClient.getRetrofitInstance().create(APIInterface.class);
         Call<LoginModel> call = apiInterface.VerifiedLoginData(username,password);
         call.enqueue(new Callback<LoginModel>() {
             @Override
             public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {
-
+                AppManager.hideProgress();
                 if(response.body().getStatusCode()==200){
                     if(response.body().getMessage().trim().equals("Success")){
                         StartUserSession(username,password);
@@ -77,7 +79,9 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<LoginModel> call, Throwable t) {
-
+                AppManager.hideProgress();
+                Toast.makeText(LoginActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                Log.e("errror",t.getMessage());
             }
         });
 

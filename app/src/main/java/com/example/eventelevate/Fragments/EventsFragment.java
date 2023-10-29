@@ -73,7 +73,7 @@ public class EventsFragment extends Fragment {
         binding.drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-
+        AppManager.showProgress(getActivity());
         binding.locationName.setText(AppManager.SelectedLocation);
         binding.location.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,13 +166,13 @@ public class EventsFragment extends Fragment {
     }
 
     private void getListofAllService() {
+
         APIInterface apiInterface = RetrofitClient.getRetrofitInstance().create(APIInterface.class);
         Call<ServiceModel> call = apiInterface.GetServiceType();
         call.enqueue(new Callback<ServiceModel>() {
             @Override
             public void onResponse(Call<ServiceModel> call, Response<ServiceModel> response) {
 
-                AppManager.hideProgress();
                 if(response.body().getStatusCode()==200){
                     ArrayList<ServiceModel.Servicetype> servicetypes = response.body().getServicetype();
 

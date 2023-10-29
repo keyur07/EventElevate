@@ -1,49 +1,69 @@
 package com.example.eventelevate.Model;
 
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class ServiceProviderModel {
+public class ProviderProfileModel {
 
-    @SerializedName("status_code")
-    @Expose
-    private Integer statusCode;
-    @SerializedName("message")
-    @Expose
-    private String message;
-    @SerializedName("servicetype")
-    @Expose
-    private List<Servicetype> servicetype;
+@SerializedName("status_code")
+@Expose
+private Integer statusCode;
+@SerializedName("message")
+@Expose
+private String message;
+@SerializedName("service_data")
+@Expose
+private List<ServiceDatum> serviceData;
+@SerializedName("user_data")
+@Expose
+private List<UserDatum> userData;
+@SerializedName("images")
+@Expose
+private List<Image> images;
 
-    public Integer getStatusCode() {
-        return statusCode;
-    }
+public Integer getStatusCode() {
+return statusCode;
+}
 
-    public void setStatusCode(Integer statusCode) {
-        this.statusCode = statusCode;
-    }
+public void setStatusCode(Integer statusCode) {
+this.statusCode = statusCode;
+}
 
-    public String getMessage() {
-        return message;
-    }
+public String getMessage() {
+return message;
+}
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
+public void setMessage(String message) {
+this.message = message;
+}
 
-    public List<Servicetype> getServicetype() {
-        return servicetype;
-    }
+public List<ServiceDatum> getServiceData() {
+return serviceData;
+}
 
-    public void setServicetype(List<Servicetype> servicetype) {
-        this.servicetype = servicetype;
-    }
+public void setServiceData(List<ServiceDatum> serviceData) {
+this.serviceData = serviceData;
+}
 
+public List<UserDatum> getUserData() {
+return userData;
+}
 
-    public class Servicetype {
+public void setUserData(List<UserDatum> userData) {
+this.userData = userData;
+}
+
+public List<Image> getImages() {
+return images;
+}
+
+public void setImages(List<Image> images) {
+this.images = images;
+}
+
+    public class ServiceDatum {
 
         @SerializedName("id")
         @Expose
@@ -72,9 +92,6 @@ public class ServiceProviderModel {
         @SerializedName("userid")
         @Expose
         private Integer userid;
-        @SerializedName("images")
-        @Expose
-        private List<Image> images;
 
         public Integer getId() {
             return id;
@@ -148,13 +165,99 @@ public class ServiceProviderModel {
             this.userid = userid;
         }
 
-        public List<Image> getImages() {
-            return images;
+    }
+
+    public class UserDatum {
+
+        @SerializedName("Id")
+        @Expose
+        private Integer id;
+        @SerializedName("firstName")
+        @Expose
+        private String firstName;
+        @SerializedName("lastName")
+        @Expose
+        private String lastName;
+        @SerializedName("email")
+        @Expose
+        private String email;
+        @SerializedName("password")
+        @Expose
+        private String password;
+        @SerializedName("deviceId")
+        @Expose
+        private String deviceId;
+        @SerializedName("status")
+        @Expose
+        private Integer status;
+        @SerializedName("createdOn")
+        @Expose
+        private String createdOn;
+
+        public Integer getId() {
+            return id;
         }
 
-        public void setImages(List<Image> images) {
-            this.images = images;
+        public void setId(Integer id) {
+            this.id = id;
         }
+
+        public String getFirstName() {
+            return firstName;
+        }
+
+        public void setFirstName(String firstName) {
+            this.firstName = firstName;
+        }
+
+        public String getLastName() {
+            return lastName;
+        }
+
+        public void setLastName(String lastName) {
+            this.lastName = lastName;
+        }
+
+        public String getEmail() {
+            return email;
+        }
+
+        public void setEmail(String email) {
+            this.email = email;
+        }
+
+        public String getPassword() {
+            return password;
+        }
+
+        public void setPassword(String password) {
+            this.password = password;
+        }
+
+        public String getDeviceId() {
+            return deviceId;
+        }
+
+        public void setDeviceId(String deviceId) {
+            this.deviceId = deviceId;
+        }
+
+        public Integer getStatus() {
+            return status;
+        }
+
+        public void setStatus(Integer status) {
+            this.status = status;
+        }
+
+        public String getCreatedOn() {
+            return createdOn;
+        }
+
+        public void setCreatedOn(String createdOn) {
+            this.createdOn = createdOn;
+        }
+    }
 
         public class Image {
 
@@ -166,10 +269,10 @@ public class ServiceProviderModel {
             private String images;
             @SerializedName("photographer_id")
             @Expose
-            private Integer photographerId;
+            private Object photographerId;
             @SerializedName("food_id")
             @Expose
-            private Object foodId;
+            private Integer foodId;
             @SerializedName("music_id")
             @Expose
             private Object musicId;
@@ -193,19 +296,19 @@ public class ServiceProviderModel {
                 this.images = images;
             }
 
-            public Integer getPhotographerId() {
+            public Object getPhotographerId() {
                 return photographerId;
             }
 
-            public void setPhotographerId(Integer photographerId) {
+            public void setPhotographerId(Object photographerId) {
                 this.photographerId = photographerId;
             }
 
-            public Object getFoodId() {
+            public Integer getFoodId() {
                 return foodId;
             }
 
-            public void setFoodId(Object foodId) {
+            public void setFoodId(Integer foodId) {
                 this.foodId = foodId;
             }
 
@@ -226,5 +329,6 @@ public class ServiceProviderModel {
             }
 
         }
+
+
     }
-}

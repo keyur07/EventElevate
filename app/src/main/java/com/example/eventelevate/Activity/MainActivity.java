@@ -35,6 +35,7 @@ import com.example.eventelevate.Fragments.CreateFragment;
 import com.example.eventelevate.Fragments.EventFragment;
 import com.example.eventelevate.Fragments.EventsFragment;
 import com.example.eventelevate.Fragments.ForYouFragment;
+import com.example.eventelevate.Fragments.ManageFragment;
 import com.example.eventelevate.Fragments.ProfileFragment;
 import com.example.eventelevate.Manager.AppManager;
 import com.example.eventelevate.R;
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
     private TabLayout tab;
     ActivityMainBinding binding;
     Fragment selectedFragment = null;
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,37 +80,21 @@ public class MainActivity extends AppCompatActivity {
                 String fragmentTag = null;
 
                 if (itemId == R.id.event) {
-                    selectedFragment = getSupportFragmentManager().findFragmentByTag("ForYouFragment");
-                    fragmentTag = "ForYouFragment";
-                    if (selectedFragment == null) {
-                        selectedFragment = new ForYouFragment();
-                    }
+                    selectedFragment = new ForYouFragment();
                 } else if (itemId == R.id.foryou) {
-                    selectedFragment = getSupportFragmentManager().findFragmentByTag("EventsFragment");
-                    fragmentTag = "EventsFragment";
-                    if (selectedFragment == null) {
-                        selectedFragment = new EventsFragment();
-                    }
+                    selectedFragment = new EventsFragment();
                 } else if (itemId == R.id.create) {
-                    selectedFragment = getSupportFragmentManager().findFragmentByTag("CreateFragment");
-                    fragmentTag = "CreateFragment";
-                    if (selectedFragment == null) {
-                        selectedFragment = new CreateFragment();
-                    }
+                    selectedFragment = new ManageFragment();
                 } else if (itemId == R.id.profile) {
-                    selectedFragment = getSupportFragmentManager().findFragmentByTag("ProfileFragment");
-                    fragmentTag = "ProfileFragment";
-                    if (selectedFragment == null) {
-                        selectedFragment = new ProfileFragment();
-                    }
+                    selectedFragment = new ProfileFragment();
                 }
 
                 if (selectedFragment != null) {
-                    if (!selectedFragment.isAdded()) {
-                        getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.framelayout, selectedFragment, fragmentTag)
-                                .commit();
-                    }
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.framelayout, selectedFragment, fragmentTag)
+                            .commitNow();
+
                 }
 
                 return true;
@@ -123,21 +109,21 @@ public class MainActivity extends AppCompatActivity {
 
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(ContextCompat.getColor(this,R.color.start_color));
+        window.setStatusBarColor(ContextCompat.getColor(this, R.color.start_color));
 
     }
 
     private void getDataFromGoogleAccount() {
 
         googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
-        signInClient = GoogleSignIn.getClient(MainActivity.this,googleSignInOptions);
+        signInClient = GoogleSignIn.getClient(MainActivity.this, googleSignInOptions);
 
         GoogleSignInAccount signIn = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
 
-        if(signIn!=null){
-            Log.e("datdatadata",signIn.getDisplayName());
-            Log.e("datdatadata",signIn.getEmail());
-        }else {
+        if (signIn != null) {
+            Log.e("datdatadata", signIn.getDisplayName());
+            Log.e("datdatadata", signIn.getEmail());
+        } else {
 
         }
 
@@ -171,13 +157,13 @@ public class MainActivity extends AppCompatActivity {
                         finish();
                         System.exit(0);
                     }
-                },2000);
+                }, 2000);
 
             }
         });
     }
 
-    public void FragmentChanger(Fragment fragment){
+    public void FragmentChanger(Fragment fragment) {
         getSupportFragmentManager().beginTransaction().replace(R.id.framelayout, fragment).commit();
 
     }

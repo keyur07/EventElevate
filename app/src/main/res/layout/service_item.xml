@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?><!-- res/layout/service_item.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/serviceItemLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/border"
+    android:orientation="vertical"
+    android:layout_margin="@dimen/_5sdp"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/serviceThumbnail"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/serviceTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Service Title"
+        android:textColor="@color/start_color"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/servicePrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Service Price"
+        android:textColor="@color/start_color"
+        android:textSize="16sp"
+    android:layout_marginTop="4dp" />
+
+    <TextView
+        android:id="@+id/serviceLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Service Location"
+        android:textColor="@color/start_color"
+        android:textSize="16sp"
+    android:layout_marginTop="4dp" />
+
+</LinearLayout>

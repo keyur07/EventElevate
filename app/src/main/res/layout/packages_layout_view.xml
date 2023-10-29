@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     android:background="@color/white"
+    android:id="@+id/event_items"
     app:cardCornerRadius="12dp"
     app:cardElevation="4dp">
 

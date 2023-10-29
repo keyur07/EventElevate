@@ -34,8 +34,10 @@ public class EventFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = FragmentEventBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
+
         AppManager.showProgress(getActivity());
         getEventType();
+
         return view;
     }
 
@@ -50,7 +52,6 @@ public class EventFragment extends Fragment {
                 AppManager.hideProgress();
                 if(response.body().getStatusCode()==200){
                     ArrayList<EventtypeModel.EventType> eventtypeModels = response.body().getEventTypes();
-                    // Log.d("TAG", "onResponse:.......................................... "+eventtypeModels.get(0).getEventTypeName());
                     binding.recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
                     EventsListAdapter eventsListAdapter = new EventsListAdapter(eventtypeModels,getContext());
                     binding.recyclerview.setAdapter(eventsListAdapter);
@@ -64,8 +65,6 @@ public class EventFragment extends Fragment {
             @Override
             public void onFailure(Call<EventtypeModel> call, Throwable t) {
                 AppManager.hideProgress();
-                // Snackbar snackbar = Snackbar.make(binding.container, "Something Went Wrong", 0);
-                //snackbar.show();
             }
         });
     }

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "157436370286",
+    "project_id": "eventelevate-b7520",
+    "storage_bucket": "eventelevate-b7520.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:157436370286:android:b279e85d5696658af7f57f",
+        "android_client_info": {
+          "package_name": "com.example.eventelevate"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAX67Drybp35PkZ9NObHoyLuQkIpByDUaY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

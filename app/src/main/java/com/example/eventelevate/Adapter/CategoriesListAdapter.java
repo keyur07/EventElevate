@@ -1,9 +1,12 @@
 package com.example.eventelevate.Adapter;
 
+import android.app.Activity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -45,9 +48,16 @@ public class CategoriesListAdapter extends RecyclerView.Adapter<CategoriesListAd
     public void onBindViewHolder(@NonNull CategoriesListAdapter.ViewHolder holder, int position) {
         holder.cates_name.setText(servicetypes.get(position).getServiceName());
         getDatabyTable(servicetypes.get(position).getServiceName(),holder);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(holder.itemView.getContext(), "name: "+servicetypes.get(position).getServiceName(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void getDatabyTable(String serviceName, ViewHolder holder) {
+        AppManager.showProgress((Activity) holder.itemView.getContext());
         APIInterface apiInterface = RetrofitClient.getRetrofitInstance().create(APIInterface.class);
         Call<ServiceProviderModel> call = apiInterface.GetServicelistbytable(serviceName);
         call.enqueue(new Callback<ServiceProviderModel>() {
@@ -56,7 +66,8 @@ public class CategoriesListAdapter extends RecyclerView.Adapter<CategoriesListAd
 
                 AppManager.hideProgress();
                 if(response.body().getStatusCode()==200){
-                    ArrayList<ServiceProviderModel.Servicetype> servicetypes = (ArrayList<ServiceProviderModel.Servicetype>) response.body().getServicetype();
+                    AppManager.hideProgress();
+                    ServiceProviderModel servicetypes =  response.body();
                     LinearLayoutManager layoutManager = new LinearLayoutManager(eventsFragment.getActivity());
                     layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
                     holder.recyclerView.setLayoutManager(layoutManager);
