@@ -62,7 +62,7 @@ public class ContactUs extends AppCompatActivity {
                     if(response.body().getMessage().trim().equals("Contact request submitted successfully")){
                         binding.emailField3.setText("");
                         binding.textArea.setText("");
-                        AppManager.StatusDialog(ContactUs.this,true);
+                        AppManager.StatusDialog(ContactUs.this,true,"Message Submitted Successfully");
                     }
                 }else if(response.body().getStatusCode()==201){
                     Toast.makeText(ContactUs.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();

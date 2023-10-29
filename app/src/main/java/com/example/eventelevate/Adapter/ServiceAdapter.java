@@ -48,6 +48,8 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceV
         holder.titleTextView.setText(serviceList.get(position).getTitle());
         holder.priceTextView.setText(serviceList.get(position).getPrice());
         holder.locationTextView.setText(serviceList.get(position).getLocation());
+
+
         holder.serviceItemLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

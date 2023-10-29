@@ -194,7 +194,7 @@ public  class AppManager {
                 Settings.Secure.ANDROID_ID);
     }
 
-    public static void StatusDialog(Context context,boolean status){
+    public static void StatusDialog(Context context,boolean status,String message){
 
         if(status==true){
             Dialog download_completed = new Dialog(context);
@@ -202,6 +202,8 @@ public  class AppManager {
             download_completed.setContentView(R.layout.task_completed_view_dialog);
             download_completed.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT ));
             download_completed.show();
+           TextView textView= (TextView)download_completed.findViewById(R.id.message);
+           textView.setText(message);
 
             download_completed.findViewById(R.id.ok).setOnClickListener(new View.OnClickListener() {
                 @Override

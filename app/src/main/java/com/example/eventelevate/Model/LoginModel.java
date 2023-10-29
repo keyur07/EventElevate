@@ -5,7 +5,6 @@ import com.google.gson.annotations.SerializedName;
 
 public class LoginModel {
 
-
     @SerializedName("status_code")
     @Expose
     private Integer statusCode;
@@ -40,7 +39,6 @@ public class LoginModel {
         this.user = user;
     }
 
-
     public class User {
 
         @SerializedName("Id")
@@ -67,6 +65,9 @@ public class LoginModel {
         @SerializedName("createdOn")
         @Expose
         private String createdOn;
+        @SerializedName("photo")
+        @Expose
+        private String photo;
 
         public Integer getId() {
             return id;
@@ -132,6 +133,13 @@ public class LoginModel {
             this.createdOn = createdOn;
         }
 
+        public String getPhoto() {
+            return photo;
+        }
+
+        public void setPhoto(String photo) {
+            this.photo = photo;
+        }
     }
 
 }

@@ -36,6 +36,7 @@ import com.example.eventelevate.Fragments.EventFragment;
 import com.example.eventelevate.Fragments.EventsFragment;
 import com.example.eventelevate.Fragments.ForYouFragment;
 import com.example.eventelevate.Fragments.ManageFragment;
+import com.example.eventelevate.Fragments.MessagesFragment;
 import com.example.eventelevate.Fragments.ProfileFragment;
 import com.example.eventelevate.Manager.AppManager;
 import com.example.eventelevate.R;
@@ -87,6 +88,8 @@ public class MainActivity extends AppCompatActivity {
                     selectedFragment = new ManageFragment();
                 } else if (itemId == R.id.profile) {
                     selectedFragment = new ProfileFragment();
+                }else if (itemId == R.id.messages) {
+                    selectedFragment = new MessagesFragment();
                 }
 
                 if (selectedFragment != null) {

@@ -7,7 +7,6 @@
         android:layout_width="wrap_content"
         android:id="@+id/txt_organizer"
         android:layout_marginStart="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_10sdp"
         android:text="Top Organizer"
         android:textSize="@dimen/_14sdp"
         android:fontFamily="@font/robotobold"
@@ -18,7 +17,6 @@
         android:layout_width="wrap_content"
         android:id="@+id/txt_categories_see_all_"
         android:layout_marginStart="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_10sdp"
         android:layout_alignParentRight="true"
         android:text="See all"
         android:layout_marginEnd="@dimen/_10sdp"
@@ -32,7 +30,6 @@
         android:id="@+id/item_list"
         android:paddingVertical="@dimen/_10sdp"
         android:layout_below="@+id/txt_organizer"
-        android:layout_marginTop="@dimen/_10sdp"
         android:layout_height="wrap_content"/>
 
 </RelativeLayout>

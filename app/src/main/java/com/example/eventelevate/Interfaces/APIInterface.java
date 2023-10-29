@@ -26,6 +26,7 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Query;
+import retrofit2.http.Streaming;
 
 public interface APIInterface {
 
@@ -67,6 +68,14 @@ public interface APIInterface {
     Call<ProviderProfileModel> GetAllDetailsOfProvider(@Field("user_id") String  userID,
                                                        @Field("service_id") String serviceId,
                                                        @Field("servicename") String ServiceName);
+
+    @FormUrlEncoded
+    @POST("user/update")
+    Call<SignupModel> UpdateUserProfile(
+            @Field("user_id") String userId,
+            @Field("first_name") String firstName,
+            @Field("last_name") String lastName
+    );
 
     @Multipart
     @POST("event/service/additem")

@@ -1,6 +1,7 @@
 package com.example.eventelevate.Adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.eventelevate.Activity.ShowAllServices;
 import com.example.eventelevate.Fragments.EventsFragment;
 import com.example.eventelevate.Interfaces.APIInterface;
 import com.example.eventelevate.Manager.AppManager;
@@ -48,6 +50,14 @@ public class CategoriesListAdapter extends RecyclerView.Adapter<CategoriesListAd
     public void onBindViewHolder(@NonNull CategoriesListAdapter.ViewHolder holder, int position) {
         holder.cates_name.setText(servicetypes.get(position).getServiceName());
         getDatabyTable(servicetypes.get(position).getServiceName(),holder);
+        holder.txt_categories_see_all_.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(holder.itemView.getContext(), ShowAllServices.class);
+                intent.putExtra("table_name",servicetypes.get(position).getServiceName());
+                holder.itemView.getContext().startActivity(intent);
+            }
+        });
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,35 +68,40 @@ public class CategoriesListAdapter extends RecyclerView.Adapter<CategoriesListAd
 
     private void getDatabyTable(String serviceName, ViewHolder holder) {
         AppManager.showProgress((Activity) holder.itemView.getContext());
-        APIInterface apiInterface = RetrofitClient.getRetrofitInstance().create(APIInterface.class);
-        Call<ServiceProviderModel> call = apiInterface.GetServicelistbytable(serviceName);
-        call.enqueue(new Callback<ServiceProviderModel>() {
-            @Override
-            public void onResponse(Call<ServiceProviderModel> call, Response<ServiceProviderModel> response) {
+        try{
+            APIInterface apiInterface = RetrofitClient.getRetrofitInstance().create(APIInterface.class);
+            Call<ServiceProviderModel> call = apiInterface.GetServicelistbytable(serviceName);
+            call.enqueue(new Callback<ServiceProviderModel>() {
+                @Override
+                public void onResponse(Call<ServiceProviderModel> call, Response<ServiceProviderModel> response) {
 
-                AppManager.hideProgress();
-                if(response.body().getStatusCode()==200){
                     AppManager.hideProgress();
-                    ServiceProviderModel servicetypes =  response.body();
-                    LinearLayoutManager layoutManager = new LinearLayoutManager(eventsFragment.getActivity());
-                    layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-                    holder.recyclerView.setLayoutManager(layoutManager);
-                    ServiceTypeAdapter eventsListAdapter = new ServiceTypeAdapter(eventsFragment.getActivity(),servicetypes);
-                    holder.recyclerView.setAdapter(eventsListAdapter);
+                    if(response.body().getStatusCode()==200){
+                        AppManager.hideProgress();
+                        ServiceProviderModel servicetypes =  response.body();
+                        LinearLayoutManager layoutManager = new LinearLayoutManager(eventsFragment.getActivity());
+                        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+                        holder.recyclerView.setLayoutManager(layoutManager);
+                        ServiceTypeAdapter eventsListAdapter = new ServiceTypeAdapter(eventsFragment.getActivity(),servicetypes,1);
+                        holder.recyclerView.setAdapter(eventsListAdapter);
 
-                }else if(response.body().getStatusCode()==201){
+                    }else if(response.body().getStatusCode()==201){
+
+                    }
 
                 }
 
-            }
+                @Override
+                public void onFailure(Call<ServiceProviderModel> call, Throwable t) {
+                    AppManager.hideProgress();
+                    // Snackbar snackbar = Snackbar.make(binding.container, "Something Went Wrong", 0);
+                    //snackbar.show();
+                }
+            });
+        }catch (Exception e){
+            Toast.makeText(holder.itemView.getContext(), "Something Went Wrong", Toast.LENGTH_SHORT).show();
+        }
 
-            @Override
-            public void onFailure(Call<ServiceProviderModel> call, Throwable t) {
-                AppManager.hideProgress();
-                // Snackbar snackbar = Snackbar.make(binding.container, "Something Went Wrong", 0);
-                //snackbar.show();
-            }
-        });
     }
 
     @Override
@@ -97,11 +112,13 @@ public class CategoriesListAdapter extends RecyclerView.Adapter<CategoriesListAd
     public class ViewHolder extends RecyclerView.ViewHolder {
         public RecyclerView recyclerView;
         public TextView cates_name;
+        private TextView txt_categories_see_all_;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             recyclerView = itemView.findViewById(R.id.item_list);
             cates_name = itemView.findViewById(R.id.txt_organizer);
+            txt_categories_see_all_ = itemView.findViewById(R.id.txt_categories_see_all_);
         }
     }
 }

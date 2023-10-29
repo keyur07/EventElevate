@@ -14,7 +14,7 @@
 
 
     <item android:title="Messages"
-        android:id="@+id/MyEvents"
+        android:id="@+id/messages"
         android:icon="@drawable/ic_events_add_24"/>
 
     <item android:title="Profile"

@@ -23,9 +23,11 @@ import java.util.List;
 
 public class ServiceTypeAdapter extends RecyclerView.Adapter<ServiceTypeAdapter.ViewHolder> {
     private Activity activity;
+    private int typ;
     private ServiceProviderModel servicetypes;
-    public ServiceTypeAdapter(FragmentActivity activity, ServiceProviderModel servicetypes) {
+    public ServiceTypeAdapter(FragmentActivity activity, ServiceProviderModel servicetypes,int type) {
         this.activity = activity;
+        this.typ = type;
         this.servicetypes = servicetypes;
     }
 
@@ -40,9 +42,23 @@ public class ServiceTypeAdapter extends RecyclerView.Adapter<ServiceTypeAdapter.
     public void onBindViewHolder(@NonNull ServiceTypeAdapter.ViewHolder holder, int position) {
         List<ServiceProviderModel.Servicetype> servicetypes1 = this.servicetypes.getServicetype();
         holder.name.setText(servicetypes1.get(position).getTitle());
-        holder.price.setText(servicetypes1.get(position).getPrice());
+
+        if(servicetypes1.get(position).getPaymenttype().equals("Hourly")){
+            holder.price.setText("$"+servicetypes1.get(position).getPrice()+"/"+"hour");
+        }else {
+            holder.price.setText("$"+servicetypes1.get(position).getPrice()+"/"+"day");
+        }
         Glide.with(activity).load(servicetypes1.get(position).getImages().get(0).getImages()).into(holder.imageView);
 
+        if(typ==0){
+            ViewGroup.LayoutParams layoutParams = holder.container.getLayoutParams();
+            layoutParams.width = layoutParams.FILL_PARENT;
+            holder.container.setLayoutParams(layoutParams);
+        }else {
+            ViewGroup.LayoutParams layoutParams = holder.container.getLayoutParams();
+            layoutParams.width = 450;
+            holder.container.setLayoutParams(layoutParams);
+        }
         holder.container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
