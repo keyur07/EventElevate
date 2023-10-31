@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Define user 1 message background -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:top="5dp" android:right="5dp" android:bottom="5dp" android:left="5dp">
+        <shape>
+            <solid android:color="#007ACC"/> <!-- Background color for User 1 -->
+            <corners android:radius="8dp"/> <!-- Rounded corners -->
+        </shape>
+    </item>
+</layer-list>

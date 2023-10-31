@@ -61,13 +61,12 @@ public interface APIInterface {
 
     @FormUrlEncoded
     @POST("event/service/getservicebytablename")
-    Call<ServiceProviderModel> GetServicelistbytable(@Field("table_name") String tablename);
+    Call<ServiceProviderModel> GetServicelistbytable(@Field("service_id") String tablename);
 
     @FormUrlEncoded
     @POST("event/service/getproviderdata")
     Call<ProviderProfileModel> GetAllDetailsOfProvider(@Field("user_id") String  userID,
-                                                       @Field("service_id") String serviceId,
-                                                       @Field("servicename") String ServiceName);
+                                                       @Field("service_id") String serviceId);
 
     @FormUrlEncoded
     @POST("user/update")

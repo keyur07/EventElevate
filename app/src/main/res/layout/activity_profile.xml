@@ -161,6 +161,7 @@
                     android:background="@drawable/button_round"
                     android:layout_below="@id/txt_message"
                     android:text="SEND"
+                    android:id="@+id/send"
                     android:textColor="@color/white"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:layout_height="@dimen/_30sdp"/>

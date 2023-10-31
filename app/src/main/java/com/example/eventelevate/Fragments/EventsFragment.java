@@ -160,9 +160,8 @@ public class EventsFragment extends Fragment {
         binding.categoriesList.setLayoutManager(layoutManager);
         BestOrganiserAdapter bestOrganiserAdapter = new BestOrganiserAdapter(this);
         binding.categoriesList.setAdapter(bestOrganiserAdapter);
-
-
         getListofAllService();
+
     }
 
     private void getListofAllService() {

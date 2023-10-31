@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
@@ -24,6 +25,7 @@ import retrofit2.Response;
 public class ProfileActivity extends AppCompatActivity {
 
     private ActivityProfileBinding binding;
+    private int ClientID = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,21 @@ public class ProfileActivity extends AppCompatActivity {
     private void Init() {
         AppManager.changeStatusBarandBottomColor(this);
         GetServiceProviderProfile();
+
+        binding.send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(ProfileActivity.this, FirebaseActivity.class);
+
+                String message = "Hello, Second Activity!";
+                intent.putExtra("msg", message);
+                intent.putExtra("status", "User");
+                intent.putExtra("userId", AppManager.user.getId().toString());
+                intent.putExtra("clientId",String.valueOf(ClientID));
+                startActivity(intent);
+            }
+        });
     }
 
     private void GetServiceProviderProfile() {
@@ -50,7 +67,7 @@ public class ProfileActivity extends AppCompatActivity {
         Log.e("datacatata",serviceName);
         APIInterface apiInterface = RetrofitClient.getRetrofitInstance().create(APIInterface.class);
 
-        Call<ProviderProfileModel> call = apiInterface.GetAllDetailsOfProvider(user_id,service_id,serviceName);
+        Call<ProviderProfileModel> call = apiInterface.GetAllDetailsOfProvider(user_id,service_id);
         call.enqueue(new Callback<ProviderProfileModel>() {
             @Override
             public void onResponse(Call<ProviderProfileModel> call, Response<ProviderProfileModel> response) {
@@ -60,7 +77,7 @@ public class ProfileActivity extends AppCompatActivity {
                     binding.txtLocation.setText(response.body().getServiceData().get(0).getLocation());
                     binding.txtPrice.setText("$"+response.body().getServiceData().get(0).getPrice());
                     binding.txtDescription.setText(response.body().getServiceData().get(0).getDescription());
-
+                    ClientID = response.body().getUserData().get(0).getId();
                     PhotoAdapter photoAdapter = new PhotoAdapter(this,response.body().getImages());
                     LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
                     layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);

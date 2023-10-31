@@ -1,5 +1,6 @@
 package com.example.eventelevate.Adapter;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
@@ -47,14 +48,14 @@ public class CategoriesListAdapter extends RecyclerView.Adapter<CategoriesListAd
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CategoriesListAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CategoriesListAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.cates_name.setText(servicetypes.get(position).getServiceName());
-        getDatabyTable(servicetypes.get(position).getServiceName(),holder);
+        getDatabyTable(String.valueOf(servicetypes.get(position).getServiceId()),holder);
         holder.txt_categories_see_all_.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(holder.itemView.getContext(), ShowAllServices.class);
-                intent.putExtra("table_name",servicetypes.get(position).getServiceName());
+                intent.putExtra("table_name",servicetypes.get(position).getServiceId());
                 holder.itemView.getContext().startActivity(intent);
             }
         });
