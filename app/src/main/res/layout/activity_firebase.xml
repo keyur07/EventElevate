@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,30 +9,39 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvMessage"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/textinput" />
+        android:layout_height="match_parent" />
 
-    <EditText
-        android:id="@+id/textinput"
+    <RelativeLayout
+        android:id="@+id/bottom_layout"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@drawable/rounded_button"
-        android:gravity="center_vertical"
-        android:hint="Write here"
-        android:paddingLeft="@dimen/_10sdp"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        android:textSize="@dimen/_14sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_height="@dimen/_60sdp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/start_color">
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/send"
-        android:layout_width="60dp"
-        android:layout_height="50dp"
-        android:background="@color/white"
-        android:text="send"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <EditText
+            android:id="@+id/textinput"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="10dp"
+            android:paddingHorizontal="@dimen/_7sdp"
+            android:layout_toStartOf="@id/send"
+            android:fontFamily="@font/robotoregular"
+            android:textSize="@dimen/_12sdp"
+            android:background="@drawable/round"
+            android:backgroundTint="@color/white" />
+
+        <ImageView
+            android:id="@+id/send"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:backgroundTint="@color/white"
+            android:paddingEnd="@dimen/_5sdp"
+            android:src="@drawable/round_send_24" />
+
+    </RelativeLayout>
+</RelativeLayout>

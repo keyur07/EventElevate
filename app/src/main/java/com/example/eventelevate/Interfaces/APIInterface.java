@@ -1,11 +1,11 @@
 package com.example.eventelevate.Interfaces;
 
 import com.example.eventelevate.Model.AboutUsModel;
+import com.example.eventelevate.Model.CityModel;
 import com.example.eventelevate.Model.ContactModel;
 import com.example.eventelevate.Model.EventtypeModel;
-import com.example.eventelevate.Model.Location.MainLoction;
-import com.example.eventelevate.Model.LocationModel;
 import com.example.eventelevate.Model.LoginModel;
+import com.example.eventelevate.Model.MyServiceModel;
 import com.example.eventelevate.Model.PackageModel;
 import com.example.eventelevate.Model.ProviderProfileModel;
 import com.example.eventelevate.Model.ServiceModel;
@@ -21,20 +21,26 @@ import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
-import retrofit2.http.Query;
-import retrofit2.http.Streaming;
 
 public interface APIInterface {
+
+    @FormUrlEncoded
+    @POST("user/getuser")
+    Call<LoginModel> GetUserDetailsById(
+            @Field("user_id") String userId);
 
     @FormUrlEncoded
     @POST("user/login")
     Call<LoginModel> VerifiedLoginData(
             @Field("username") String username,
             @Field("password") String password);
+
+    @FormUrlEncoded
+    @POST("user/events")
+    Call<MyServiceModel> GetAllPostedService(@Field("user_id") String userId);
 
     @FormUrlEncoded
     @POST("user/signup")
@@ -44,8 +50,8 @@ public interface APIInterface {
                                  @Field("password") String password,
                                  @Field("deviceid") String deviceid);
 
-    @GET("cities")
-    Call<MainLoction> GetLocationList();
+    @GET("Controller/Api/LocationController.json")
+    Call<CityModel> GetLocationList();
 
     @GET("admin/setting")
     Call<SettingModel> GetApplicationSetting();

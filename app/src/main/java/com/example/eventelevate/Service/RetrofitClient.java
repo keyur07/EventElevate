@@ -16,7 +16,7 @@ public class RetrofitClient {
     private static Retrofit retrofit;
     private static String BASE_URL = "https://eventpeak.000webhostapp.com";
     private static String SUB_URL = "/Events/Api/index.php/";
-    private static String LOCATION = "https://services.feverup.com/api/4.1/";
+    private static String LOCATION = "/Events/Api/";
 
     public static Retrofit getRetrofitInstance() {
 
@@ -37,23 +37,13 @@ public class RetrofitClient {
 
     public static Retrofit getRetrofitInstanceforlocation() {
 
-        OkHttpClient client = new OkHttpClient.Builder()
-                .addInterceptor(new Interceptor() {
-                    @NotNull
-                    @Override
-                    public Response intercept(@NotNull Chain chain) throws IOException {
-                        Request originalRequest = chain.request();
-                        Request newRequest = originalRequest.newBuilder()
-                                .header("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk3Njg0Mjc5LCJpYXQiOjE2OTczODM1MDQsImp0aSI6ImFlMWZlOTA5Y2E2ZDQzMWE5OGQ1MjQxNDAzNzI4NTIzIiwidXNlcl9pZCI6NTMxNjY3MTN9.N_5aRps7HVVUV-D6hw5YT4Kbl_66cRzpIwB8YzI_NAI")
-                                .build();
-                        return chain.proceed(newRequest);
-                    }
-                })
-                .build();
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
 
 
         retrofit = new Retrofit.Builder()
-                .baseUrl(LOCATION)
+                .baseUrl(BASE_URL+LOCATION)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build();

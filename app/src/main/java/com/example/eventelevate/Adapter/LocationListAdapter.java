@@ -15,8 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.eventelevate.Activity.Location;
-import com.example.eventelevate.Model.Location.CityName;
-import com.example.eventelevate.Model.LocationModel;
+import com.example.eventelevate.Model.CityModel;
 import com.example.eventelevate.R;
 
 import java.util.ArrayList;
@@ -25,10 +24,10 @@ import java.util.List;
 public class LocationListAdapter extends RecyclerView.Adapter<LocationListAdapter.ViewHolder> {
 
     private Context location;
-    private ArrayList<CityName> list;
+    private List<CityModel.Loaction.Result> list;
     int selectedPosition = -1;
     int lastSelectedPosition = -1;
-    public LocationListAdapter(Context location,ArrayList<CityName> body) {
+    public LocationListAdapter(Context location, List<CityModel.Loaction.Result> body) {
         this.list = body;
         this.location = location;
     }
@@ -41,21 +40,22 @@ public class LocationListAdapter extends RecyclerView.Adapter<LocationListAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        CityName cityName = (CityName)  list.get(position);
+    public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
-        Glide.with(location).load(cityName.getImg()).into(holder.imageView);
-        holder.textView.setText(cityName.getName());
-          /*  holder.frameLayout.setOnClickListener(new View.OnClickListener() {
+        Glide.with(location).load(list.get(position).getPhoto()).into(holder.imageView);
+        holder.textView.setText(list.get(position).getName());
+        holder.frameLayout.setOnClickListener(new View.OnClickListener() {
 
+                @SuppressLint("ResourceAsColor")
                 @Override
                 public void onClick(View v) {
-                    Location.position = position;
                     lastSelectedPosition = selectedPosition;
                     selectedPosition = holder.getAdapterPosition();
                     notifyItemChanged(lastSelectedPosition);
                     notifyItemChanged(selectedPosition);
                     holder.frameLayout.setBackgroundColor(R.color.start_color);
+                    Location.position = position;
+
                 }
             });
 
@@ -63,10 +63,7 @@ public class LocationListAdapter extends RecyclerView.Adapter<LocationListAdapte
                 holder.frameLayout.setBackgroundColor(Color.BLACK);
             } else {
                 holder.frameLayout.setBackgroundColor(Color.WHITE);
-
-            }*/
-
-
+            }
 
     }
 

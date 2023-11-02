@@ -18,10 +18,8 @@ import com.example.eventelevate.Adapter.EventsListAdapter;
 import com.example.eventelevate.Adapter.LocationListAdapter;
 import com.example.eventelevate.Interfaces.APIInterface;
 import com.example.eventelevate.Manager.AppManager;
-import com.example.eventelevate.Model.Location.CityName;
-import com.example.eventelevate.Model.Location.Loaction;
-import com.example.eventelevate.Model.Location.MainLoction;
-import com.example.eventelevate.Model.LocationModel;
+import com.example.eventelevate.Model.CityModel;
+
 import com.example.eventelevate.R;
 import com.example.eventelevate.Service.RetrofitClient;
 import com.example.eventelevate.databinding.ActivityLocationBinding;
@@ -42,15 +40,13 @@ public class Location extends AppCompatActivity {
     ActivityLocationBinding binding;
     public static int position;
     int page =1;
-    private List<LocationModel.Result> list = new ArrayList<>();
+    private List<CityModel.Loaction.Result> list = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityLocationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         AppManager.changeStatusBarandBottomColor(Location.this);
-
         AppManager.showProgress(Location.this);
         getLocationList(page);
 
@@ -75,71 +71,29 @@ public class Location extends AppCompatActivity {
 
     private void getLocationList(int number) {
         APIInterface apiInterface = RetrofitClient.getRetrofitInstanceforlocation().create(APIInterface.class);
-        Call<MainLoction> call = apiInterface.GetLocationList();
-        call.enqueue(new Callback<MainLoction>() {
+        Call<CityModel> call = apiInterface.GetLocationList();
+        call.enqueue(new Callback<CityModel>() {
             @Override
-            public void onResponse(Call<MainLoction> call, Response<MainLoction> response) {
-
-                if (response.body().getStatusCode()==200) {
-                    Toast.makeText(Location.this, "success....", Toast.LENGTH_SHORT).show();
-                    ArrayList<CityName> cityNames = new ArrayList<>();
-                    List<Loaction> location = response.body().getLoactions();
+            public void onResponse(Call<CityModel> call, Response<CityModel> response) {
+                if (response.body().getStatusCode() == 200) {
                     AppManager.hideProgress();
-                    for (int i = 0; i < location.size(); i++) {
-                        for (int j = 0; j < location.get(i).getResults().size(); j++) {
-                            cityNames.add(new CityName(location.get(i).getResults().get(j).getName().toString(), location.get(i).getResults().get(j).getPhoto().toString()));
-                        }
-                    }
+                    list = response.body().getLoactions().get(0).getResults();
 
-
-                    LocationListAdapter eventsListAdapter = new LocationListAdapter(Location.this, cityNames);
+                    GridLayoutManager manager = new GridLayoutManager(Location.this,2);
+                    LocationListAdapter eventsListAdapter = new LocationListAdapter(Location.this, response.body().getLoactions().get(0).getResults());
+                    binding.locationList.setLayoutManager(manager);
                     binding.locationList.setAdapter(eventsListAdapter);
                 } else {
-
+                    AppManager.hideProgress();
                     Toast.makeText(Location.this, "faile....", Toast.LENGTH_SHORT).show();
                 }
 
-              /*  if (response.isSuccessful() && response.body() != null) {
-                    list.addAll(response.body().getResults());
-                    Log.e("CombinedResponse", ""+list.size());
-                } else {
-                    Log.e("Error", "Request for page " + number + " failed.");
-                }
-
-                if(page==5){
-
-
-                }else {
-                    page++;
-                    getLocationList(page);
-                }
-*/
-
             }
 
             @Override
-            public void onFailure(Call<MainLoction> call, Throwable t) {
-
-                Log.e("errrororo", t.getMessage().toString());
-
+            public void onFailure(Call<CityModel> call, Throwable t) {
+                Log.e("errororor",t.getMessage());
             }
         });
-    }
-
-    public int SplitText(String val){
-
-        String input = val;
-        int number = 1;
-
-        Pattern pattern = Pattern.compile("page=(\\d+)");
-        Matcher matcher = pattern.matcher(input);
-        if (matcher.find()) {
-            String numberString = matcher.group(1); // Group 1 contains the number
-            number = Integer.parseInt(numberString); // Convert the string to an integer
-            return number;
-        } else {
-            // Handle the case where the pattern is not found
-           return 1;
-        }
     }
 }

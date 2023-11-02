@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.eventelevate.Adapter.FirebaseListAdapter;
@@ -37,7 +38,7 @@ import java.util.Map;
 
 public class FirebaseActivity extends AppCompatActivity {
     EditText txtinput;
-    AppCompatButton send ;
+    ImageView send ;
     RecyclerView rvMessage;
 
     FirebaseListAdapter firebaseListAdapter;

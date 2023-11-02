@@ -1,23 +1,34 @@
 package com.example.eventelevate.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.eventelevate.Activity.FirebaseActivity;
+import com.example.eventelevate.Interfaces.APIInterface;
+import com.example.eventelevate.Manager.AppManager;
+import com.example.eventelevate.Model.LoginModel;
 import com.example.eventelevate.Model.MessageModel;
 import com.example.eventelevate.R;
+import com.example.eventelevate.Service.RetrofitClient;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class FirebaseMessageListAdapter extends RecyclerView.Adapter<FirebaseMessageListAdapter.ViewHolder> {
     private ArrayList<MessageModel>  data;
@@ -37,7 +48,7 @@ public class FirebaseMessageListAdapter extends RecyclerView.Adapter<FirebaseMes
     @NonNull
     @Override
     public FirebaseMessageListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.message_layout,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.messagelist_layout,parent,false);
         return new ViewHolder(view);
     }
 
@@ -48,8 +59,9 @@ public class FirebaseMessageListAdapter extends RecyclerView.Adapter<FirebaseMes
 
             holder.lluser1.setVisibility(View.VISIBLE);
             holder.keyTextView.setText(item.getStatus());
+            GetUserByID(item.getUserId(),holder);
         }
-        holder.cvView.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, FirebaseActivity.class);
@@ -76,20 +88,46 @@ public class FirebaseMessageListAdapter extends RecyclerView.Adapter<FirebaseMes
     ViewHolder extends RecyclerView.ViewHolder {
 
         LinearLayout lluser1,lluser2;
-        CardView cvView;
+        private ImageView imageView;
         private TextView keyTextView,keyTextView1;
         private TextView valueTextView,valueTextView2;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            cvView=itemView.findViewById(R.id.event_items);
             keyTextView = itemView.findViewById(R.id.keyTextView);
             valueTextView = itemView.findViewById(R.id.valueTextView);
             lluser1 = itemView.findViewById(R.id.lluser1);
-            lluser2 = itemView.findViewById(R.id.lluser2);
-            keyTextView1 = itemView.findViewById(R.id.keyTextView1);
-            valueTextView2 = itemView.findViewById(R.id.valueTextView1);
+            imageView = itemView.findViewById(R.id.profile_PHOTO);
 
         }
+    }
+
+    public void GetUserByID(String userId, ViewHolder holder){
+        APIInterface apiInterface = RetrofitClient.getRetrofitInstance().create(APIInterface.class);
+        Call<LoginModel> call = apiInterface.GetUserDetailsById(userId);
+        call.enqueue(new Callback<LoginModel>() {
+            @Override
+            public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {
+                if(response.body().getStatusCode()==200){
+                    if(response.body().getMessage().trim().equals("User details retrieved successfully")){
+                        Glide.with(context).load(response.body().getUser().getPhoto()).into(holder.imageView);
+                        holder.valueTextView.setText(response.body().getUser().getFirstName()+" "+response.body().getUser().getLastName());
+                    }
+                }else if(response.body().getStatusCode()==201){
+
+                }
+
+                Log.e("errror",response.body().getMessage());
+
+            }
+
+            @Override
+            public void onFailure(Call<LoginModel> call, Throwable t) {
+                AppManager.hideProgress();
+//                Toast.makeText((Activity) context.getApplicationContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
+                Log.e("errror",t.getMessage());
+            }
+        });
+
     }
 }

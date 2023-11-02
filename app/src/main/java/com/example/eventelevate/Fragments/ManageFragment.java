@@ -5,15 +5,25 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.eventelevate.Activity.CreatePost;
+import com.example.eventelevate.Adapter.MyEventListAdapter;
+import com.example.eventelevate.Interfaces.APIInterface;
+import com.example.eventelevate.Manager.AppManager;
+import com.example.eventelevate.Model.MyServiceModel;
 import com.example.eventelevate.R;
+import com.example.eventelevate.Service.RetrofitClient;
 import com.example.eventelevate.databinding.FragmentManageBinding;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ManageFragment extends Fragment {
 
@@ -33,6 +43,28 @@ public class ManageFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ShowBottomDialog();
+            }
+        });
+        Getallmyeventlist();
+    }
+
+    private void Getallmyeventlist(){
+
+        APIInterface apiInterface = RetrofitClient.getRetrofitInstance().create(APIInterface.class);
+        Call<MyServiceModel> call = apiInterface.GetAllPostedService(String.valueOf(AppManager.user.getId()));
+        call.enqueue(new Callback<MyServiceModel>() {
+            @Override
+            public void onResponse(Call<MyServiceModel> call, Response<MyServiceModel> response) {
+                if (response.body().getStatusCode().equals(200)){
+                    binding.myeventlist.setLayoutManager(new LinearLayoutManager(getActivity()));
+                    MyEventListAdapter adapter = new MyEventListAdapter(getActivity(),response.body().getEvents());
+                    binding.myeventlist.setAdapter(adapter);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MyServiceModel> call, Throwable t) {
+
             }
         });
     }
