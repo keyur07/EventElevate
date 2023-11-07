@@ -33,7 +33,7 @@ import retrofit2.Response;
 public class CategoriesListAdapter extends RecyclerView.Adapter<CategoriesListAdapter.ViewHolder> {
 
     private EventsFragment eventsFragment;
-    private ArrayList<ServiceModel.Servicetype> servicetypes;
+    public ArrayList<ServiceModel.Servicetype> servicetypes;
 
     public CategoriesListAdapter(EventsFragment eventsFragment, ArrayList<ServiceModel.Servicetype> servicetypes) {
         this.eventsFragment = eventsFragment;
@@ -50,6 +50,7 @@ public class CategoriesListAdapter extends RecyclerView.Adapter<CategoriesListAd
     @Override
     public void onBindViewHolder(@NonNull CategoriesListAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.cates_name.setText(servicetypes.get(position).getServiceName());
+        Log.e("datadata",""+servicetypes.get(position).getServiceId());
         getDatabyTable(String.valueOf(servicetypes.get(position).getServiceId()),holder);
         holder.txt_categories_see_all_.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,16 +79,14 @@ public class CategoriesListAdapter extends RecyclerView.Adapter<CategoriesListAd
 
                     AppManager.hideProgress();
                     if(response.body().getStatusCode()==200){
+                        Toast.makeText(holder.itemView.getContext(), "Something Went Wrong", Toast.LENGTH_SHORT).show();
                         AppManager.hideProgress();
-                        ServiceProviderModel servicetypes =  response.body();
+                        ServiceProviderModel servicetype =  response.body();
                         LinearLayoutManager layoutManager = new LinearLayoutManager(eventsFragment.getActivity());
                         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
                         holder.recyclerView.setLayoutManager(layoutManager);
-                        ServiceTypeAdapter eventsListAdapter = new ServiceTypeAdapter(eventsFragment.getActivity(),servicetypes,1);
+                        ServiceTypeAdapter eventsListAdapter = new ServiceTypeAdapter(eventsFragment.getActivity(),servicetype,1);
                         holder.recyclerView.setAdapter(eventsListAdapter);
-
-                    }else if(response.body().getStatusCode()==201){
-
                     }
 
                 }

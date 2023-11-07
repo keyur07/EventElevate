@@ -42,7 +42,7 @@ public class ServiceTypeAdapter extends RecyclerView.Adapter<ServiceTypeAdapter.
     public void onBindViewHolder(@NonNull ServiceTypeAdapter.ViewHolder holder, int position) {
         List<ServiceProviderModel.Servicetype> servicetypes1 = this.servicetypes.getServicetype();
         holder.name.setText(servicetypes1.get(position).getTitle());
-
+        Log.e("datadata",""+servicetypes1.get(position).getUserid());
         if(servicetypes1.get(position).getPaymenttype().equals("Hourly")){
             holder.price.setText("$"+servicetypes1.get(position).getPrice()+"/"+"hour");
         }else {

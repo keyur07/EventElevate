@@ -20,6 +20,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -77,6 +78,7 @@ public class CreateFragment extends Fragment {
     ArrayList<String> eventtype = new ArrayList<>();
     private List<Uri> selectedImageUris = new ArrayList<>();
     String[] paymentTypes = new String[]{"Select Payment Type","Hourly", "Per day"};
+    private ServiceModel serviceList;
 
 
     @Override
@@ -104,6 +106,12 @@ public class CreateFragment extends Fragment {
             public void onClick(View v) {
                 sendData(binding.editTitile.getText().toString(),binding.editPrice.getText().toString(),binding.editDescription.getText().toString(),
                         binding.editTermsandcondition.getText().toString(),"Kitchener,On,CA");
+            }
+        });
+        binding.cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
             }
         });
         binding.btnAddImage.setOnClickListener(new View.OnClickListener() {
@@ -181,8 +189,10 @@ public class CreateFragment extends Fragment {
     private void sendData(String title, String price, String decription, String terms, String location) {
         List<MultipartBody.Part> imageParts = new ArrayList<>();
 
+
         for (Uri uri : selectedImageUris) {
             String realPath = RealPathUtil.getRealPath(getActivity(), uri);
+            Log.e("positions",realPath);
             String fileName = new File(realPath).getName(); // Extract file name from the real path
             RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), new File(realPath));
             MultipartBody.Part imagePart = MultipartBody.Part.createFormData("image[]", fileName, requestFile);
@@ -196,7 +206,7 @@ public class CreateFragment extends Fragment {
         RequestBody descriptionRB = RequestBody.create(MediaType.parse("multipart/form-data"), decription);
         RequestBody termsRB = RequestBody.create(MediaType.parse("multipart/form-data"), terms);
         RequestBody locationRB = RequestBody.create(MediaType.parse("multipart/form-data"), location);
-        RequestBody servicenameRB = RequestBody.create(MediaType.parse("multipart/form-data"), binding.editCategory.getSelectedItem().toString());
+        RequestBody servicenameRB = RequestBody.create(MediaType.parse("multipart/form-data"), getSelectedServiceId());
 
         AppManager.showProgress(getActivity());
 
@@ -207,7 +217,10 @@ public class CreateFragment extends Fragment {
             public void onResponse(Call<SignupModel> call, Response<SignupModel> response) {
                 if (response.body() != null && response.body().getStatusCode() == 200) {
                     AppManager.hideProgress();
-                    Log.e("success", response.body().getMessage());
+                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.container,new CreateFragment()).commit();
+                    AppManager.StatusDialog(getActivity(),true,"successfully service created");
+
                 }
             }
 
@@ -217,6 +230,18 @@ public class CreateFragment extends Fragment {
                 Log.e("failure", t.getMessage());
             }
         });
+    }
+
+    private String getSelectedServiceId() {
+        for(int i=0;i<=eventtype.size();i++){
+
+            if(serviceList.getServicetype().get(i).getServiceName().equals(binding.editCategory.getSelectedItem().toString())){
+                return String.valueOf(serviceList.getServicetype().get(i).getServiceId());
+            }
+        }
+        return "1";
+
+
     }
 
 
@@ -230,8 +255,10 @@ public class CreateFragment extends Fragment {
                 AppManager.hideProgress();
                 eventtype.add("Select Service");
                 if(response.body().getStatusCode()==200){
+                    serviceList = response.body();
                     for(int i=0;i<response.body().getServicetype().size();i++){
                         eventtype.add(response.body().getServicetype().get(i).getServiceName());
+                        Log.e("position",""+response.body().getServicetype().get(i).getServiceId());
                     }
                     ArrayAdapter<String> eventadapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_dropdown_item_1line, eventtype);
                     eventadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

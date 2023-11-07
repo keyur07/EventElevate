@@ -5,49 +5,37 @@ import static android.content.Context.MODE_PRIVATE;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.Gravity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.eventelevate.Activity.AboutUs;
-import com.example.eventelevate.Activity.CategoriesActivity;
 import com.example.eventelevate.Activity.ContactUs;
 import com.example.eventelevate.Activity.Location;
 import com.example.eventelevate.Activity.LoginActivity;
-import com.example.eventelevate.Activity.MainActivity;
 import com.example.eventelevate.Adapter.BestOrganiserAdapter;
 import com.example.eventelevate.Adapter.CategoriesListAdapter;
-import com.example.eventelevate.Adapter.EventsListAdapter;
-import com.example.eventelevate.Adapter.RecentlyListedAdapter;
-import com.example.eventelevate.Adapter.ServiceListAdapter;
-import com.example.eventelevate.Adapter.ViewPagerAdapter;
 import com.example.eventelevate.Interfaces.APIInterface;
 import com.example.eventelevate.Manager.AppManager;
 import com.example.eventelevate.Model.ServiceModel;
+import com.example.eventelevate.Model.ServiceProviderModel;
 import com.example.eventelevate.R;
 import com.example.eventelevate.Service.RetrofitClient;
-import com.example.eventelevate.databinding.FragmentEventBinding;
 import com.example.eventelevate.databinding.FragmentEventsBinding;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.util.ArrayList;
 
@@ -58,7 +46,9 @@ import retrofit2.Response;
 public class EventsFragment extends Fragment {
 
     FragmentEventsBinding binding;
+    ArrayList<ServiceModel.Servicetype> servicetypes  = new ArrayList<>();
     private ActionBarDrawerToggle toggle;
+    private int finalI = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -173,18 +163,18 @@ public class EventsFragment extends Fragment {
             public void onResponse(Call<ServiceModel> call, Response<ServiceModel> response) {
 
                 if(response.body().getStatusCode()==200){
-                    ArrayList<ServiceModel.Servicetype> servicetypes = response.body().getServicetype();
+
 
                     LinearLayoutManager layoutManager1 = new LinearLayoutManager(getActivity());
                     layoutManager1.setOrientation(LinearLayoutManager.VERTICAL);
                     binding.categoriesListItems.setLayoutManager(layoutManager1);
-                    CategoriesListAdapter eventsListAdapter = new CategoriesListAdapter(EventsFragment.this,servicetypes);
-                    binding.categoriesListItems.setAdapter(eventsListAdapter);
 
+                 getServicesList(response);
 
                 }else if(response.body().getStatusCode()==201){
                     Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
                 }
+
 
             }
 
@@ -197,6 +187,40 @@ public class EventsFragment extends Fragment {
         });
     }
 
+    private void getServicesList(Response<ServiceModel> response) {
+        APIInterface apiInterface = RetrofitClient.getRetrofitInstance().create(APIInterface.class);
+        Call<ServiceProviderModel> call1 = apiInterface.GetServicelistbytable(String.valueOf(response.body().getServicetype().get(finalI).getServiceId()));
+
+        call1.enqueue(new Callback<ServiceProviderModel>() {
+            @Override
+            public void onResponse(Call<ServiceProviderModel> call, Response<ServiceProviderModel> responses) {
+                if(responses.body().getStatusCode()==200){
+                    if (responses.body().getServicetype().size() != 0) {
+                        ServiceModel.Servicetype servicetype1 = new ServiceModel.Servicetype(response.body().getServicetype().get(finalI).getServiceName(),response.body().getServicetype().get(finalI).getServiceId());
+                        servicetypes.add(servicetype1);
+
+                    }
+                }
+                if((finalI+1)==response.body().getServicetype().size()){
+                    CategoriesListAdapter eventsListAdapter = new CategoriesListAdapter(EventsFragment.this,servicetypes);
+                    binding.categoriesListItems.setAdapter(eventsListAdapter);
+                    Log.e("successsss","Calll"+servicetypes.get(0));
+                }
+                finalI++;
+                if(finalI<response.body().getServicetype().size()){
+                    getServicesList(response);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ServiceProviderModel> call, Throwable t) {
+
+                Log.e("successsss","aaaaa"+servicetypes.size());
+            }
+        });
+    }
+
 
     public void openCloseNavigationDrawer(){
         if(binding.drawerLayout.isDrawerOpen(GravityCompat.START)){
@@ -205,4 +229,6 @@ public class EventsFragment extends Fragment {
             binding.drawerLayout.openDrawer(GravityCompat.START);
         }
     }
+
+
 }

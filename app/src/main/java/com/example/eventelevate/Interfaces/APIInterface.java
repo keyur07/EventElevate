@@ -92,8 +92,21 @@ public interface APIInterface {
             @Part("description") RequestBody description,
             @Part("terms") RequestBody terms,
             @Part("location") RequestBody location,
-            @Part("servicename") RequestBody servicename,
+            @Part("service_id") RequestBody servicename,
             @Part List<MultipartBody.Part> images
+    );
+
+    @Multipart
+    @POST("event/service/update")
+    Call<SignupModel> UpdatePost(
+            @Part("userid") RequestBody userID,
+            @Part("title") RequestBody title,
+            @Part("paymenttype") RequestBody paymentType,
+            @Part("price") RequestBody price,
+            @Part("description") RequestBody description,
+            @Part("terms") RequestBody terms,
+            @Part("location") RequestBody location,
+            @Part("item_id") RequestBody serviceId
     );
 
 

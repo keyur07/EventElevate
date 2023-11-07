@@ -19,6 +19,7 @@
             android:fontFamily="@font/robotobold"
             android:paddingStart="@dimen/_20sdp"
             android:text="Cancel"
+            android:id="@+id/cancel"
             android:textColor="@color/white"
             android:textSize="@dimen/_10sdp" />
 

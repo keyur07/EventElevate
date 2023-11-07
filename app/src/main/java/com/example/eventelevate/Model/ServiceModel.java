@@ -53,7 +53,7 @@ public class ServiceModel {
         this.servicetype = servicetype;
     }
 
-    public class Servicetype {
+    public static class Servicetype {
         @SerializedName("serviceId")
         @Expose
         private Integer serviceId;
@@ -79,6 +79,10 @@ public class ServiceModel {
             this.image = image;
         }
 
+        public Servicetype(String serviceName,Integer serviceId) {
+            this.serviceName = serviceName;
+            this.serviceId = serviceId;
+        }
 
         public Integer getServiceId() {
             return serviceId;
