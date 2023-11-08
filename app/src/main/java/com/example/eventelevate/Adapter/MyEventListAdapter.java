@@ -2,6 +2,8 @@ package com.example.eventelevate.Adapter;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,7 +59,7 @@ public class MyEventListAdapter extends RecyclerView.Adapter<MyEventListAdapter.
         holder.btn_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ShowBottomDialog(position);
+                ShowOptionBottomDialog(position);
             }
         });
     }
@@ -79,6 +81,76 @@ public class MyEventListAdapter extends RecyclerView.Adapter<MyEventListAdapter.
             price = itemView.findViewById(R.id.price);
             btn_edit = itemView.findViewById(R.id.edit);
         }
+    }
+
+
+    @SuppressLint("MissingInflatedId")
+    private void ShowOptionBottomDialog(int position){
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(activity, R.style.BottomSheetDialog);
+        View bottom = LayoutInflater.from(activity).inflate(R.layout.items_of_create_service_bootom_dialog, null);
+        bottomSheetDialog.setContentView(bottom);
+        bottomSheetDialog.show();
+
+        ((TextView)bottom.findViewById(R.id.txt_header)).setText("Edit Service");
+        ((TextView)bottom.findViewById(R.id.first_text)).setText("Delete");
+        ((TextView)bottom.findViewById(R.id.second_text)).setText("Edit");
+        bottom.findViewById(R.id.btn_packages).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShowBottomDialog(position);
+            }
+        });
+        bottom.findViewById(R.id.btn_Events).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                builder.setMessage("Are you sure you want to delete this item?");
+                builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                      DeleteService(position);
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        });
+    }
+
+    private void DeleteService(int position) {
+        APIInterface apiInterface = RetrofitClient.getRetrofitInstance().create(APIInterface.class);
+        Call<SignupModel> call = apiInterface.DeletePost(AppManager.user.getId().toString(),events.get(position).getId().toString());
+        call.enqueue(new Callback<SignupModel>() {
+            @Override
+            public void onResponse(Call<SignupModel> call, Response<SignupModel> response) {
+                if(response.body().getStatusCode()==200){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                    builder.setMessage("Item deleted successfully");
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Dismiss the dialog
+                            dialog.dismiss();
+                        }
+                    });
+
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SignupModel> call, Throwable t) {
+
+            }
+        });
     }
 
     @SuppressLint("MissingInflatedId")

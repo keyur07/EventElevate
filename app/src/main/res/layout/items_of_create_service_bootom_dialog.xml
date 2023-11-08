@@ -50,7 +50,8 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:text="Events"
+                android:text="Service"
+                android:id="@+id/first_text"
                 android:fontFamily="@font/robotoregular"
                 android:textStyle="bold"
                 android:textColor="@color/text_color"
@@ -90,6 +91,7 @@
                 android:text="Full package"
                 android:fontFamily="@font/robotoregular"
                 android:textStyle="bold"
+                android:id="@+id/second_text"
                 android:textColor="@color/text_color"
                 android:paddingStart="@dimen/_10sdp"
                 android:layout_gravity="center_vertical"

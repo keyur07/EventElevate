@@ -79,7 +79,6 @@ public class CategoriesListAdapter extends RecyclerView.Adapter<CategoriesListAd
 
                     AppManager.hideProgress();
                     if(response.body().getStatusCode()==200){
-                        Toast.makeText(holder.itemView.getContext(), "Something Went Wrong", Toast.LENGTH_SHORT).show();
                         AppManager.hideProgress();
                         ServiceProviderModel servicetype =  response.body();
                         LinearLayoutManager layoutManager = new LinearLayoutManager(eventsFragment.getActivity());

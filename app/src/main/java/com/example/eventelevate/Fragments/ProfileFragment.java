@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.example.eventelevate.Activity.ProfileActivity;
+import com.example.eventelevate.Activity.SettingActivity;
 import com.example.eventelevate.Activity.UserProfileActivity;
 import com.example.eventelevate.Manager.AppManager;
 import com.example.eventelevate.R;
@@ -36,6 +37,14 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(), UserProfileActivity.class));
+            }
+        });
+
+        binding.setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                startActivity(new Intent(getActivity(), SettingActivity.class));
             }
         });
     }

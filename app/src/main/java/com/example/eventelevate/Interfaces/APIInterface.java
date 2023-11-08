@@ -26,7 +26,6 @@ import retrofit2.http.POST;
 import retrofit2.http.Part;
 
 public interface APIInterface {
-
     @FormUrlEncoded
     @POST("user/getuser")
     Call<LoginModel> GetUserDetailsById(
@@ -107,6 +106,13 @@ public interface APIInterface {
             @Part("terms") RequestBody terms,
             @Part("location") RequestBody location,
             @Part("item_id") RequestBody serviceId
+    );
+
+    @Multipart
+    @POST("event/service/delete")
+    Call<SignupModel> DeletePost(
+            @Part("userid") String userID,
+            @Part("item_id") String serviceId
     );
 
 

@@ -220,10 +220,8 @@ public class CreateFragment extends Fragment {
                     FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.container,new CreateFragment()).commit();
                     AppManager.StatusDialog(getActivity(),true,"successfully service created");
-
                 }
             }
-
             @Override
             public void onFailure(Call<SignupModel> call, Throwable t) {
                 AppManager.hideProgress();
@@ -234,17 +232,12 @@ public class CreateFragment extends Fragment {
 
     private String getSelectedServiceId() {
         for(int i=0;i<=eventtype.size();i++){
-
             if(serviceList.getServicetype().get(i).getServiceName().equals(binding.editCategory.getSelectedItem().toString())){
                 return String.valueOf(serviceList.getServicetype().get(i).getServiceId());
             }
         }
         return "1";
-
-
     }
-
-
     private void getListOfeventCategory() {
         APIInterface apiInterface = RetrofitClient.getRetrofitInstance().create(APIInterface.class);
         Call<ServiceModel> call = apiInterface.GetServiceType();

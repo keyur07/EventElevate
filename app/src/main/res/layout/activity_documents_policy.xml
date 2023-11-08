@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.DocumentsPolicyActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/photo_screen"
+        android:visibility="visible"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:id="@+id/actionbar"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:background="@color/start_color">
+
+            <ImageView
+                android:id="@+id/back_"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="6dp"
+                android:background="?attr/actionBarItemBackground"
+                android:padding="5dp"
+                android:src="@drawable/back_btn" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/poppins_regular"
+                android:text="Photo ID"
+                android:id="@+id/title"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="Take a photo of your Photo ID"
+            android:textSize="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:fontFamily="@font/robotobold"
+            android:id="@+id/header"
+            android:textColor="@color/text_color"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="Make sure the photo contains all the information on the front face of the identity card (the one with your name). Remember the requirements are: - Minimum age: 18 years - Passports are not allowed"
+            android:textSize="@dimen/_11sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:fontFamily="@font/robotoregular"
+            android:textColor="@color/text_color"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom"
+            android:gravity="bottom"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_marginBottom="-10dp"
+                android:elevation="@dimen/_5sdp"
+                android:layout_height="@dimen/_70sdp">
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:background="@color/start_color"
+                    android:layout_marginHorizontal="@dimen/_20sdp"
+                    android:text="Take Photo"
+                    android:id="@+id/take"
+                    android:layout_gravity="center"
+                    android:textColor="@color/white"
+                    android:layout_height="@dimen/_33sdp"/>
+
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
