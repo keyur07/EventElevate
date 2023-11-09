@@ -3,6 +3,7 @@ package com.example.eventelevate.Interfaces;
 import com.example.eventelevate.Model.AboutUsModel;
 import com.example.eventelevate.Model.CityModel;
 import com.example.eventelevate.Model.ContactModel;
+import com.example.eventelevate.Model.DocumentsModel;
 import com.example.eventelevate.Model.EventtypeModel;
 import com.example.eventelevate.Model.LoginModel;
 import com.example.eventelevate.Model.MyServiceModel;
@@ -96,7 +97,7 @@ public interface APIInterface {
     );
 
     @Multipart
-    @POST("event/service/additem")
+    @POST("user/documents")
     Call<SignupModel> UploadDocuments(
             @Part("user_id") RequestBody userID,
             @Part("document") RequestBody title,
@@ -123,7 +124,11 @@ public interface APIInterface {
             @Part("item_id") String serviceId
     );
 
-
+    @Multipart
+    @POST("user/status")
+    Call<DocumentsModel> GetStatusofDocuments(
+            @Part("user_id") String userID
+    );
 
 
     @Multipart

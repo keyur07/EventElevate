@@ -17,9 +17,14 @@ import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
+import com.example.eventelevate.Interfaces.APIInterface;
 import com.example.eventelevate.Manager.AppManager;
+import com.example.eventelevate.Model.SignupModel;
 import com.example.eventelevate.R;
+import com.example.eventelevate.Service.RetrofitClient;
 import com.example.eventelevate.databinding.ActivityCameraBinding;
+
+import retrofit2.Call;
 
 public class CameraActivity extends AppCompatActivity {
 
@@ -54,6 +59,10 @@ public class CameraActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void UploadDocuments(){
+
     }
 
 

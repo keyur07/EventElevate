@@ -17,4 +17,8 @@
     <color name="text_color">#232F34</color>
     <color name="sky_blue">#3075FF</color>
 
+    <color name="not_submited">#99FFD9D9</color>
+    <color name="pending">#99FFCC7D</color>
+    <color name="verified">#99A3FFD4</color>
+
 </resources>

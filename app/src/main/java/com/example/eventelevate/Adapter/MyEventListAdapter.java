@@ -51,7 +51,7 @@ public class MyEventListAdapter extends RecyclerView.Adapter<MyEventListAdapter.
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyEventListAdapter.Viewholder holder, int position) {
+    public void onBindViewHolder(@NonNull MyEventListAdapter.Viewholder holder, @SuppressLint("RecyclerView") int position) {
         Glide.with(holder.itemView.getContext()).load(events.get(position).getImages().get(0).getImages()).into(holder.imageView);
         holder.header.setText(events.get(position).getTitle());
         holder.description.setText(events.get(position).getDescription());
