@@ -96,6 +96,14 @@ public interface APIInterface {
     );
 
     @Multipart
+    @POST("event/service/additem")
+    Call<SignupModel> UploadDocuments(
+            @Part("user_id") RequestBody userID,
+            @Part("document") RequestBody title,
+            @Part MultipartBody.Part images
+    );
+
+    @Multipart
     @POST("event/service/update")
     Call<SignupModel> UpdatePost(
             @Part("userid") RequestBody userID,
@@ -114,6 +122,8 @@ public interface APIInterface {
             @Part("userid") String userID,
             @Part("item_id") String serviceId
     );
+
+
 
 
     @Multipart
