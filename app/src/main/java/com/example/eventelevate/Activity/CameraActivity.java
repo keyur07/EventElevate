@@ -16,19 +16,29 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.eventelevate.Interfaces.APIInterface;
 import com.example.eventelevate.Manager.AppManager;
 import com.example.eventelevate.Model.SignupModel;
 import com.example.eventelevate.R;
 import com.example.eventelevate.Service.RetrofitClient;
+import com.example.eventelevate.Utils.RealPathUtil;
 import com.example.eventelevate.databinding.ActivityCameraBinding;
 
+import java.io.File;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CameraActivity extends AppCompatActivity {
 
     private ActivityCameraBinding binding;
+    private  Uri selectedImageUri;
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final int REQUEST_IMAGE_PICK = 2;
 
@@ -59,10 +69,48 @@ public class CameraActivity extends AppCompatActivity {
                 }
             }
         });
+
+        binding.submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (intent.getStringExtra("position").equals("1")) {
+                    UploadDocuments("photo");
+                }else {
+                    UploadDocuments("photoid");
+                }
+
+            }
+        });
     }
 
-    private void UploadDocuments(){
+    private void UploadDocuments(String docs){
 
+        RequestBody userID = RequestBody.create(MediaType.parse("text/plain"), AppManager.user.getId().toString()); // Replace "12345" with the actual user ID
+        RequestBody title = RequestBody.create(MediaType.parse("text/plain"), docs);
+
+// Create MultipartBody.Part for the image file.
+        File file = new File(RealPathUtil.getRealPath(CameraActivity.this,selectedImageUri)); // Replace with the actual file path
+        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        MultipartBody.Part imagePart = MultipartBody.Part.createFormData("images", file.getName(), requestFile);
+
+        APIInterface apiInterface = RetrofitClient.getRetrofitInstance().create(APIInterface.class);
+        Call<SignupModel> call = apiInterface.UploadDocuments(userID,title,imagePart);
+
+        call.enqueue(new Callback<SignupModel>() {
+            @Override
+            public void onResponse(Call<SignupModel> call, Response<SignupModel> response) {
+                if(response.body().getStatusCode()==200){
+                    Toast.makeText(CameraActivity.this, "Documents Uploaded", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(CameraActivity.this,DocumentsActivity.class));
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SignupModel> call, Throwable t) {
+
+            }
+        });
     }
 
 
@@ -120,12 +168,11 @@ public class CameraActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == REQUEST_IMAGE_PICK && data != null) {
-                Uri selectedImageUri = data.getData();
+                selectedImageUri = data.getData();
                 binding.preview.setImageURI(selectedImageUri);
             } else if (requestCode == REQUEST_IMAGE_CAPTURE) {
-                Bundle extras = data.getExtras();
-                Bitmap imageBitmap = (Bitmap) extras.get("data");
-                binding.preview.setImageBitmap(imageBitmap);
+                selectedImageUri = data.getData();
+                binding.preview.setImageURI(selectedImageUri);
             }else {
                 finish();
             }

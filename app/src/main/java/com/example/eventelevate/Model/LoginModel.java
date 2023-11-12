@@ -2,7 +2,6 @@ package com.example.eventelevate.Model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
 public class LoginModel {
 
     @SerializedName("status_code")
@@ -68,6 +67,9 @@ public class LoginModel {
         @SerializedName("photo")
         @Expose
         private String photo;
+        @SerializedName("userid")
+        @Expose
+        private Integer userid;
 
         public Integer getId() {
             return id;
@@ -140,6 +142,15 @@ public class LoginModel {
         public void setPhoto(String photo) {
             this.photo = photo;
         }
+
+        public Integer getUserid() {
+            return userid;
+        }
+
+        public void setUserid(Integer userid) {
+            this.userid = userid;
+        }
+
     }
 
 }

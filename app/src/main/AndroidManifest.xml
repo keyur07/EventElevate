@@ -21,7 +21,18 @@
         tools:targetApi="31">
         <activity
             android:name=".Activity.DocumentsPolicyActivity"
-            android:exported="false" />
+            android:exported="true" />
+
+        <activity
+            android:name=".Activity.IntroActivity"
+            android:exported="true">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".Activity.CameraActivity"
             android:exported="false" />
@@ -104,11 +115,7 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/CustomTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <service

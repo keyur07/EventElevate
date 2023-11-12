@@ -81,5 +81,9 @@
         <item name="android:background">@drawable/rounded_button</item>
     </style>
 
+    <style name="RippleStyleBlack">
+        <item name="mrl_rippleColor">#8096989a</item>
+    </style>
+
 
 </resources>

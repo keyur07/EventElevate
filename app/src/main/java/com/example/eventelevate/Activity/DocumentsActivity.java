@@ -70,6 +70,7 @@ public class DocumentsActivity extends AppCompatActivity {
                 if (response.body().getStatusCode() == 200) {
                     if (response.body().getDocumentStatus().get(0).getPhotoStatus() == 2) {
                         binding.photo.setBackgroundResource(R.color.verified);
+                        binding.photo.setEnabled(false);
                     } else if (response.body().getDocumentStatus().get(0).getPhotoStatus() == 1) {
                         binding.photo.setBackgroundResource(R.color.pending);
                     } else if (response.body().getDocumentStatus().get(0).getPhotoStatus() == 3) {
@@ -78,6 +79,7 @@ public class DocumentsActivity extends AppCompatActivity {
 
                     if (response.body().getDocumentStatus().get(0).getPhotoidStatus() == 2) {
                         binding.photoId.setBackgroundResource(R.color.verified);
+                        binding.photoId.setEnabled(false);
                     } else if (response.body().getDocumentStatus().get(0).getPhotoidStatus() == 1) {
                         binding.photoId.setBackgroundResource(R.color.pending);
                     } else if (response.body().getDocumentStatus().get(0).getPhotoidStatus() == 3) {
