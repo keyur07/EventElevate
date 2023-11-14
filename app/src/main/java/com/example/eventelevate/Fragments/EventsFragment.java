@@ -26,6 +26,7 @@ import com.example.eventelevate.Activity.AboutUs;
 import com.example.eventelevate.Activity.ContactUs;
 import com.example.eventelevate.Activity.Location;
 import com.example.eventelevate.Activity.LoginActivity;
+import com.example.eventelevate.Activity.LoginScreen;
 import com.example.eventelevate.Adapter.BestOrganiserAdapter;
 import com.example.eventelevate.Adapter.CategoriesListAdapter;
 import com.example.eventelevate.Interfaces.APIInterface;
@@ -35,6 +36,9 @@ import com.example.eventelevate.Model.ServiceProviderModel;
 import com.example.eventelevate.R;
 import com.example.eventelevate.Service.RetrofitClient;
 import com.example.eventelevate.databinding.FragmentEventsBinding;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
@@ -110,13 +114,16 @@ public class EventsFragment extends Fragment {
                 } else if (itemId == R.id.profile) {
                     binding.drawerLayout.closeDrawer(GravityCompat.START);
                 }else if(itemId == R.id.logout){
+                    GoogleSignInClient signInClient = GoogleSignIn.getClient(getActivity(), GoogleSignInOptions.DEFAULT_SIGN_IN);
+                    signInClient.signOut();
                     binding.drawerLayout.closeDrawer(GravityCompat.START);
                     SharedPreferences sharedpreferences = getActivity().getSharedPreferences(String.valueOf(R.string.user_session_key), MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedpreferences.edit();
                     editor.putString(String.valueOf(R.string.user_session_key_username), "");
                     editor.putString(String.valueOf(R.string.user_session_key_password), "");
                     editor.apply();
-                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                    startActivity(new Intent(getActivity(), LoginScreen.class));
+                    getActivity().finish();
                 }else if(itemId == R.id.contactus){
                     binding.drawerLayout.closeDrawer(GravityCompat.START);
                     AppManager.changeActivity(getActivity(), ContactUs.class);

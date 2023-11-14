@@ -15,6 +15,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -46,6 +47,8 @@ public class IntroActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        binding = ActivityIntroBinding.inflate(getLayoutInflater());
+
         setContentView(R.layout.activity_welcome);
 
         viewPager = (ViewPager) findViewById(R.id.view_pager);
@@ -55,7 +58,6 @@ public class IntroActivity extends AppCompatActivity {
                 R.layout.welcome_slide_1,
                 R.layout.welcome_slide_2,
                 R.layout.welcome_slide_3,
-                R.layout.activity_intro
         };
 
         addBottomDots(0);
@@ -67,7 +69,12 @@ public class IntroActivity extends AppCompatActivity {
         viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
         btnNext = (TextView) findViewById(R.id.btn_next);
         AppManager.changeStatusBarandBottomColor(IntroActivity.this);
-
+binding.permissionsButton.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        Toast.makeText(IntroActivity.this, "Hello", Toast.LENGTH_SHORT).show();
+    }
+});
 
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,8 +117,13 @@ public class IntroActivity extends AppCompatActivity {
         public void onPageSelected(int position) {
             addBottomDots(position);
             if (position == layouts.length - 1) {
-                btnNext.setText("Allow");
-                btnNext.setVisibility(View.GONE);
+                btnNext.setText("Finish");
+                btnNext.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(new Intent(IntroActivity.this,PermissionActivity.class));
+                    }
+                });
             } else {
                 btnNext.setText("Next");
                 btnNext.setVisibility(View.VISIBLE);

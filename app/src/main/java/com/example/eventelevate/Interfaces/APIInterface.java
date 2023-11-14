@@ -39,6 +39,11 @@ public interface APIInterface {
             @Field("password") String password);
 
     @FormUrlEncoded
+    @POST("user/google")
+    Call<LoginModel> GetUserByEmailId(
+            @Field("email") String username);
+
+    @FormUrlEncoded
     @POST("user/events")
     Call<MyServiceModel> GetAllPostedService(@Field("user_id") String userId);
 

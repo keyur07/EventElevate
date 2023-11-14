@@ -4,13 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RatingBar;
@@ -23,6 +22,10 @@ import com.example.eventelevate.Model.LoginModel;
 import com.example.eventelevate.Model.SettingModel;
 import com.example.eventelevate.R;
 import com.example.eventelevate.Service.RetrofitClient;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import retrofit2.Call;
@@ -30,6 +33,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class SplashScreen extends AppCompatActivity {
+
+    GoogleSignInOptions googleSignInOptions;
+    GoogleSignInClient signInClient;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,23 +52,83 @@ public class SplashScreen extends AppCompatActivity {
         CheckInternet();
     }
 
-    public void init(){
+    public void init() {
         CheckUserloginStatus();
     }
 
     private void CheckUserloginStatus() {
         String username = AppManager.getSaveShareData(this, String.valueOf(R.string.user_session_key_username));
         String password = AppManager.getSaveShareData(this, String.valueOf(R.string.user_session_key_password));
+        String policy = AppManager.getSaveShareData(SplashScreen.this, "policy");
 
-        if(username.equals("") && password.equals("")){
-            AppManager.changeActivity(this,LoginScreen.class);
+        if (policy.equals("1")) {
+
+            if (username.equals("") && password.equals("")) {
+                AppManager.changeActivity(this, LoginScreen.class);
+                finish();
+            } else {
+                if (getDataFromGoogleAccount()) {
+                    googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
+                    signInClient = GoogleSignIn.getClient(SplashScreen.this, googleSignInOptions);
+                    GoogleSignInAccount signIn = GoogleSignIn.getLastSignedInAccount(SplashScreen.this);
+                    getUSerDataWithGoogle(signIn.getEmail());
+                } else {
+                    getUserData(username, password);
+                }
+            }
+
+        } else {
+            AppManager.changeActivity(SplashScreen.this, TermsAndConditions.class);
             finish();
-        }else {
-            getUserData(username,password);
+        }
+
+    }
+
+    private boolean getDataFromGoogleAccount() {
+
+        googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
+        signInClient = GoogleSignIn.getClient(SplashScreen.this, googleSignInOptions);
+
+        GoogleSignInAccount signIn = GoogleSignIn.getLastSignedInAccount(SplashScreen.this);
+
+        if (signIn != null) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    private void getUSerDataWithGoogle(String username) {
+        AppManager.showProgress(SplashScreen.this);
+        if (username != null) {
+            APIInterface apiInterface = RetrofitClient.getRetrofitInstance().create(APIInterface.class);
+            Call<LoginModel> call = apiInterface.GetUserByEmailId(username);
+            call.enqueue(new Callback<LoginModel>() {
+                @Override
+                public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {
+                    AppManager.hideProgress();
+                    if (response.body().getStatusCode().equals(200)) {
+                        AppManager.user = response.body().getUser();
+                        AppManager.changeActivity(SplashScreen.this, MainActivity.class);
+                        finish();
+                    } else {
+                        AppManager.changeActivity(SplashScreen.this, LoginScreen.class);
+                        finish();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<LoginModel> call, Throwable t) {
+                    AppManager.hideProgress();
+                    Toast.makeText(SplashScreen.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
+                    Log.e("errororo", t.getMessage());
+                }
+            });
         }
     }
 
-    public void showunderMaintenanceDialog(){
+    public void showunderMaintenanceDialog() {
 
         final Dialog dialog = new Dialog(SplashScreen.this);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
@@ -78,19 +145,19 @@ public class SplashScreen extends AppCompatActivity {
         dialog.show();
     }
 
-    private void getApplicationSetting(){
+    private void getApplicationSetting() {
         APIInterface apiInterface = RetrofitClient.getRetrofitInstance().create(APIInterface.class);
         Call<SettingModel> call = apiInterface.GetApplicationSetting();
         call.enqueue(new Callback<SettingModel>() {
             @Override
             public void onResponse(Call<SettingModel> call, Response<SettingModel> response) {
-                if(response.body().getStatusCode()==200){
-                    if (response.body().getMessage().equals("Success")){
+                if (response.body().getStatusCode() == 200) {
+                    if (response.body().getMessage().equals("Success")) {
                         AppManager.setting = response.body().getSetting();
 
-                        if(response.body().getSetting().getMaintenance()==1){
+                        if (response.body().getSetting().getMaintenance() == 1) {
                             showunderMaintenanceDialog();
-                        }else {
+                        } else {
                             init();
                         }
 
@@ -106,10 +173,10 @@ public class SplashScreen extends AppCompatActivity {
     }
 
 
-    public void CheckInternet(){
+    public void CheckInternet() {
 
 
-        if(isNetworkAvailable()){
+        if (isNetworkAvailable()) {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -117,7 +184,7 @@ public class SplashScreen extends AppCompatActivity {
                 }
             }, 2000);
 
-        }else {
+        } else {
             BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(SplashScreen.this, R.style.CustomBottomSheetDialogTheme);
             View bottom = LayoutInflater.from(SplashScreen.this).inflate(R.layout.no_internet, null);
             bottomSheetDialog.setContentView(bottom);
@@ -128,11 +195,11 @@ public class SplashScreen extends AppCompatActivity {
             refresh.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(isNetworkAvailable()){
+                    if (isNetworkAvailable()) {
                         bottomSheetDialog.dismiss();
                         init();
 
-                    }else {
+                    } else {
                         Toast.makeText(SplashScreen.this, "Please Check Internet Connection Again..", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -142,16 +209,17 @@ public class SplashScreen extends AppCompatActivity {
 
 
     }
-    private void getUserData(String username,String password){
+
+    private void getUserData(String username, String password) {
         APIInterface apiInterface = RetrofitClient.getRetrofitInstance().create(APIInterface.class);
-        Call<LoginModel> call = apiInterface.VerifiedLoginData(username,password);
+        Call<LoginModel> call = apiInterface.VerifiedLoginData(username, password);
         call.enqueue(new Callback<LoginModel>() {
             @Override
             public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {
-                if(response.body().getStatusCode()==200){
-                    if (response.body().getMessage().equals("Success")){
+                if (response.body().getStatusCode() == 200) {
+                    if (response.body().getMessage().equals("Success")) {
                         AppManager.user = response.body().getUser();
-                        AppManager.changeActivity(SplashScreen.this,MainActivity.class);
+                        AppManager.changeActivity(SplashScreen.this, MainActivity.class);
                         finish();
 
                     }

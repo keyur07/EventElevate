@@ -17,6 +17,10 @@ import com.example.eventelevate.R;
 import com.example.eventelevate.Service.RetrofitClient;
 import com.example.eventelevate.databinding.ActivityLoginBinding;
 import com.example.eventelevate.databinding.ActivitySignUpBinding;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.material.snackbar.Snackbar;
 
 import retrofit2.Call;
@@ -25,6 +29,8 @@ import retrofit2.Response;
 
 public class SignUp extends AppCompatActivity {
     ActivitySignUpBinding binding;
+    GoogleSignInOptions googleSignInOptions;
+    GoogleSignInClient signInClient;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,19 +121,43 @@ public class SignUp extends AppCompatActivity {
 
             }
         });
-
         binding.btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 startActivity(new Intent(SignUp.this,LoginActivity.class));
             }
         });
 
+        Intent intent = getIntent();
+        if(intent.getStringExtra("google").equals("1")){
+            getDataFromGoogleAccount();
+        }
+
 
     }
 
-    private void StartUserSession(String username, String password) {
+    private void getDataFromGoogleAccount() {
+
+        googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
+        signInClient = GoogleSignIn.getClient(SignUp.this, googleSignInOptions);
+
+        GoogleSignInAccount signIn = GoogleSignIn.getLastSignedInAccount(SignUp.this);
+
+        if (signIn != null) {
+            Log.e("datdatadata", signIn.getDisplayName());
+            Log.e("datdatadata", signIn.getEmail());
+
+            binding.edtEmail.setText(signIn.getEmail());
+            binding.edtFirstname.setText(signIn.getGivenName());
+            binding.edtLastname.setText(signIn.getFamilyName());
+
+        } else {
+            Toast.makeText(this, "Null", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+        private void StartUserSession(String username, String password) {
 
         AppManager.SaveShareData(this, String.valueOf(R.string.user_session_key_username),username);
         AppManager.SaveShareData(this, String.valueOf(R.string.user_session_key_password),password);
