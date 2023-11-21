@@ -59,7 +59,7 @@ public class UserProfileActivity extends AppCompatActivity {
             AppManager.showProgress(this);
             APIInterface userService = RetrofitClient.getRetrofitInstance().create(APIInterface.class);
 
-            String userId =  String.valueOf(AppManager.user.getId());
+            String userId =  String.valueOf(AppManager.user.getUserId());
             String firstName =  binding.firstNameEditText.getText().toString();
             String lastName =  binding.lastNameEditText.getText().toString();
 

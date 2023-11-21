@@ -40,6 +40,7 @@ public class ShowAllServices extends AppCompatActivity {
         AppManager.changeStatusBarandBottomColor(this);
       //  getSupportActionBar().setTitle(intent.getStringExtra("table_name"));
         getDatabyTable(intent.getStringExtra("table_name"));
+        Toast.makeText(this, ""+intent.getStringExtra("table_name"), Toast.LENGTH_SHORT).show();
     }
 
     private void getDatabyTable(String serviceName) {

@@ -1,5 +1,8 @@
 package com.example.eventelevate.Service;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -19,18 +22,22 @@ public class RetrofitClient {
     private static String LOCATION = "/Events/Api/";
 
     public static Retrofit getRetrofitInstance() {
-
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
 
-
-        retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL+SUB_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(client)
+        OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(interceptor)
                 .build();
 
+        Gson gson = new GsonBuilder()
+                .setLenient() // Set leniency here
+                .create();
+
+        retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL + SUB_URL)
+                .addConverterFactory(GsonConverterFactory.create(gson)) // Pass the Gson instance
+                .client(client)
+                .build();
 
         return retrofit;
     }

@@ -126,7 +126,7 @@ public class MyEventListAdapter extends RecyclerView.Adapter<MyEventListAdapter.
 
     private void DeleteService(int position) {
         APIInterface apiInterface = RetrofitClient.getRetrofitInstance().create(APIInterface.class);
-        Call<SignupModel> call = apiInterface.DeletePost(AppManager.user.getId().toString(),events.get(position).getId().toString());
+        Call<SignupModel> call = apiInterface.DeletePost(AppManager.user.getUserId().toString(),events.get(position).getId().toString());
         call.enqueue(new Callback<SignupModel>() {
             @Override
             public void onResponse(Call<SignupModel> call, Response<SignupModel> response) {
@@ -184,7 +184,7 @@ public class MyEventListAdapter extends RecyclerView.Adapter<MyEventListAdapter.
 
     private void UpdateService(EditText titles, EditText pricee, EditText descriptionn, EditText termsandconditionn, String type, int position, BottomSheetDialog bottomSheetDialog) {
 
-        RequestBody userID = RequestBody.create(MediaType.parse("text/plain"), AppManager.user.getId().toString());
+        RequestBody userID = RequestBody.create(MediaType.parse("text/plain"), AppManager.user.getUserId().toString());
         RequestBody title = RequestBody.create(MediaType.parse("text/plain"),titles.getText().toString());
         RequestBody paymentType = RequestBody.create(MediaType.parse("text/plain"),type );
         RequestBody price = RequestBody.create(MediaType.parse("text/plain"), pricee.getText().toString());

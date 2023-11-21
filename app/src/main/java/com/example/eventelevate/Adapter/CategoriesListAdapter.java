@@ -56,7 +56,8 @@ public class CategoriesListAdapter extends RecyclerView.Adapter<CategoriesListAd
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(holder.itemView.getContext(), ShowAllServices.class);
-                intent.putExtra("table_name",servicetypes.get(position).getServiceId());
+                intent.putExtra("table_name",""+servicetypes.get(position).getServiceId());
+                Log.e("datadata",""+servicetypes.get(position).getServiceId());
                 holder.itemView.getContext().startActivity(intent);
             }
         });

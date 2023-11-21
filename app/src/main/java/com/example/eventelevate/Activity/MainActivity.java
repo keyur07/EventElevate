@@ -1,36 +1,23 @@
 package com.example.eventelevate.Activity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-import androidx.viewpager2.widget.ViewPager2;
-
 import android.annotation.SuppressLint;
-import android.app.Application;
-import android.app.usage.EventStats;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 
-import com.example.eventelevate.Adapter.ViewPagerAdapter;
 import com.example.eventelevate.Fragments.CreateFragment;
 import com.example.eventelevate.Fragments.EventFragment;
 import com.example.eventelevate.Fragments.EventsFragment;
@@ -47,18 +34,13 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.tabs.TabLayout;
-import com.google.android.material.tabs.TabLayoutMediator;
 
 public class MainActivity extends AppCompatActivity {
 
     GoogleSignInOptions googleSignInOptions;
     GoogleSignInClient signInClient;
 
-
     private ViewPager2 viewPager2;
-    private TabLayout tab;
     ActivityMainBinding binding;
     Fragment selectedFragment = null;
 
@@ -68,43 +50,43 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        FragmentChanger(new EventsFragment());
 
         getDataFromGoogleAccount();
+        viewPager2 = findViewById(R.id.viewPager); // Change to viewPager2
+        BottomNavigationView bottomNavigation = findViewById(R.id.bottom_navigation);
 
-        binding.bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        // Use FragmentStateAdapter for ViewPager2
+        MyPagerAdapter adapter = new MyPagerAdapter(this);
+        viewPager2.setAdapter(adapter);
+
+        bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
                 int itemId = item.getItemId();
-                Fragment selectedFragment = null;
-                String fragmentTag = null;
+                int position = 0;
 
                 if (itemId == R.id.event) {
-                    selectedFragment = new ForYouFragment();
+                    position = 0;
                 } else if (itemId == R.id.foryou) {
-                    selectedFragment = new EventsFragment();
+                    position = 1;
                 } else if (itemId == R.id.create) {
-                    selectedFragment = new ManageFragment();
+                    position = 2;
                 } else if (itemId == R.id.profile) {
-                    selectedFragment = new ProfileFragment();
-                }else if (itemId == R.id.messages) {
-                    selectedFragment = new MessagesFragment();
+                    position = 3;
+                } else if (itemId == R.id.messages) {
+                    position = 4;
                 }
 
-                if (selectedFragment != null) {
-                    getSupportFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.framelayout, selectedFragment, fragmentTag)
-                            .commitNow();
-
-                }
-
+                viewPager2.setCurrentItem(position, false); // Disable smooth scroll
                 return true;
             }
         });
 
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        // Set the default selected item to "For You"
+        bottomNavigation.setSelectedItemId(R.id.foryou);
+        viewPager2.setCurrentItem(1, false); // Set the default page to "For You"
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setNavigationBarColor(getResources().getColor(R.color.start_color));
         }
 
@@ -131,7 +113,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-
 
     @Override
     public void onBackPressed() {
@@ -166,9 +147,33 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void FragmentChanger(Fragment fragment) {
-        getSupportFragmentManager().beginTransaction().replace(R.id.framelayout, fragment).commit();
+    public class MyPagerAdapter extends FragmentStateAdapter {
+        public MyPagerAdapter(@NonNull AppCompatActivity fragmentActivity) {
+            super(fragmentActivity);
+        }
 
+        @NonNull
+        @Override
+        public Fragment createFragment(int position) {
+            switch (position) {
+                case 0:
+                    return new ForYouFragment();
+                case 1:
+                    return new EventsFragment();
+                case 2:
+                    return new ManageFragment();
+                case 3:
+                    return new ProfileFragment();
+                case 4:
+                    return new MessagesFragment();
+                default:
+                    return null;
+            }
+        }
+
+        @Override
+        public int getItemCount() {
+            return 5; // Number of tabs
+        }
     }
-
 }

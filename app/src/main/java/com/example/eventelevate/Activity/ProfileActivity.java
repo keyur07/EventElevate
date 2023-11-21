@@ -48,7 +48,7 @@ public class ProfileActivity extends AppCompatActivity {
                 String message = "Hello, Second Activity!";
                 intent.putExtra("msg", message);
                 intent.putExtra("status", "User");
-                intent.putExtra("userId", AppManager.user.getId().toString());
+                intent.putExtra("userId", AppManager.user.getUserId().toString());
                 intent.putExtra("clientId",String.valueOf(ClientID));
                 startActivity(intent);
             }

@@ -92,7 +92,7 @@
 
         private void getDataFromIntent() {
             msg = "Hello";
-            userId = AppManager.user.getId();
+            userId = AppManager.user.getUserId();
             clientId = 0;
         }
     }

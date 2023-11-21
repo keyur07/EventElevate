@@ -64,8 +64,9 @@ public class LoginScreen extends AppCompatActivity {
         binding.btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                startActivity(new Intent(LoginScreen.this, SignUp.class));
+                Intent intent = new Intent(LoginScreen.this, SignUp.class);
+                intent.putExtra("google", "0");
+                startActivity(intent);
 
             }
         });

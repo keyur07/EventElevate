@@ -110,6 +110,7 @@ public class SplashScreen extends AppCompatActivity {
                     AppManager.hideProgress();
                     if (response.body().getStatusCode().equals(200)) {
                         AppManager.user = response.body().getUser();
+                        Log.e("uxccserid","aASAS "+response.body().getUser().getUserId());
                         AppManager.changeActivity(SplashScreen.this, MainActivity.class);
                         finish();
                     } else {

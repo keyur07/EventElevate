@@ -51,7 +51,7 @@ public class ManageFragment extends Fragment {
     private void Getallmyeventlist(){
 
         APIInterface apiInterface = RetrofitClient.getRetrofitInstance().create(APIInterface.class);
-        Call<MyServiceModel> call = apiInterface.GetAllPostedService(String.valueOf(AppManager.user.getId()));
+        Call<MyServiceModel> call = apiInterface.GetAllPostedService(String.valueOf(AppManager.user.getUserId()));
         call.enqueue(new Callback<MyServiceModel>() {
             @Override
             public void onResponse(Call<MyServiceModel> call, Response<MyServiceModel> response) {

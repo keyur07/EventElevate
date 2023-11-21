@@ -7,5 +7,8 @@
     <string name="user_session_key_username">username</string>
     <string name="user_session_key_password">username</string>
     <string name="user_session_key">User</string>
+
+    <string name="public_key">pk_test_51OD9nbAjOTCJBRzUlgAqKsv4p4VFYD8FQdSibSM0lIyz7CsBEtp9lPcA6eZtgdQBQQVhYzkem9gSJ5Nvnm0T68Hr001KgR1KKI</string>
+    <string name="private_key">sk_test_51OD9nbAjOTCJBRzU2oERuVUECHxqO2HOL10zhkqCj4FrOyYs8VzjteRhby9703KGioJvIlcwe0wMqtlFbQm6vmII00YEUqSeSA</string>
     <string name="create_pravacy">Service items are public and can be seen by anyone on or off EventPeck. Listings also may be featured on other Meta platforms, such as google. \n\nAll listings go through a quick standard review when published to make sure they follow our Commerce policies before they are visible to others. Items like animals, drugs, weapons, counterfeits and more are not allowed. \n\n Service listings must not discriminate. See our Discrimination</string>
 </resources>

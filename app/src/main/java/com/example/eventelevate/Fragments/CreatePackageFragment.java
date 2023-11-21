@@ -105,7 +105,7 @@ public class CreatePackageFragment extends Fragment {
             imageParts.add(imagePart);
         }
 
-        RequestBody userID = RequestBody.create(MediaType.parse("multipart/form-data"), AppManager.user.getId().toString());
+        RequestBody userID = RequestBody.create(MediaType.parse("multipart/form-data"), AppManager.user.getUserId().toString());
         RequestBody titleRB = RequestBody.create(MediaType.parse("multipart/form-data"), title);
         RequestBody paymentTypeRB = RequestBody.create(MediaType.parse("multipart/form-data"), binding.editPaymentType.getSelectedItem().toString());
         RequestBody priceRB = RequestBody.create(MediaType.parse("multipart/form-data"), price);

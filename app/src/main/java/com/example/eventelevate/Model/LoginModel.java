@@ -37,12 +37,11 @@ public class LoginModel {
     public void setUser(User user) {
         this.user = user;
     }
-
     public class User {
 
-        @SerializedName("Id")
+        @SerializedName("user_Id")
         @Expose
-        private Integer id;
+        private Integer userid;
         @SerializedName("firstName")
         @Expose
         private String firstName;
@@ -61,6 +60,9 @@ public class LoginModel {
         @SerializedName("status")
         @Expose
         private Integer status;
+        @SerializedName("isVerified")
+        @Expose
+        private Integer isVerified;
         @SerializedName("createdOn")
         @Expose
         private String createdOn;
@@ -69,14 +71,14 @@ public class LoginModel {
         private String photo;
         @SerializedName("userid")
         @Expose
-        private Integer userid;
+        private Integer userId;
 
-        public Integer getId() {
-            return id;
+        public Integer getUserid() {
+            return userid;
         }
 
-        public void setId(Integer id) {
-            this.id = id;
+        public void setUserid(Integer userid) {
+            this.userid = userid;
         }
 
         public String getFirstName() {
@@ -127,6 +129,14 @@ public class LoginModel {
             this.status = status;
         }
 
+        public Integer getIsVerified() {
+            return isVerified;
+        }
+
+        public void setIsVerified(Integer isVerified) {
+            this.isVerified = isVerified;
+        }
+
         public String getCreatedOn() {
             return createdOn;
         }
@@ -143,12 +153,12 @@ public class LoginModel {
             this.photo = photo;
         }
 
-        public Integer getUserid() {
-            return userid;
+        public Integer getUserId() {
+            return userId;
         }
 
-        public void setUserid(Integer userid) {
-            this.userid = userid;
+        public void setUserId(Integer userId) {
+            this.userId = userId;
         }
 
     }

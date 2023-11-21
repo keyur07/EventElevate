@@ -4,6 +4,7 @@ import com.example.eventelevate.Model.AboutUsModel;
 import com.example.eventelevate.Model.CityModel;
 import com.example.eventelevate.Model.ContactModel;
 import com.example.eventelevate.Model.DocumentsModel;
+import com.example.eventelevate.Model.DocumentsUploadModel;
 import com.example.eventelevate.Model.EventtypeModel;
 import com.example.eventelevate.Model.LoginModel;
 import com.example.eventelevate.Model.MyServiceModel;
@@ -18,10 +19,12 @@ import java.util.List;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -103,10 +106,10 @@ public interface APIInterface {
 
     @Multipart
     @POST("user/documents")
-    Call<SignupModel> UploadDocuments(
-            @Part("user_id") RequestBody userID,
-            @Part("document") RequestBody title,
-            @Part MultipartBody.Part images
+    Call<DocumentsUploadModel> UploadDocuments(
+            @Part("user_id") RequestBody userId,
+            @Part MultipartBody.Part image,
+            @Part("documenttype") RequestBody documentType
     );
 
     @Multipart

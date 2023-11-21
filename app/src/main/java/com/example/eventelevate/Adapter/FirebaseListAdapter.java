@@ -49,53 +49,53 @@ public class FirebaseListAdapter extends RecyclerView.Adapter<FirebaseListAdapte
         MessageEntry item = data.get(position);
         if (item.getKey() != null && item.getValue() != null) {
             String uid;
-            if (status.equals("User")){
-                 uid= String.valueOf(userId);
+            if (status.equals("User")) {
+                uid = String.valueOf(userId);
+            } else {
+                uid = String.valueOf(clientId);
             }
-            else {
-                uid= String.valueOf(clientId);
+
+            Log.d("TAG", "onBindViewHolder:..................... " + uid);
+            Log.d("TAG", "onBindViewHolder:..............1....... " + userId);
+            Log.d("TAG", "onBindViewHolder:.........2............ " + clientId);
+            Log.d("TAG", "onBindViewHolder:.........3............ " + status);
+            Log.d("TAG", "onBindViewHolder:.........4............ " + item.getKey());
+
+            // Convert the timestamp to a ZonedDateTime
+            Instant instant = Instant.ofEpochSecond(item.getTimestamp());
+            ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(instant, ZoneId.systemDefault());
+
+            // Get the current date
+            ZonedDateTime currentZonedDateTime = ZonedDateTime.now();
+
+            // Define a format for the output time
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm a");
+
+            // Format and print the time
+            String formattedTime = zonedDateTime.format(formatter);
+
+            // Compare the message date with the current date
+            if (zonedDateTime.toLocalDate().equals(currentZonedDateTime.toLocalDate())) {
+                // If the message was sent today, show "Today" instead of the date
+                formattedTime = "Today " + zonedDateTime.format(DateTimeFormatter.ofPattern("HH:mm a"));
             }
 
-            Log.d("TAG", "onBindViewHolder:..................... "+uid);
-            Log.d("TAG", "onBindViewHolder:..............1....... "+userId);
-            Log.d("TAG", "onBindViewHolder:.........2............ "+clientId);
-            Log.d("TAG", "onBindViewHolder:.........3............ "+status);
-            Log.d("TAG", "onBindViewHolder:.........4............ "+item.getKey());
-            if (item.getKey().equals(uid)){
-                // Convert the timestamp to a ZonedDateTime
-                Instant instant = Instant.ofEpochSecond(item.getTimestamp());
-                ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(instant, ZoneId.systemDefault());
+            System.out.println("Formatted Time: " + formattedTime);
 
-                // Define a format for the output time
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm a");
-
-                // Format and print the time
-                String formattedTime = zonedDateTime.format(formatter);
-                System.out.println("Formatted Time: " + formattedTime);
+            if (item.getKey().equals(uid)) {
                 holder.keyTextView.setText(formattedTime);
                 holder.valueTextView.setText(item.getValue().toString());
                 holder.lluser1.setVisibility(View.VISIBLE);
                 holder.lluser2.setVisibility(View.GONE);
-            }
-            else {
-                // Convert the timestamp to a ZonedDateTime
-                Instant instant = Instant.ofEpochSecond(item.getTimestamp());
-                ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(instant, ZoneId.systemDefault());
-
-                // Define a format for the output time
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm a");
-
-                // Format and print the time
-                String formattedTime = zonedDateTime.format(formatter);
-                System.out.println("Formatted Time: " + formattedTime);
+            } else {
                 holder.keyTextView1.setText(formattedTime);
                 holder.valueTextView2.setText(item.getValue().toString());
                 holder.lluser2.setVisibility(View.VISIBLE);
                 holder.lluser1.setVisibility(View.GONE);
             }
         }
-
     }
+
 
     @Override
     public int getItemCount() {

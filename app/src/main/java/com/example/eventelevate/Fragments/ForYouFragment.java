@@ -24,7 +24,7 @@ public class ForYouFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = FragmentForYouBinding.inflate(getLayoutInflater());
 
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager(),getLifecycle());
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager(), getLifecycle());
         binding.viewPager.setAdapter(viewPagerAdapter);
 
         new TabLayoutMediator(binding.tabLayout, binding.viewPager, (tab, position) -> {

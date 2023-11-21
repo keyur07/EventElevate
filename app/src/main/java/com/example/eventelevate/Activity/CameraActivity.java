@@ -5,12 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -20,12 +22,14 @@ import android.widget.Toast;
 
 import com.example.eventelevate.Interfaces.APIInterface;
 import com.example.eventelevate.Manager.AppManager;
+import com.example.eventelevate.Model.DocumentsUploadModel;
 import com.example.eventelevate.Model.SignupModel;
 import com.example.eventelevate.R;
 import com.example.eventelevate.Service.RetrofitClient;
 import com.example.eventelevate.Utils.RealPathUtil;
 import com.example.eventelevate.databinding.ActivityCameraBinding;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 
 import okhttp3.MediaType;
@@ -39,6 +43,7 @@ public class CameraActivity extends AppCompatActivity {
 
     private ActivityCameraBinding binding;
     private  Uri selectedImageUri;
+    private   AlertDialog dialog;
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final int REQUEST_IMAGE_PICK = 2;
 
@@ -84,31 +89,31 @@ public class CameraActivity extends AppCompatActivity {
     }
 
     private void UploadDocuments(String docs){
-
-        RequestBody userID = RequestBody.create(MediaType.parse("text/plain"), AppManager.user.getId().toString()); // Replace "12345" with the actual user ID
+        AppManager.showProgress(CameraActivity.this);
+        RequestBody userID = RequestBody.create(MediaType.parse("text/plain"), AppManager.user.getUserId().toString()); // Replace "12345" with the actual user ID
         RequestBody title = RequestBody.create(MediaType.parse("text/plain"), docs);
-
-// Create MultipartBody.Part for the image file.
         File file = new File(RealPathUtil.getRealPath(CameraActivity.this,selectedImageUri)); // Replace with the actual file path
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-        MultipartBody.Part imagePart = MultipartBody.Part.createFormData("images", file.getName(), requestFile);
+        MultipartBody.Part imagePart = MultipartBody.Part.createFormData("image", file.getName(), requestFile);
 
         APIInterface apiInterface = RetrofitClient.getRetrofitInstance().create(APIInterface.class);
-        Call<SignupModel> call = apiInterface.UploadDocuments(userID,title,imagePart);
+        Call<DocumentsUploadModel> call = apiInterface.UploadDocuments(userID,imagePart,title);
 
-        call.enqueue(new Callback<SignupModel>() {
+        call.enqueue(new Callback<DocumentsUploadModel>() {
             @Override
-            public void onResponse(Call<SignupModel> call, Response<SignupModel> response) {
+            public void onResponse(Call<DocumentsUploadModel> call, Response<DocumentsUploadModel> response) {
                 if(response.body().getStatusCode()==200){
                     Toast.makeText(CameraActivity.this, "Documents Uploaded", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(CameraActivity.this,DocumentsActivity.class));
                     finish();
                 }
+                Log.e("errroror",""+response.body().getStatusCode());
+                Log.e("errroror",""+response.body().getMessage());
             }
 
             @Override
-            public void onFailure(Call<SignupModel> call, Throwable t) {
-
+            public void onFailure(Call<DocumentsUploadModel> call, Throwable t) {
+                Log.e("errroror",t.getMessage());
             }
         });
     }
@@ -146,7 +151,7 @@ public class CameraActivity extends AppCompatActivity {
             }
         });
 
-        AlertDialog dialog = builder.create();
+        dialog = builder.create();
         dialog.show();
     }
 
@@ -170,14 +175,30 @@ public class CameraActivity extends AppCompatActivity {
             if (requestCode == REQUEST_IMAGE_PICK && data != null) {
                 selectedImageUri = data.getData();
                 binding.preview.setImageURI(selectedImageUri);
+                dialog.dismiss();
             } else if (requestCode == REQUEST_IMAGE_CAPTURE) {
-                selectedImageUri = data.getData();
-                binding.preview.setImageURI(selectedImageUri);
-            }else {
+                if (data != null && data.hasExtra("data")) {
+                    Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+                    selectedImageUri = getImageUri(this, bitmap);
+                    binding.preview.setImageURI(selectedImageUri);
+                    if (dialog != null) {
+                        dialog.dismiss();
+                    }
+                } else {
+                    Toast.makeText(this, "Failed to capture image", Toast.LENGTH_SHORT).show();
+                }
+            } else {
                 finish();
             }
-        }else {
+        } else {
             finish();
         }
+    }
+
+    private Uri getImageUri(Context context, Bitmap bitmap) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, "Title", null);
+        return Uri.parse(path);
     }
 }
