@@ -6,7 +6,9 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.eventelevate.Interfaces.APIInterface;
 import com.example.eventelevate.Manager.AppManager;
@@ -28,9 +30,7 @@ public class DocumentsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityDocumentsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         init();
-
     }
 
     private void init() {
@@ -68,22 +68,33 @@ public class DocumentsActivity extends AppCompatActivity {
             public void onResponse(Call<DocumentsModel> call, Response<DocumentsModel> response) {
                 AppManager.hideProgress();
                 if (response.body().getStatusCode() == 200) {
-                    if (response.body().getDocumentStatus().get(0).getPhotoStatus() == 2) {
+                    Log.e("responsese",""+response.body().getDocumentStatus().get(0).getPhotoStatus());
+                    if (response.body().getDocumentStatus().get(0).getPhotoStatus().equals(2)) {
                         binding.photo.setBackgroundResource(R.color.verified);
+                        binding.comments.setText("Verified");
                         binding.photo.setEnabled(false);
-                    } else if (response.body().getDocumentStatus().get(0).getPhotoStatus() == 1) {
+                        binding.statusPhoto.setImageResource(R.drawable.verified);
+                    } else if (response.body().getDocumentStatus().get(0).getPhotoStatus().equals(1)) {
                         binding.photo.setBackgroundResource(R.color.pending);
-                    } else if (response.body().getDocumentStatus().get(0).getPhotoStatus() == 3) {
+                        binding.comments.setText("Pending");
+                        binding.photo.setEnabled(false);
+                    } else if (response.body().getDocumentStatus().get(0).getPhotoStatus().equals(0)) {
                         binding.photo.setBackgroundResource(R.color.not_submited);
+                        binding.comments.setText("Need a attention");
                     }
 
-                    if (response.body().getDocumentStatus().get(0).getPhotoidStatus() == 2) {
+                    if (response.body().getDocumentStatus().get(0).getPhotoidStatus().equals(2)) {
                         binding.photoId.setBackgroundResource(R.color.verified);
                         binding.photoId.setEnabled(false);
-                    } else if (response.body().getDocumentStatus().get(0).getPhotoidStatus() == 1) {
+                        binding.comments2.setText("Verified");
+                        binding.statusPhotoid.setImageResource(R.drawable.verified);
+                    } else if (response.body().getDocumentStatus().get(0).getPhotoidStatus().equals(1)) {
                         binding.photoId.setBackgroundResource(R.color.pending);
-                    } else if (response.body().getDocumentStatus().get(0).getPhotoidStatus() == 3) {
+                        binding.photoId.setEnabled(false);
+                        binding.comments2.setText("Pending");
+                    } else if (response.body().getDocumentStatus().get(0).getPhotoidStatus().equals(0)) {
                         binding.photoId.setBackgroundResource(R.color.not_submited);
+                        binding.comments2.setText("Need a attention");
                     }
                 } else {
                     if (response.body().getStatusCode() == 201) {
@@ -97,6 +108,7 @@ public class DocumentsActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<DocumentsModel> call, Throwable t) {
                 AppManager.hideProgress();
+                Toast.makeText(DocumentsActivity.this, "Failed", Toast.LENGTH_SHORT).show();
             }
         });
     }

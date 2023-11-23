@@ -132,10 +132,10 @@ public interface APIInterface {
             @Part("item_id") String serviceId
     );
 
-    @Multipart
+    @FormUrlEncoded
     @POST("user/status")
     Call<DocumentsModel> GetStatusofDocuments(
-            @Part("user_id") String userID
+            @Field("user_id") String userID
     );
 
 

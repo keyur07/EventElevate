@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="center"
+    app:cardCornerRadius="@dimen/_10sdp"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_margin="@dimen/_10sdp"
+        android:layout_height="wrap_content">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="@dimen/_140sdp"
+            android:layout_height="@dimen/_140sdp"
+            app:lottie_autoPlay="true"
+            android:layout_centerHorizontal="true"
+            app:lottie_rawRes="@raw/update"
+            android:layout_gravity="center"
+            app:lottie_loop="true"
+            android:id="@+id/lottie"
+            tools:ignore="ResourceCycle" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/lottie"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="App Needs a update"
+            android:fontFamily="@font/robotobold"
+            android:textSize="@dimen/_16sdp"
+            android:textColor="@color/Grey"
+            android:id="@+id/txt_ma"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/txt_ma"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:textAlignment="center"
+            android:id="@+id/txt_message"
+            android:text="To use this app, download the latest version"
+            android:fontFamily="@font/robotobold"
+            android:textSize="@dimen/_12sdp"
+            android:textColor="@color/start_color"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/update"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:layout_below="@id/txt_message"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/button_round"
+            android:text="Update"
+            android:textColor="@color/white"></Button>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/update"
+            android:text="Cancel"
+            android:padding="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:layout_marginBottom="18dp"
+            android:fontFamily="@font/robotoregular"
+            android:textSize="@dimen/_12sdp"
+            android:textColor="@color/grey"
+            android:id="@+id/cancel"
+            android:layout_height="wrap_content"/>
+
+        
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

@@ -55,9 +55,10 @@ public class IntroActivity extends AppCompatActivity {
         dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
         btnNext = (TextView) findViewById(R.id.btn_next);
         layouts = new int[]{
-                R.layout.welcome_slide_1,
-                R.layout.welcome_slide_2,
-                R.layout.welcome_slide_3,
+                R.layout.item_intro_card,
+                R.layout.item_intro_card,
+                R.layout.item_intro_card,
+                R.layout.item_intro_card,
         };
 
         addBottomDots(0);
@@ -65,25 +66,27 @@ public class IntroActivity extends AppCompatActivity {
 
         myViewPagerAdapter = new MyViewPagerAdapter();
         viewPager.setAdapter(myViewPagerAdapter);
-        viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
         viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
+        viewPager.setPageTransformer(true, new PopPageTransformer());
+
         btnNext = (TextView) findViewById(R.id.btn_next);
         AppManager.changeStatusBarandBottomColor(IntroActivity.this);
-binding.permissionsButton.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-        Toast.makeText(IntroActivity.this, "Hello", Toast.LENGTH_SHORT).show();
-    }
-});
+        binding.permissionsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(IntroActivity.this, "Hello", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int current = getItem(+1);
-                if (current < layouts.length) {
-                    viewPager.setCurrentItem(current);
+                int current = getItem(0);
+                if (current < layouts.length - 1) {
+                    viewPager.setCurrentItem(current + 1);
                 } else {
-
+                    startActivity(new Intent(IntroActivity.this, PermissionActivity.class));
+                    finish();
                 }
             }
         });
@@ -111,22 +114,32 @@ binding.permissionsButton.setOnClickListener(new View.OnClickListener() {
     private int getItem(int i) {
         return viewPager.getCurrentItem() + i;
     }
+
     ViewPager.OnPageChangeListener viewPagerPageChangeListener = new ViewPager.OnPageChangeListener() {
 
         @Override
         public void onPageSelected(int position) {
             addBottomDots(position);
             if (position == layouts.length - 1) {
-                btnNext.setText("Finish");
+                // Last page
+                btnNext.setText("FINISH");
                 btnNext.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        startActivity(new Intent(IntroActivity.this,PermissionActivity.class));
+                        startActivity(new Intent(IntroActivity.this, PermissionActivity.class));
+                        finish();
                     }
                 });
             } else {
-                btnNext.setText("Next");
-                btnNext.setVisibility(View.VISIBLE);
+                // Not the last page
+                btnNext.setText("NEXT");
+                btnNext.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Move to next page
+                        viewPager.setCurrentItem(position + 1);
+                    }
+                });
             }
         }
 
@@ -140,6 +153,7 @@ binding.permissionsButton.setOnClickListener(new View.OnClickListener() {
 
         }
     };
+
     private void changeStatusBarColor() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
@@ -179,6 +193,7 @@ binding.permissionsButton.setOnClickListener(new View.OnClickListener() {
             container.removeView(view);
         }
     }
+
     public class ZoomOutPageTransformer implements ViewPager.PageTransformer {
         private static final float MIN_SCALE = 0.85f;
         private static final float MIN_ALPHA = 0.5f;
@@ -210,4 +225,56 @@ binding.permissionsButton.setOnClickListener(new View.OnClickListener() {
             }
         }
     }
+
+    public class PopPageTransformer implements ViewPager.PageTransformer {
+        private static final float MIN_SCALE = 0.85f;
+        private static final float MIN_ALPHA = 0.5f;
+
+        @Override
+        public void transformPage(View view, float position) {
+            int pageWidth = view.getWidth();
+            int pageHeight = view.getHeight();
+
+            if (position < -1) { // [-Infinity,-1)
+                // This page is way off-screen to the left.
+                view.setAlpha(0f);
+            } else if (position <= 1) { // [-1,1]
+                view.setAlpha(1f);
+
+                // Counteract the default slide transition
+                view.setTranslationX(pageWidth * -position);
+
+                // Scale the page down (between MIN_SCALE and 1)
+                float scaleFactor = Math.max(MIN_SCALE, 1 - Math.abs(position));
+                float verticalMargin = pageHeight * (1 - scaleFactor) / 2;
+                float horizontalMargin = pageWidth * (1 - scaleFactor) / 2;
+
+                if (position < 0) {
+                    view.setTranslationX(horizontalMargin - verticalMargin / 2);
+                } else {
+                    view.setTranslationX(-horizontalMargin + verticalMargin / 2);
+                }
+
+                // Scale the page down (between MIN_SCALE and 1)
+                view.setScaleX(scaleFactor);
+                view.setScaleY(scaleFactor);
+
+                // Fade the page relative to its size.
+                view.setAlpha(MIN_ALPHA +
+                        (scaleFactor - MIN_SCALE) /
+                                (1 - MIN_SCALE) * (1 - MIN_ALPHA));
+
+                // Adding the pop effect
+                float MIN_SCALE_FOR_POP = 0.75f;
+                float scaleForPop = 1 + Math.abs(position) * (MIN_SCALE_FOR_POP - 1);
+                view.setScaleX(scaleForPop);
+                view.setScaleY(scaleForPop);
+
+            } else { // (1,+Infinity]
+                // This page is way off-screen to the right.
+                view.setAlpha(0f);
+            }
+        }
+    }
+
 }

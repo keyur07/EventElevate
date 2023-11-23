@@ -15,11 +15,15 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.eventelevate.Activity.AboutUs;
@@ -53,14 +57,13 @@ public class EventsFragment extends Fragment {
     ArrayList<ServiceModel.Servicetype> servicetypes  = new ArrayList<>();
     private ActionBarDrawerToggle toggle;
     private int finalI = 0;
+    private CategoriesListAdapter eventsListAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding  = FragmentEventsBinding.inflate(getLayoutInflater());
-
-
 
         toggle = new ActionBarDrawerToggle(getActivity(), binding.drawerLayout, binding.toolbarMain, R.string.open, R.string.close);
         toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.white));
@@ -78,6 +81,24 @@ public class EventsFragment extends Fragment {
 
         ((AppCompatActivity) getActivity()).setSupportActionBar(binding.toolbarMain);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Event Peak");
+
+        binding.editTextSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String query = s.toString().toLowerCase();
+                updateRecyclerView(query);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         binding.drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
@@ -197,7 +218,6 @@ public class EventsFragment extends Fragment {
     private void getServicesList(Response<ServiceModel> response) {
         APIInterface apiInterface = RetrofitClient.getRetrofitInstance().create(APIInterface.class);
         Call<ServiceProviderModel> call1 = apiInterface.GetServicelistbytable(String.valueOf(response.body().getServicetype().get(finalI).getServiceId()));
-
         call1.enqueue(new Callback<ServiceProviderModel>() {
             @Override
             public void onResponse(Call<ServiceProviderModel> call, Response<ServiceProviderModel> responses) {
@@ -209,7 +229,7 @@ public class EventsFragment extends Fragment {
                     }
                 }
                 if((finalI+1)==response.body().getServicetype().size()){
-                    CategoriesListAdapter eventsListAdapter = new CategoriesListAdapter(EventsFragment.this,servicetypes);
+                    eventsListAdapter  = new CategoriesListAdapter(EventsFragment.this,servicetypes);
                     binding.categoriesListItems.setAdapter(eventsListAdapter);
                     Log.e("successsss","Calll"+servicetypes.get(0));
                 }
@@ -236,6 +256,18 @@ public class EventsFragment extends Fragment {
             binding.drawerLayout.openDrawer(GravityCompat.START);
         }
     }
+    private void updateRecyclerView(String query) {
+        ArrayList<ServiceModel.Servicetype> filteredServiceTypes = new ArrayList<>();
 
+        // Filter the list based on the search query
+        for (ServiceModel.Servicetype serviceType : servicetypes) {
+            if (serviceType.getServiceName().toLowerCase().contains(query)) {
+                filteredServiceTypes.add(serviceType);
+            }
+        }
+
+        // Update the adapter with the filtered list
+        eventsListAdapter.updateList(filteredServiceTypes);
+    }
 
 }

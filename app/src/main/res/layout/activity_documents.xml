@@ -42,7 +42,7 @@
         <LinearLayout
             android:id="@+id/home_screen"
             android:layout_width="match_parent"
-            android:visibility="invisible"
+            android:visibility="visible"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
@@ -63,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_7sdp"
-                android:background="#99A3FFD4"
+                android:background="#99FFD9D9"
                 android:orientation="vertical"
                 android:padding="@dimen/_5sdp">
 
@@ -74,6 +74,7 @@
                     android:layout_marginStart="10dp"
                     android:fontFamily="@font/poppins_regular"
                     android:text="Needs attention"
+                    android:id="@+id/comments"
                     android:textColor="@color/Grey"
                     android:textSize="12sp" />
 
@@ -95,6 +96,7 @@
                     <ImageView
                         android:layout_width="@dimen/_17sdp"
                         android:layout_height="@dimen/_17sdp"
+                        android:id="@+id/status_photo"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:layout_marginEnd="7dp"
@@ -120,6 +122,7 @@
                     android:layout_marginStart="10dp"
                     android:fontFamily="@font/poppins_regular"
                     android:text="Needs attention"
+                    android:id="@+id/comments2"
                     android:textColor="@color/Grey"
                     android:textSize="12sp" />
 
@@ -141,6 +144,7 @@
                     <ImageView
                         android:layout_width="@dimen/_17sdp"
                         android:layout_height="@dimen/_17sdp"
+                        android:id="@+id/status_photoid"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:layout_marginEnd="7dp"

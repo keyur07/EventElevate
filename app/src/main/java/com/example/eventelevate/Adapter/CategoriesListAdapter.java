@@ -47,6 +47,11 @@ public class CategoriesListAdapter extends RecyclerView.Adapter<CategoriesListAd
         return new CategoriesListAdapter.ViewHolder(view);
     }
 
+    public void updateList(List<ServiceModel.Servicetype> newList) {
+        servicetypes.addAll(newList);
+        notifyDataSetChanged();
+    }
+
     @Override
     public void onBindViewHolder(@NonNull CategoriesListAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.cates_name.setText(servicetypes.get(position).getServiceName());

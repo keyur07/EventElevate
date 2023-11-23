@@ -41,7 +41,9 @@ public class LoginActivity extends AppCompatActivity {
         binding.btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this,SignUp.class));
+                Intent intent = new Intent(LoginActivity.this, SignUp.class);
+                intent.putExtra("google", "0");
+                startActivity(intent);
             }
         });
 

@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -28,9 +29,12 @@ import com.example.eventelevate.R;
 import com.example.eventelevate.Service.RetrofitClient;
 import com.example.eventelevate.Utils.RealPathUtil;
 import com.example.eventelevate.databinding.ActivityCameraBinding;
+import com.google.gson.Gson;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.util.Random;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -94,6 +98,7 @@ public class CameraActivity extends AppCompatActivity {
         RequestBody title = RequestBody.create(MediaType.parse("text/plain"), docs);
         File file = new File(RealPathUtil.getRealPath(CameraActivity.this,selectedImageUri)); // Replace with the actual file path
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        Log.e("errroror",""+userID+" "+title);
         MultipartBody.Part imagePart = MultipartBody.Part.createFormData("image", file.getName(), requestFile);
 
         APIInterface apiInterface = RetrofitClient.getRetrofitInstance().create(APIInterface.class);
@@ -102,13 +107,10 @@ public class CameraActivity extends AppCompatActivity {
         call.enqueue(new Callback<DocumentsUploadModel>() {
             @Override
             public void onResponse(Call<DocumentsUploadModel> call, Response<DocumentsUploadModel> response) {
-                if(response.body().getStatusCode()==200){
-                    Toast.makeText(CameraActivity.this, "Documents Uploaded", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(CameraActivity.this,DocumentsActivity.class));
-                    finish();
-                }
-                Log.e("errroror",""+response.body().getStatusCode());
-                Log.e("errroror",""+response.body().getMessage());
+               if(response.body().getStatusCode().equals(200)){
+                   Toast.makeText(CameraActivity.this, "Documents Uploaded", Toast.LENGTH_SHORT).show();
+                   AppManager.hideProgress();
+               }
             }
 
             @Override
@@ -156,8 +158,10 @@ public class CameraActivity extends AppCompatActivity {
     }
 
     private void openGallery() {
-        Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(galleryIntent, REQUEST_IMAGE_PICK);
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Photos"), REQUEST_IMAGE_PICK);
     }
 
     private void dispatchTakePictureIntent() {
@@ -179,7 +183,7 @@ public class CameraActivity extends AppCompatActivity {
             } else if (requestCode == REQUEST_IMAGE_CAPTURE) {
                 if (data != null && data.hasExtra("data")) {
                     Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-                    selectedImageUri = getImageUri(this, bitmap);
+                    selectedImageUri = bitmapToUriConverter(this, bitmap);
                     binding.preview.setImageURI(selectedImageUri);
                     if (dialog != null) {
                         dialog.dismiss();
@@ -195,10 +199,53 @@ public class CameraActivity extends AppCompatActivity {
         }
     }
 
-    private Uri getImageUri(Context context, Bitmap bitmap) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, "Title", null);
-        return Uri.parse(path);
+    public Uri bitmapToUriConverter(Context context,Bitmap mBitmap) {
+        Uri uri = null;
+        try {
+            final BitmapFactory.Options options = new BitmapFactory.Options();
+            // Calculate inSampleSize
+            options.inSampleSize = calculateInSampleSize(options, 100, 100);
+
+            // Decode bitmap with inSampleSize set
+            options.inJustDecodeBounds = false;
+            Bitmap newBitmap = Bitmap.createScaledBitmap(mBitmap, 200, 200,
+                    true);
+            File file = new File(context.getFilesDir(), "Image"
+                    + new Random().nextInt() + ".jpeg");
+            FileOutputStream out = context.openFileOutput(file.getName(),
+                    Context.MODE_PRIVATE);
+            newBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+            out.flush();
+            out.close();
+            //get absolute path
+            String realPath = file.getAbsolutePath();
+            File f = new File(realPath);
+            uri = Uri.fromFile(f);
+
+        } catch (Exception e) {
+            Log.e("Your Error Message", e.getMessage());
+        }
+        return uri;
+    }
+
+    public static int calculateInSampleSize(
+            BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            while ((halfHeight / inSampleSize) >= reqHeight
+                    && (halfWidth / inSampleSize) >= reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+
+        return inSampleSize;
     }
 }

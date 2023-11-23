@@ -17,6 +17,4 @@
             android:scaleType="centerCrop" />
     </androidx.cardview.widget.CardView>
 
-
-
 </RelativeLayout>

@@ -64,6 +64,13 @@ public class FirebaseActivity extends AppCompatActivity {
         txtinput.setText(msg);
         //   rvMessage.setLayoutManager(new LinearLayoutManager(FirebaseActivity.this));
 
+        findViewById(R.id.backbtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                finish();
+            }
+        });
 
         messageList = new ArrayList<>();
         clientList = new ArrayList<>();

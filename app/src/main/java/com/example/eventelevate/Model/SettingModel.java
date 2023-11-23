@@ -60,6 +60,9 @@ public class SettingModel {
         @SerializedName("policy")
         @Expose
         private String policy;
+        @SerializedName("version")
+        @Expose
+        private String version;
 
         public Integer getId() {
             return id;
@@ -107,6 +110,14 @@ public class SettingModel {
 
         public void setPolicy(String policy) {
             this.policy = policy;
+        }
+
+        public String getVersion() {
+            return version;
+        }
+
+        public void setVersion(String version) {
+            this.version = version;
         }
 
     }

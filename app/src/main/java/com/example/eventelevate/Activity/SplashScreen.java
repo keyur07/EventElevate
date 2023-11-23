@@ -3,15 +3,20 @@ package com.example.eventelevate.Activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -109,10 +114,18 @@ public class SplashScreen extends AppCompatActivity {
                 public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {
                     AppManager.hideProgress();
                     if (response.body().getStatusCode().equals(200)) {
-                        AppManager.user = response.body().getUser();
-                        Log.e("uxccserid","aASAS "+response.body().getUser().getUserId());
-                        AppManager.changeActivity(SplashScreen.this, MainActivity.class);
-                        finish();
+
+                        if(response.body().getUser().getStatus().equals(1) || response.body().getUser().getStatus().equals(2)){
+                            AppManager.user = response.body().getUser();
+                            Log.e("uxccserid","aASAS "+response.body().getUser().getUserId());
+                            AppManager.changeActivity(SplashScreen.this, MainActivity.class);
+                            finish();
+                        }else {
+                            if(response.body().getUser().getStatus().equals(0)){
+                                ShowUserSuspendedDialog();
+                            }
+                        }
+
                     } else {
                         AppManager.changeActivity(SplashScreen.this, LoginScreen.class);
                         finish();
@@ -127,6 +140,16 @@ public class SplashScreen extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    private void ShowUserSuspendedDialog() {
+
+        final Dialog dialog = new Dialog(SplashScreen.this);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+        dialog.requestWindowFeature(1);
+        dialog.setContentView(R.layout.suspended_dialog);
+        dialog.setCancelable(false);
+        dialog.show();
     }
 
     public void showunderMaintenanceDialog() {
@@ -146,6 +169,25 @@ public class SplashScreen extends AppCompatActivity {
         dialog.show();
     }
 
+    public void showunderMaintenanceDialogSkipeble() {
+
+        final Dialog dialog = new Dialog(SplashScreen.this);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+        dialog.requestWindowFeature(1);
+        dialog.setContentView(R.layout.maintenance_dialog);
+        dialog.setCancelable(false);
+        Button button = dialog.findViewById(R.id.exit);
+        button.setText("OK");
+        dialog.findViewById(R.id.exit).setOnClickListener(new View.OnClickListener() { // from class: m.a.a.b.c0
+            @Override // android.view.View.OnClickListener
+            public final void onClick(View view) {
+                dialog.dismiss();
+               init();
+            }
+        });
+        dialog.show();
+    }
+
     private void getApplicationSetting() {
         APIInterface apiInterface = RetrofitClient.getRetrofitInstance().create(APIInterface.class);
         Call<SettingModel> call = apiInterface.GetApplicationSetting();
@@ -156,10 +198,32 @@ public class SplashScreen extends AppCompatActivity {
                     if (response.body().getMessage().equals("Success")) {
                         AppManager.setting = response.body().getSetting();
 
-                        if (response.body().getSetting().getMaintenance() == 1) {
-                            showunderMaintenanceDialog();
+                        if (response.body().getSetting().getMaintenance() == 0) {
+                            try {
+                                String versionName = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+                                if(response.body().getSetting().getVersion().equals(versionName)){
+                                    init();
+                            }else {
+                                    if(response.body().getSetting().getUpdate()==0){
+                                        init();
+                                    }else {
+                                        if(response.body().getSetting().getUpdate()==1){
+                                            ShowSkipableUpdateAppDialog();
+                                        }else {
+                                            ShowUpdateAppDialog();
+                                        }
+                                    }
+                                }
+                        } catch (PackageManager.NameNotFoundException e) {
+                                throw new RuntimeException(e);
+                            }
                         } else {
-                            init();
+                            if(response.body().getSetting().getMaintenance()==1){
+                                showunderMaintenanceDialogSkipeble();
+                            }else {
+                                showunderMaintenanceDialog();
+                            }
+
                         }
 
                     }
@@ -171,6 +235,58 @@ public class SplashScreen extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void ShowSkipableUpdateAppDialog() {
+        final Dialog dialog = new Dialog(SplashScreen.this);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+        dialog.requestWindowFeature(1);
+        dialog.setContentView(R.layout.update_dialog);
+        dialog.setCancelable(false);
+        final RatingBar ratingBar = (RatingBar) dialog.findViewById(R.id.rating);
+        dialog.findViewById(R.id.update).setOnClickListener(new View.OnClickListener() { // from class: m.a.a.b.c0
+            @Override // android.view.View.OnClickListener
+            public final void onClick(View view) {
+                Uri uri = Uri.parse("market://details?id=" + getPackageName());
+                Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+                try {
+                    startActivity(goToMarket);
+                } catch (ActivityNotFoundException e) {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + getPackageName())));
+                }
+            }
+        });
+        dialog.findViewById(R.id.cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                init();
+            }
+        });
+        dialog.show();
+    }
+
+    private void ShowUpdateAppDialog() {
+        final Dialog dialog = new Dialog(SplashScreen.this);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+        dialog.requestWindowFeature(1);
+        dialog.setContentView(R.layout.update_dialog);
+        dialog.setCancelable(false);
+        final RatingBar ratingBar = (RatingBar) dialog.findViewById(R.id.rating);
+        dialog.findViewById(R.id.update).setOnClickListener(new View.OnClickListener() { // from class: m.a.a.b.c0
+            @Override // android.view.View.OnClickListener
+            public final void onClick(View view) {
+                Uri uri = Uri.parse("market://details?id=" + getPackageName());
+                Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+                try {
+                    startActivity(goToMarket);
+                } catch (ActivityNotFoundException e) {
+                   startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + getPackageName())));
+                }
+            }
+        });
+        dialog.findViewById(R.id.cancel).setVisibility(View.INVISIBLE);
+        dialog.show();
     }
 
 
@@ -219,9 +335,12 @@ public class SplashScreen extends AppCompatActivity {
             public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {
                 if (response.body().getStatusCode() == 200) {
                     if (response.body().getMessage().equals("Success")) {
-                        AppManager.user = response.body().getUser();
-                        AppManager.changeActivity(SplashScreen.this, MainActivity.class);
-                        finish();
+                        if(response.body().getUser().getStatus().equals(1)){
+                            AppManager.user = response.body().getUser();
+                            AppManager.changeActivity(SplashScreen.this, MainActivity.class);
+                            finish();
+                        }
+
 
                     }
                 }

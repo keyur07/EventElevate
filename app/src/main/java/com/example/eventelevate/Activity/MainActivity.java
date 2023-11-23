@@ -85,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
         // Set the default selected item to "For You"
         bottomNavigation.setSelectedItemId(R.id.foryou);
         viewPager2.setCurrentItem(1, false); // Set the default page to "For You"
+        viewPager2.setUserInputEnabled(false);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setNavigationBarColor(getResources().getColor(R.color.start_color));
