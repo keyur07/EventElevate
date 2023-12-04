@@ -1,15 +1,201 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/login_back_image"
     tools:context=".Activity.PaymentActivity">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:id="@+id/payment"
-        android:text="Payment"
-        android:layout_height="wrap_content"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#A1000000">
+
+        <TextView
+            android:id="@+id/title_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:fontFamily="@font/robotobold"
+            android:text="MEMBERSHIP"
+            android:layout_above="@id/title_sub"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_20sdp" />
+
+        <TextView
+            android:id="@+id/title_sub"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/_25sdp"
+            android:layout_above="@id/month"
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:fontFamily="@font/robotoregular"
+            android:text="Unleash a world of services at your fingertips with our exclusive membership. Discover a diverse range of offerings and showcase your own expertise. Join us to connect, thrive, and make service magic happen!"
+            android:textColor="@color/white"
+            android:textAlignment="center"
+            android:textSize="@dimen/_12sdp" />
+
+        <LinearLayout
+            android:id="@+id/month"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_80sdp"
+            android:layout_centerVertical="true"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:background="@drawable/button_round_transparent"
+            android:backgroundTint="#ffffff"
+            android:orientation="vertical"
+            app:cardCornerRadius="@dimen/_10sdp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:paddingStart="20dp"
+                android:paddingTop="@dimen/_10sdp"
+                android:text="1 Month"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <!-- Field 2: Amount -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/robotobold"
+                android:gravity="start"
+                android:paddingStart="20dp"
+                android:text="$ 19"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <!-- Field 4: $150 for 1 Month -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:paddingStart="20dp"
+                android:text="$ 19 PER MONTH"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/six_month"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_80sdp"
+            android:layout_below="@id/month"
+            android:layout_centerVertical="true"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@drawable/button_round_transparent"
+            android:backgroundTint="#ffffff"
+            android:orientation="vertical"
+            app:cardCornerRadius="@dimen/_10sdp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:paddingStart="20dp"
+                android:paddingTop="@dimen/_10sdp"
+                android:text="6 Month"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <!-- Field 2: Amount -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/robotobold"
+                android:gravity="start"
+                android:paddingStart="20dp"
+                android:text="$ 109"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <!-- Field 4: $150 for 1 Month -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:paddingStart="20dp"
+                android:text="$ 109 for 6 Months"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/year"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_80sdp"
+            android:layout_below="@id/six_month"
+            android:layout_centerVertical="true"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@drawable/button_round_transparent"
+            android:backgroundTint="#ffffff"
+            android:orientation="vertical"
+            app:cardCornerRadius="@dimen/_10sdp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:paddingStart="20dp"
+                android:paddingTop="@dimen/_10sdp"
+                android:text="12 Months"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <!-- Field 2: Amount -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/robotobold"
+                android:gravity="start"
+                android:paddingStart="20dp"
+                android:text="$ 199"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <!-- Field 4: $150 for 1 Month -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:paddingStart="20dp"
+                android:text="$ 199 for 1 year"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/privacy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/robotoregular"
+            android:text="Privacy policy"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:padding="@dimen/_5sdp"
+            android:textSize="12sp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/_15sdp"
+            tools:ignore="RtlCompat" />
+
+    </RelativeLayout>
 
 </RelativeLayout>

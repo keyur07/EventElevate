@@ -56,9 +56,9 @@ public class IntroActivity extends AppCompatActivity {
         btnNext = (TextView) findViewById(R.id.btn_next);
         layouts = new int[]{
                 R.layout.item_intro_card,
-                R.layout.item_intro_card,
-                R.layout.item_intro_card,
-                R.layout.item_intro_card,
+                R.layout.item_intro_card_2,
+                R.layout.item_intro_card_3,
+                R.layout.item_intro_card_3,
         };
 
         addBottomDots(0);

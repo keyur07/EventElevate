@@ -36,6 +36,7 @@ public class FirebaseMessageListAdapter extends RecyclerView.Adapter<FirebaseMes
     //private final Fragment eventFragment;
 
     Context context;
+    private Response<LoginModel> datares ;
 
     public FirebaseMessageListAdapter(ArrayList<MessageModel> data, Context context, int ul, int cl) {
             this.data =data;
@@ -44,7 +45,6 @@ public class FirebaseMessageListAdapter extends RecyclerView.Adapter<FirebaseMes
             this.clientId=cl;
 
     }
-
     @NonNull
     @Override
     public FirebaseMessageListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -66,7 +66,7 @@ public class FirebaseMessageListAdapter extends RecyclerView.Adapter<FirebaseMes
             public void onClick(View view) {
                 Intent intent = new Intent(context, FirebaseActivity.class);
 
-                String message = "Hello, Second Activity!";
+                String message = "Hii";
                 intent.putExtra("msg", message);
                 intent.putExtra("status", item.getStatus());
                 intent.putExtra("userId", item.getUserId());
@@ -74,8 +74,6 @@ public class FirebaseMessageListAdapter extends RecyclerView.Adapter<FirebaseMes
                 context.startActivity(intent);
             }
         });
-
-
 
     }
 
@@ -111,14 +109,13 @@ public class FirebaseMessageListAdapter extends RecyclerView.Adapter<FirebaseMes
                 if(response.body().getStatusCode()==200){
                     if(response.body().getMessage().trim().equals("User details retrieved successfully")){
                         Glide.with(context).load(response.body().getUser().getPhoto()).into(holder.imageView);
+                        datares = response;
                         holder.valueTextView.setText(response.body().getUser().getFirstName()+" "+response.body().getUser().getLastName());
                     }
                 }else if(response.body().getStatusCode()==201){
 
                 }
-
                 Log.e("errror",response.body().getMessage());
-
             }
 
             @Override

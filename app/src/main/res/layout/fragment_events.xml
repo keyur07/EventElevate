@@ -72,25 +72,43 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <EditText
+                <RelativeLayout
+                    android:layout_width="wrap_content"
                     android:id="@+id/editTextSearch"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_40sdp"
-                    android:layout_weight="1"
-                    android:background="@drawable/search"
-                    android:drawableTint="#5005445E"
-                    android:layout_marginHorizontal="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:drawableStart="@drawable/baseline_search_24"
-                    android:drawablePadding="8dp"
-                    android:hint="Search"
-                    android:fontFamily="@font/robotoregular"
-                    android:imeOptions="actionSearch"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:singleLine="true" />
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_40sdp"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/search"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <ImageView
+                            android:layout_width="@dimen/_15sdp"
+                            android:layout_height="@dimen/_15sdp"
+                            android:src="@drawable/baseline_search_24"
+                            android:layout_marginStart="16dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginEnd="8dp"
+                            app:tint="#5005445E" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@android:color/transparent"
+                            android:text="Search"
+                            android:textSize="@dimen/_14sdp"
+                            android:gravity="center_vertical"
+                            android:fontFamily="@font/robotoregular"
+                            android:imeOptions="actionSearch" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -123,7 +141,7 @@
                     android:id="@+id/categories_list"
                     android:layout_below="@+id/txt_categories"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_height="@dimen/_100sdp"/>
+                    android:layout_height="wrap_content"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"

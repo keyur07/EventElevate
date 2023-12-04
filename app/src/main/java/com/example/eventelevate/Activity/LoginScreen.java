@@ -20,6 +20,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.tasks.Task;
 
 import retrofit2.Call;
@@ -67,7 +68,6 @@ public class LoginScreen extends AppCompatActivity {
                 Intent intent = new Intent(LoginScreen.this, SignUp.class);
                 intent.putExtra("google", "0");
                 startActivity(intent);
-
             }
         });
     }
@@ -83,7 +83,6 @@ public class LoginScreen extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         AppManager.hideProgress();
         if (requestCode == 1) {
-
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
         }
@@ -96,29 +95,42 @@ public class LoginScreen extends AppCompatActivity {
             navigatetoAnotherActivity(account);
         } catch (ApiException e) {
             Log.e("GoogleSignIn", "Sign-in failed with code: " + e.getStatusCode());
-            e.printStackTrace();
+            if (e.getStatusCode() == CommonStatusCodes.NETWORK_ERROR) {
+                // Handle network error
+                Toast.makeText(this, "Network error. Please check your internet connection.", Toast.LENGTH_SHORT).show();
+            } else {
+                // Handle other Google sign-in errors
+                Toast.makeText(this, "Google sign-in failed. Please try again.", Toast.LENGTH_SHORT).show();
+            }
         } catch (Exception e) {
             Log.e("GoogleSignIn", "Unexpected error: " + e.getMessage());
-            e.printStackTrace();
+            Toast.makeText(this, "An unexpected error occurred.", Toast.LENGTH_SHORT).show();
         }
     }
 
     private void navigatetoAnotherActivity(GoogleSignInAccount account) {
         Intent intent = new Intent(LoginScreen.this, SignUp.class);
         AppManager.showProgress(LoginScreen.this);
-        if (account.getEmail() != null) {
+        if (account != null && account.getEmail() != null) {
             APIInterface apiInterface = RetrofitClient.getRetrofitInstance().create(APIInterface.class);
             Call<LoginModel> call = apiInterface.GetUserByEmailId(account.getEmail());
             call.enqueue(new Callback<LoginModel>() {
                 @Override
                 public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {
                     AppManager.hideProgress();
-                    if (response.body().getStatusCode().equals(200)) {
+                    if (response.isSuccessful() && response.body() != null && response.body().getStatusCode() == 200) {
                         AppManager.user = response.body().getUser();
-                        AppManager.SaveShareData(LoginScreen.this, String.valueOf(R.string.user_session_key_username),account.getId());
-                        AppManager.SaveShareData(LoginScreen.this, String.valueOf(R.string.user_session_key_password),"");
-                        AppManager.changeActivity(LoginScreen.this, MainActivity.class);
-                        finish();
+                        Log.e("hsvdfcbc","sbmas"+account.getEmail());
+                        AppManager.SaveShareData(LoginScreen.this, String.valueOf(R.string.user_session_key_username), account.getEmail());
+                        AppManager.SaveShareData(LoginScreen.this, getString(R.string.user_session_key_password), "");
+
+                        if (response.body().getUser().getMembershipStatus() == 1) {
+                            AppManager.changeActivity(LoginScreen.this, MainActivity.class);
+                            finish();
+                        } else {
+                            AppManager.changeActivity(LoginScreen.this, PaymentActivity.class);
+                            finish();
+                        }
                     } else {
                         intent.putExtra("google", "1");
                         startActivity(intent);
@@ -129,10 +141,11 @@ public class LoginScreen extends AppCompatActivity {
                 public void onFailure(Call<LoginModel> call, Throwable t) {
                     AppManager.hideProgress();
                     Toast.makeText(LoginScreen.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
-                    Log.e("errororo",t.getMessage());
+                    Log.e("errororo", t.getMessage());
                 }
             });
+        } else {
+            Toast.makeText(this, "Google sign-in failed. Please try again.", Toast.LENGTH_SHORT).show();
         }
-
     }
 }

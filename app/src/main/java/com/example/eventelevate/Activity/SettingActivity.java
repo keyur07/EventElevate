@@ -78,7 +78,7 @@ public class SettingActivity extends AppCompatActivity {
             File cacheDir = context.getCacheDir();
             if (cacheDir != null && cacheDir.isDirectory()) {
                 deleteDir(cacheDir);
-                Toast.makeText(context, "Cache Cleared...", 0).show();
+                Toast.makeText(context, "Cache Cleared...",Toast.LENGTH_SHORT).show();
             }
         } catch (Exception unused) {
         }

@@ -10,8 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
+import com.example.eventelevate.Activity.BillingActivity;
 import com.example.eventelevate.Activity.ProfileActivity;
 import com.example.eventelevate.Activity.SettingActivity;
+import com.example.eventelevate.Activity.UpdatePasswordActivity;
 import com.example.eventelevate.Activity.UserProfileActivity;
 import com.example.eventelevate.Manager.AppManager;
 import com.example.eventelevate.R;
@@ -40,11 +42,26 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        binding.password.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                startActivity(new Intent(getActivity(), UpdatePasswordActivity.class));
+            }
+        });
+
         binding.setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 startActivity(new Intent(getActivity(), SettingActivity.class));
+            }
+        });
+
+        binding.payments.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), BillingActivity.class));
             }
         });
     }

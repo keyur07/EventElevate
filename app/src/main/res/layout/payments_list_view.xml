@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:paddingVertical="@dimen/_10sdp"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:text="29/11/2023"
+        android:fontFamily="@font/robotobold"
+        android:textColor="@color/sky_blue"
+        android:paddingStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:id="@+id/dateofpayment"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:textSize="@dimen/_13sdp"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:text="$ 19"
+        android:fontFamily="@font/robotobold"
+        android:textColor="@color/text_color"
+        android:id="@+id/amounts"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:textSize="@dimen/_13sdp"
+        android:layout_height="wrap_content"/>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:text="Membership Service"
+        android:fontFamily="@font/robotoregular"
+        android:textColor="@color/Grey"
+        android:textStyle="bold"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_below="@id/dateofpayment"
+        android:paddingStart="@dimen/_10sdp"
+        android:paddingTop="@dimen/_5sdp"
+        android:id="@+id/header"
+        android:textSize="@dimen/_11sdp"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:text="29/11/23 -- 28/12/23"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:fontFamily="@font/robotoregular"
+        android:textColor="@color/Grey"
+        android:paddingStart="@dimen/_10sdp"
+        android:layout_below="@id/header"
+        android:textSize="@dimen/_11sdp"
+        android:id="@+id/dates"
+        android:layout_height="wrap_content"/>
+
+</RelativeLayout>

@@ -299,7 +299,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:fontFamily="@font/robotoregular"
-                    android:text="Kitchener, ON" />
+                    android:text="Kitchener, ON, CA" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -308,7 +308,9 @@
                     android:layout_marginStart="@dimen/_10sdp"
                     android:layout_toRightOf="@id/txt_location"
                     android:fontFamily="@font/robotobold"
+                    android:id="@+id/edit_location"
                     android:text="Edit"
+                    android:visibility="gone"
                     android:textColor="@color/sky_blue"
                     android:textSize="@dimen/_14sdp" />
 

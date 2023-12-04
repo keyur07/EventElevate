@@ -52,7 +52,7 @@ public class ContactUs extends AppCompatActivity {
 
     private void SendUserContactMessage() {
         APIInterface apiInterface = RetrofitClient.getRetrofitInstance().create(APIInterface.class);
-        Call<ContactModel> call = apiInterface.SendUserContactMessage(String.valueOf(AppManager.user.getUserId()),AppManager.user.getFirstName()+" "+AppManager.user.getLastName(),AppManager.user.getEmail(),binding.emailField3.getText().toString(),binding.textArea.getText().toString());
+        Call<ContactModel> call = apiInterface.SendUserContactMessage(String.valueOf(AppManager.user.getUserid()),AppManager.user.getFirstName()+" "+AppManager.user.getLastName(),AppManager.user.getEmail(),binding.emailField3.getText().toString(),binding.textArea.getText().toString());
         call.enqueue(new Callback<ContactModel>() {
             @Override
             public void onResponse(Call<ContactModel> call, Response<ContactModel> response) {

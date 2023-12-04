@@ -36,7 +36,6 @@ public class LoginActivity extends AppCompatActivity {
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        AppManager.changeStatusBarandBottomColor(LoginActivity.this);
 
         binding.btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,7 +70,11 @@ public class LoginActivity extends AppCompatActivity {
                     if(response.body().getMessage().trim().equals("Success")){
                         StartUserSession(username,password);
                         AppManager.user = response.body().getUser();
-                        AppManager.changeActivity(LoginActivity.this,MainActivity.class);
+                        if(response.body().getUser().getMembershipStatus().equals(1)){
+                            AppManager.changeActivity(LoginActivity.this,MainActivity.class);
+                        }else {
+                            AppManager.changeActivity(LoginActivity.this, PaymentActivity.class);
+                        }
                     }
                 }else if(response.body().getStatusCode()==201){
                     Toast.makeText(LoginActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();

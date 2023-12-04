@@ -72,7 +72,7 @@ public class PermissionActivity extends AppCompatActivity {
                                 }
                             }).check();
                 }else {
-
+                    startActivity(new Intent(PermissionActivity.this,LoginScreen.class));
                 }
             }
         });

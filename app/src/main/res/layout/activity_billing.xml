@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Activity.BillingActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:titleTextColor="@color/white"
+        android:id="@+id/actionbar"
+        android:orientation="horizontal"
+        app:titleMarginStart="80dp"
+        android:background="@color/start_color">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:foregroundGravity="right"
+            android:id="@+id/backbtn"
+            android:src="@drawable/back_btn">
+
+        </ImageView>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Payment Details"
+            android:id="@+id/name"
+            android:textSize="20dp"
+            android:gravity="center_vertical"
+            android:fontFamily="@font/robotobold"
+            android:textColor="@color/white"
+            android:layout_marginStart="30sp"></TextView>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:text="Payment Details"
+        android:textColor="@color/Grey"
+        android:textStyle="bold"
+        android:textSize="@dimen/_14sdp"
+        android:paddingTop="@dimen/_10sdp"
+        android:paddingStart="@dimen/_10sdp"
+        android:layout_height="wrap_content"/>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        app:cardCornerRadius="@dimen/_5sdp"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:paddingVertical="@dimen/_10sdp"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="Plan"
+                android:fontFamily="@font/robotobold"
+                android:textColor="@color/Grey"
+                android:paddingStart="@dimen/_10sdp"
+                android:textSize="@dimen/_10sdp"
+                android:layout_height="wrap_content"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="Membership"
+                android:fontFamily="@font/robotoregular"
+                android:textColor="@color/grey"
+                android:textStyle="bold"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingTop="@dimen/_5sdp"
+                android:textSize="@dimen/_11sdp"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="$ 19/month"
+                android:id="@+id/plan"
+                android:fontFamily="@font/robotoregular"
+                android:textColor="@color/text_color"
+                android:paddingStart="@dimen/_10sdp"
+                android:textSize="@dimen/_13sdp"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="Next billing date"
+                android:fontFamily="@font/robotoregular"
+                android:textColor="@color/grey"
+                android:textStyle="bold"
+                android:paddingStart="@dimen/_10sdp"
+               android:layout_marginTop="@dimen/_10sdp"
+                android:textSize="@dimen/_11sdp"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="29 December 2023"
+                android:fontFamily="@font/robotoregular"
+                android:textColor="@color/text_color"
+                android:paddingStart="@dimen/_10sdp"
+                android:textSize="@dimen/_13sdp"
+                android:id="@+id/end_date"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:id="@+id/payment_list"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>

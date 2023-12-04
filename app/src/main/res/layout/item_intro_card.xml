@@ -41,7 +41,7 @@
                 android:gravity="center_horizontal"
                 android:lines="2"
                 android:minLines="2"
-                android:text="Ready to Travel"
+                android:text="Elevate Your Celebrations"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="#37474f"
                 android:textStyle="bold" />
@@ -56,7 +56,7 @@
                 android:gravity="center_horizontal"
                 android:lines="3"
                 android:minLines="3"
-                android:text="Find Featured and Premium \10Item From Our Store"
+                android:text="Discover expert service providers for your unforgettable moments."
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="#78909c" />
         </LinearLayout>

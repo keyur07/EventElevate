@@ -133,6 +133,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="10dp"
+                android:id="@+id/payments"
                 android:background="@drawable/simple_border"
                 android:orientation="horizontal"
                 android:padding="10dp">
@@ -153,7 +154,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_toRightOf="@+id/icn_version"
                     android:fontFamily="@font/robotoregular"
-                    android:text="Manage Booking"
+                    android:text="Payment Details"
                     android:textColor="@color/black"
                     android:textSize="18sp" />
 
@@ -251,7 +252,7 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/privacy"
+                android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"

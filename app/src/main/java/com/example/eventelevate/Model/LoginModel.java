@@ -37,9 +37,10 @@ public class LoginModel {
     public void setUser(User user) {
         this.user = user;
     }
+
     public class User {
 
-        @SerializedName("user_Id")
+        @SerializedName("userid")
         @Expose
         private Integer userid;
         @SerializedName("firstName")
@@ -69,9 +70,18 @@ public class LoginModel {
         @SerializedName("photo")
         @Expose
         private String photo;
-        @SerializedName("userid")
+        @SerializedName("user_Id")
         @Expose
         private Integer userId;
+        @SerializedName("membership_status")
+        @Expose
+        private Integer membershipStatus;
+        @SerializedName("start_date")
+        @Expose
+        private String startDate;
+        @SerializedName("end_date")
+        @Expose
+        private String endDate;
 
         public Integer getUserid() {
             return userid;
@@ -159,6 +169,30 @@ public class LoginModel {
 
         public void setUserId(Integer userId) {
             this.userId = userId;
+        }
+
+        public Integer getMembershipStatus() {
+            return membershipStatus;
+        }
+
+        public void setMembershipStatus(Integer membershipStatus) {
+            this.membershipStatus = membershipStatus;
+        }
+
+        public String getStartDate() {
+            return startDate;
+        }
+
+        public void setStartDate(String startDate) {
+            this.startDate = startDate;
+        }
+
+        public String getEndDate() {
+            return endDate;
+        }
+
+        public void setEndDate(String endDate) {
+            this.endDate = endDate;
         }
 
     }

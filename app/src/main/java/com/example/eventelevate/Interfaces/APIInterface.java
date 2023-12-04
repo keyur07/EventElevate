@@ -9,6 +9,7 @@ import com.example.eventelevate.Model.EventtypeModel;
 import com.example.eventelevate.Model.LoginModel;
 import com.example.eventelevate.Model.MyServiceModel;
 import com.example.eventelevate.Model.PackageModel;
+import com.example.eventelevate.Model.PaymentDetailsModel;
 import com.example.eventelevate.Model.ProviderProfileModel;
 import com.example.eventelevate.Model.ServiceModel;
 import com.example.eventelevate.Model.ServiceProviderModel;
@@ -36,15 +37,35 @@ public interface APIInterface {
             @Field("user_id") String userId);
 
     @FormUrlEncoded
+    @POST("user/paymentdetails")
+    Call<PaymentDetailsModel> GetUserPaymentsDetailsById(
+            @Field("user_id") String userId);
+
+    @FormUrlEncoded
     @POST("user/login")
     Call<LoginModel> VerifiedLoginData(
             @Field("username") String username,
             @Field("password") String password);
 
     @FormUrlEncoded
+    @POST("user/updatepassword")
+    Call<SignupModel> UpdatePassword(
+            @Field("email") String emai,
+            @Field("new_password") String newPassword,
+            @Field("old_password") String OldPassword);
+
+    @FormUrlEncoded
     @POST("user/google")
     Call<LoginModel> GetUserByEmailId(
             @Field("email") String username);
+
+    @FormUrlEncoded
+    @POST("user/payment")
+    Call<SignupModel> AddUserPaymentDetails(@Field("userid") String userid,
+                                           @Field("amount") String amount,
+                                           @Field("transaction_id") String transactionid,
+                                           @Field("customer_id") String customerId,
+                                           @Field("payment_status") String status);
 
     @FormUrlEncoded
     @POST("user/events")
@@ -76,6 +97,9 @@ public interface APIInterface {
     @FormUrlEncoded
     @POST("event/service/getservicebytablename")
     Call<ServiceProviderModel> GetServicelistbytable(@Field("service_id") String tablename);
+
+    @GET("event/service/allservice")
+    Call<ServiceProviderModel> GetServicelist();
 
     @FormUrlEncoded
     @POST("event/service/getproviderdata")

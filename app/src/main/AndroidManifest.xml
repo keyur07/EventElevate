@@ -28,6 +28,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EventElevate"
         tools:targetApi="31">
+        <activity
+            android:name=".Activity.SearchActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.BillingActivity"
+            android:exported="false" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -36,8 +42,9 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"/>
+                android:resource="@xml/file_paths" />
         </provider>
+
         <activity
             android:name=".Adapter.DisplayPhoto"
             android:exported="false" />
@@ -46,6 +53,8 @@
             android:exported="false" />
         <activity
             android:name=".Activity.PaymentActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/CustomTheme"
             android:exported="true" />
         <activity
             android:name=".Activity.PermissionActivity"

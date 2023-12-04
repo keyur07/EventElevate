@@ -61,7 +61,7 @@ public class DocumentsActivity extends AppCompatActivity {
 
     public void getUserDocumentVerificationStatus() {
         APIInterface apiInterface = RetrofitClient.getRetrofitInstance().create(APIInterface.class);
-        Call<DocumentsModel> call = apiInterface.GetStatusofDocuments(AppManager.user.getUserId().toString());
+        Call<DocumentsModel> call = apiInterface.GetStatusofDocuments(AppManager.user.getUserid().toString());
         call.enqueue(new Callback<DocumentsModel>() {
             @SuppressLint("ResourceAsColor")
             @Override

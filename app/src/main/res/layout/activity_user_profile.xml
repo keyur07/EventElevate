@@ -41,6 +41,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:layout_marginVertical="@dimen/_10sdp"
+            android:layout_marginHorizontal="@dimen/_5sdp"
             android:padding="16dp">
 
             <TextView
@@ -90,6 +92,7 @@
         android:layout_height="wrap_content"
         android:text="Update Profile"
         android:textColor="@color/white"
+        android:layout_marginHorizontal="@dimen/_20sdp"
         android:background="@drawable/button_round"
         android:layout_below="@id/userInfoCardView"
         android:layout_marginTop="16dp"/>

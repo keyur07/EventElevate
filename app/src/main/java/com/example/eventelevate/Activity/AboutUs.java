@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import com.example.eventelevate.Adapter.CustomAdapter;
 import com.example.eventelevate.Interfaces.APIInterface;
 import com.example.eventelevate.Manager.AppManager;
 import com.example.eventelevate.Model.AboutUsModel;
@@ -40,7 +41,8 @@ public class AboutUs extends AppCompatActivity {
             public void onResponse(Call<AboutUsModel> call, Response<AboutUsModel> response) {
                 if(response.body().getStatusCode()==200){
                     if (response.body().getMessage().equals("Success")){
-
+                        CustomAdapter customAdapter = new CustomAdapter(AboutUs.this,response.body());
+                        binding.listView.setAdapter(customAdapter);
                     }
                 }
             }

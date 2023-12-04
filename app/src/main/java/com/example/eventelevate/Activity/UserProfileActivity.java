@@ -3,6 +3,7 @@ package com.example.eventelevate.Activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -41,6 +42,7 @@ public class UserProfileActivity extends AppCompatActivity {
                 UpdateUserProfile();
             }
         });
+        AppManager.changeStatusBarandBottomColor(UserProfileActivity.this);
     }
 
     private void updateData() {
@@ -59,7 +61,7 @@ public class UserProfileActivity extends AppCompatActivity {
             AppManager.showProgress(this);
             APIInterface userService = RetrofitClient.getRetrofitInstance().create(APIInterface.class);
 
-            String userId =  String.valueOf(AppManager.user.getUserId());
+            String userId =  String.valueOf(AppManager.user.getUserid());
             String firstName =  binding.firstNameEditText.getText().toString();
             String lastName =  binding.lastNameEditText.getText().toString();
 
@@ -94,7 +96,14 @@ public class UserProfileActivity extends AppCompatActivity {
             AppManager.changeActivity(this,LoginScreen.class);
             finish();
         }else {
-            getUserData(username,password);
+            if(!username.equals("") && password.equals("")){
+                getUserDatabyEmail(username);
+                Log.e("sbbsxcbzxc",AppManager.user.getFirstName());
+            }else {
+                getUserData(username,password);
+                Log.e("sbbsxcbzxc",AppManager.user.getFirstName());
+            }
+
         }
     }
 
@@ -108,7 +117,31 @@ public class UserProfileActivity extends AppCompatActivity {
                     if (response.body().getMessage().equals("Success")){
                         AppManager.user = response.body().getUser();
                         updateData();
+                        Log.e("sbbsxcbzxc",AppManager.user.getFirstName());
+                    }
+                    Log.e("sbbsxcbzxc",response.body().getMessage());
+                    Log.e("sbbsxcbzxc",""+response.body().getStatusCode());
+                }
+            }
 
+            @Override
+            public void onFailure(Call<LoginModel> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void getUserDatabyEmail(String username){
+        APIInterface apiInterface = RetrofitClient.getRetrofitInstance().create(APIInterface.class);
+        Call<LoginModel> call = apiInterface.GetUserByEmailId(username);
+        call.enqueue(new Callback<LoginModel>() {
+            @Override
+            public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {
+                if(response.body().getStatusCode()==200){
+                    if (response.body().getStatusCode().equals(200)){
+                        AppManager.user = response.body().getUser();
+                        updateData();
+                        Log.e("sbbsxcbzxc",AppManager.user.getFirstName());
                     }
                 }
             }

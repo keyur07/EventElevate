@@ -94,7 +94,7 @@ public class CameraActivity extends AppCompatActivity {
 
     private void UploadDocuments(String docs){
         AppManager.showProgress(CameraActivity.this);
-        RequestBody userID = RequestBody.create(MediaType.parse("text/plain"), AppManager.user.getUserId().toString()); // Replace "12345" with the actual user ID
+        RequestBody userID = RequestBody.create(MediaType.parse("text/plain"), AppManager.user.getUserid().toString()); // Replace "12345" with the actual user ID
         RequestBody title = RequestBody.create(MediaType.parse("text/plain"), docs);
         File file = new File(RealPathUtil.getRealPath(CameraActivity.this,selectedImageUri)); // Replace with the actual file path
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);

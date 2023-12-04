@@ -70,6 +70,7 @@ public class SplashScreen extends AppCompatActivity {
 
             if (username.equals("") && password.equals("")) {
                 AppManager.changeActivity(this, LoginScreen.class);
+                Log.e("hsvdfcbc","sbmas"+username);
                 finish();
             } else {
                 if (getDataFromGoogleAccount()) {
@@ -77,7 +78,9 @@ public class SplashScreen extends AppCompatActivity {
                     signInClient = GoogleSignIn.getClient(SplashScreen.this, googleSignInOptions);
                     GoogleSignInAccount signIn = GoogleSignIn.getLastSignedInAccount(SplashScreen.this);
                     getUSerDataWithGoogle(signIn.getEmail());
+                    Log.e("hsvdfcbc",""+signIn.getEmail());
                 } else {
+                    Log.e("hsvdfcbc",""+username);
                     getUserData(username, password);
                 }
             }
@@ -118,8 +121,14 @@ public class SplashScreen extends AppCompatActivity {
                         if(response.body().getUser().getStatus().equals(1) || response.body().getUser().getStatus().equals(2)){
                             AppManager.user = response.body().getUser();
                             Log.e("uxccserid","aASAS "+response.body().getUser().getUserId());
-                            AppManager.changeActivity(SplashScreen.this, MainActivity.class);
-                            finish();
+                            if(response.body().getUser().getMembershipStatus().equals(1)){
+                                AppManager.changeActivity(SplashScreen.this, MainActivity.class);
+                                finish();
+                            }else {
+                                AppManager.changeActivity(SplashScreen.this, PaymentActivity.class);
+                                finish();
+                            }
+
                         }else {
                             if(response.body().getUser().getStatus().equals(0)){
                                 ShowUserSuspendedDialog();
@@ -197,7 +206,6 @@ public class SplashScreen extends AppCompatActivity {
                 if (response.body().getStatusCode() == 200) {
                     if (response.body().getMessage().equals("Success")) {
                         AppManager.setting = response.body().getSetting();
-
                         if (response.body().getSetting().getMaintenance() == 0) {
                             try {
                                 String versionName = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
@@ -337,8 +345,15 @@ public class SplashScreen extends AppCompatActivity {
                     if (response.body().getMessage().equals("Success")) {
                         if(response.body().getUser().getStatus().equals(1)){
                             AppManager.user = response.body().getUser();
-                            AppManager.changeActivity(SplashScreen.this, MainActivity.class);
-                            finish();
+
+                            if(response.body().getUser().getMembershipStatus().equals(1)){
+                                AppManager.changeActivity(SplashScreen.this, MainActivity.class);
+                                finish();
+                            }else {
+                                AppManager.changeActivity(SplashScreen.this, PaymentActivity.class);
+                                finish();
+                            }
+
                         }
 
 

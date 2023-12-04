@@ -1,17 +1,26 @@
 package com.example.eventelevate.Fragments;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RatingBar;
 
 import com.example.eventelevate.Activity.CreatePost;
+import com.example.eventelevate.Activity.DocumentsActivity;
+import com.example.eventelevate.Activity.MainActivity;
+import com.example.eventelevate.Activity.SplashScreen;
 import com.example.eventelevate.Adapter.MyEventListAdapter;
 import com.example.eventelevate.Interfaces.APIInterface;
 import com.example.eventelevate.Manager.AppManager;
@@ -42,16 +51,46 @@ public class ManageFragment extends Fragment {
         binding.newItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ShowBottomDialog();
+                if(AppManager.user.getIsVerified().equals(1)){
+                    ShowBottomDialog();
+                }else {
+                    ShowVerifyYourSelf();
+                }
+
             }
         });
         Getallmyeventlist();
     }
 
+    private void ShowVerifyYourSelf() {
+        final Dialog dialog = new Dialog(getActivity());
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+        dialog.requestWindowFeature(1);
+        dialog.setContentView(R.layout.verify_dialog);
+        dialog.setCancelable(false);
+        dialog.show();
+
+        dialog.findViewById(R.id.notnow).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.findViewById(R.id.exit).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                startActivity(new Intent(getActivity(), DocumentsActivity.class));
+
+            }
+        });
+    }
+
     private void Getallmyeventlist(){
 
         APIInterface apiInterface = RetrofitClient.getRetrofitInstance().create(APIInterface.class);
-        Call<MyServiceModel> call = apiInterface.GetAllPostedService(String.valueOf(AppManager.user.getUserId()));
+        Call<MyServiceModel> call = apiInterface.GetAllPostedService(String.valueOf(AppManager.user.getUserid()));
         call.enqueue(new Callback<MyServiceModel>() {
             @Override
             public void onResponse(Call<MyServiceModel> call, Response<MyServiceModel> response) {

@@ -31,6 +31,7 @@ import com.example.eventelevate.Activity.ContactUs;
 import com.example.eventelevate.Activity.Location;
 import com.example.eventelevate.Activity.LoginActivity;
 import com.example.eventelevate.Activity.LoginScreen;
+import com.example.eventelevate.Activity.SearchActivity;
 import com.example.eventelevate.Adapter.BestOrganiserAdapter;
 import com.example.eventelevate.Adapter.CategoriesListAdapter;
 import com.example.eventelevate.Interfaces.APIInterface;
@@ -82,45 +83,6 @@ public class EventsFragment extends Fragment {
         ((AppCompatActivity) getActivity()).setSupportActionBar(binding.toolbarMain);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Event Peak");
 
-        binding.editTextSearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String query = s.toString().toLowerCase();
-                updateRecyclerView(query);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-        binding.drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
-            @Override
-            public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
-
-            }
-
-            @Override
-            public void onDrawerOpened(@NonNull View drawerView) {
-
-            }
-
-            @Override
-            public void onDrawerClosed(@NonNull View drawerView) {
-
-            }
-
-            @Override
-            public void onDrawerStateChanged(int newState) {
-            }
-        });
-
         binding.navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @SuppressLint("NonConstantResourceId")
             @Override
@@ -162,6 +124,13 @@ public class EventsFragment extends Fragment {
                 openCloseNavigationDrawer();
             }
         });
+
+        binding.editTextSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), SearchActivity.class));
+            }
+        });
         init();
         return binding.getRoot();
 
@@ -172,12 +141,6 @@ public class EventsFragment extends Fragment {
     }
 
     private void LoadCategories() {
-
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        binding.categoriesList.setLayoutManager(layoutManager);
-        BestOrganiserAdapter bestOrganiserAdapter = new BestOrganiserAdapter(this);
-        binding.categoriesList.setAdapter(bestOrganiserAdapter);
         getListofAllService();
 
     }
@@ -191,6 +154,13 @@ public class EventsFragment extends Fragment {
             public void onResponse(Call<ServiceModel> call, Response<ServiceModel> response) {
 
                 if(response.body().getStatusCode()==200){
+
+
+                    LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+                    layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+                    binding.categoriesList.setLayoutManager(layoutManager);
+                    BestOrganiserAdapter bestOrganiserAdapter = new BestOrganiserAdapter(EventsFragment.this,response.body().getServicetype());
+                    binding.categoriesList.setAdapter(bestOrganiserAdapter);
 
 
                     LinearLayoutManager layoutManager1 = new LinearLayoutManager(getActivity());

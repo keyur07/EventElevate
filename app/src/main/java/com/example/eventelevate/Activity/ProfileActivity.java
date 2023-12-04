@@ -59,7 +59,7 @@ public class ProfileActivity extends AppCompatActivity {
                 String message = "Hello, Second Activity!";
                 intent.putExtra("msg", message);
                 intent.putExtra("status", "User");
-                intent.putExtra("userId", AppManager.user.getUserId().toString());
+                intent.putExtra("userId", AppManager.user.getUserid().toString());
                 intent.putExtra("clientId",String.valueOf(ClientID));
                 startActivity(intent);
             }
@@ -86,11 +86,9 @@ public class ProfileActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String user_id = intent.getStringExtra("user_id");
         String service_id = intent.getStringExtra("service_id");
-        String serviceName = intent.getStringExtra("serviceName");
 
         Log.e("datacatata",user_id);
         Log.e("datacatata",service_id);
-        Log.e("datacatata",serviceName);
         APIInterface apiInterface = RetrofitClient.getRetrofitInstance().create(APIInterface.class);
 
         Call<ProviderProfileModel> call = apiInterface.GetAllDetailsOfProvider(user_id,service_id);

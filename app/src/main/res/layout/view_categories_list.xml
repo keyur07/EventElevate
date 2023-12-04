@@ -1,40 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="@dimen/_90sdp"
-    android:layout_height="match_parent"
-    android:layout_marginHorizontal="@dimen/_3sdp"
-    android:layout_marginVertical="@dimen/_3sdp"
+    android:layout_width="@dimen/_100sdp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="@dimen/_5sdp"
-    app:cardElevation="4dp">
+    app:cardCornerRadius="@dimen/_10sdp"
+    android:layout_marginHorizontal="@dimen/_3sdp"
+    android:id="@+id/cv_Service"
+    android:layout_margin="@dimen/_2sdp"
+    android:layout_height="wrap_content">
 
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:paddingVertical="@dimen/_15sdp"
+        android:layout_height="wrap_content">
 
         <ImageView
-            android:layout_width="match_parent"
-            android:src="@drawable/demo"
-            android:id="@+id/image"
-            android:scaleType="centerCrop"
-            android:layout_height="match_parent"/>
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:src="@drawable/bottom_shadow"
-            android:scaleType="centerCrop"
-            android:layout_height="match_parent"/>
+            android:layout_width="wrap_content"
+            android:src="@drawable/food"
+            android:id="@+id/icon"
+            android:layout_centerHorizontal="true"
+            android:layout_height="@dimen/_40sdp"/>
 
         <TextView
+            android:id="@+id/name"
             android:layout_width="wrap_content"
-            android:text="Wedding"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:fontFamily="@font/robotobold"
-            android:layout_gravity="bottom"
-            android:layout_margin="12dp"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text="Food"
+            android:textColor="@color/start_color"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:fontFamily="@font/poppins_regular"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:autoSizeMinTextSize="@dimen/_6sdp"
+            android:autoSizeMaxTextSize="@dimen/_12sdp"
+            android:layout_below="@id/icon"
+            android:layout_centerHorizontal="true"
+            android:maxLines="1"
+            android:ellipsize="end"
+            />
 
-    </FrameLayout>
+    </RelativeLayout>
 
 </androidx.cardview.widget.CardView>
