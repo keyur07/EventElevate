@@ -98,7 +98,6 @@ public class CameraActivity extends AppCompatActivity {
         RequestBody title = RequestBody.create(MediaType.parse("text/plain"), docs);
         File file = new File(RealPathUtil.getRealPath(CameraActivity.this,selectedImageUri)); // Replace with the actual file path
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-        Log.e("errroror",""+userID+" "+title);
         MultipartBody.Part imagePart = MultipartBody.Part.createFormData("image", file.getName(), requestFile);
 
         APIInterface apiInterface = RetrofitClient.getRetrofitInstance().create(APIInterface.class);
@@ -107,14 +106,20 @@ public class CameraActivity extends AppCompatActivity {
         call.enqueue(new Callback<DocumentsUploadModel>() {
             @Override
             public void onResponse(Call<DocumentsUploadModel> call, Response<DocumentsUploadModel> response) {
+                AppManager.hideProgress();
                if(response.body().getStatusCode().equals(200)){
                    Toast.makeText(CameraActivity.this, "Documents Uploaded", Toast.LENGTH_SHORT).show();
                    AppManager.hideProgress();
+                   startActivity(new Intent(CameraActivity.this,DocumentsActivity.class));
+                   finish();
+               }else {
+                   Log.e("errroror",""+response.body().getStatusCode()+" "+response.body().getMessage());
                }
             }
 
             @Override
             public void onFailure(Call<DocumentsUploadModel> call, Throwable t) {
+                AppManager.hideProgress();
                 Log.e("errroror",t.getMessage());
             }
         });

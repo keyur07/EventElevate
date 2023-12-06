@@ -1,6 +1,7 @@
 package com.example.eventelevate.Fragments;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -62,6 +63,14 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(), BillingActivity.class));
+            }
+        });
+
+        binding.termsandcondition.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent("android.intent.action.VIEW").setData(Uri.parse("https://sites.google.com/view/videodownloderpolicy/home"));
+                startActivity(intent);
             }
         });
     }

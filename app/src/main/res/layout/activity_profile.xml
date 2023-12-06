@@ -166,6 +166,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:padding="@dimen/_10sdp"
+                android:id="@+id/parent_send"
                 android:layout_height="wrap_content">
 
                 <TextView

@@ -30,7 +30,7 @@
                 android:layout_height="350dp"
                 android:layout_gravity="center_horizontal"
                 android:padding="32dp"
-                android:src="@drawable/illustration_01" />
+                android:src="@drawable/illustration_02" />
 
             <TextView
                 android:id="@+id/title"
@@ -41,7 +41,7 @@
                 android:gravity="center_horizontal"
                 android:lines="2"
                 android:minLines="2"
-                android:text="Celebrate in Style"
+                android:text="Tailored Services, Unforgettable Moments"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="#37474f"
                 android:textStyle="bold" />
@@ -50,13 +50,13 @@
                 android:id="@+id/description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="32dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginRight="32dp"
+                android:layout_marginHorizontal="@dimen/_15sdp"
                 android:gravity="center_horizontal"
                 android:lines="3"
+                android:textAlignment="center"
+                android:textSize="@dimen/_12sdp"
                 android:minLines="3"
-                android:text="Find the perfect DJ, decorator, and more to make your event extraordinary."
+                android:text="Elevate brings you a curated selection of event professionals, ensuring that every detail of your celebration, be it a birthday bash or a wedding extravaganza, is flawlessly executed for memories that last a lifetime."
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="#78909c" />
         </LinearLayout>

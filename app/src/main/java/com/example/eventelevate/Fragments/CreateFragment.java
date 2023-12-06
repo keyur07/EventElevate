@@ -201,6 +201,7 @@ public class CreateFragment extends Fragment {
 
         RequestBody userID = RequestBody.create(MediaType.parse("multipart/form-data"), AppManager.user.getUserid().toString());
         RequestBody titleRB = RequestBody.create(MediaType.parse("multipart/form-data"), title);
+        RequestBody type = RequestBody.create(MediaType.parse("multipart/form-data"), "service");
         RequestBody paymentTypeRB = RequestBody.create(MediaType.parse("multipart/form-data"), binding.editPaymentType.getSelectedItem().toString());
         RequestBody priceRB = RequestBody.create(MediaType.parse("multipart/form-data"), price);
         RequestBody descriptionRB = RequestBody.create(MediaType.parse("multipart/form-data"), decription);
@@ -211,7 +212,7 @@ public class CreateFragment extends Fragment {
         AppManager.showProgress(getActivity());
 
         APIInterface apiInterface = RetrofitClient.getRetrofitInstance().create(APIInterface.class);
-        Call<SignupModel> call = apiInterface.CreatePost(userID, titleRB, paymentTypeRB, priceRB, descriptionRB, termsRB, locationRB, servicenameRB, imageParts);
+        Call<SignupModel> call = apiInterface.CreatePost(userID, titleRB, paymentTypeRB, priceRB, descriptionRB, termsRB, locationRB, servicenameRB, type,imageParts);
         call.enqueue(new Callback<SignupModel>() {
             @Override
             public void onResponse(Call<SignupModel> call, Response<SignupModel> response) {

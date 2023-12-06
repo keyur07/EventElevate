@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.eventelevate.Adapter.ServiceListAdapter;
@@ -33,6 +34,13 @@ public class CategoriesActivity extends AppCompatActivity {
 
         AppManager.showProgress(this);
         getServiceList();
+
+        binding.backbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     public void getServiceList(){

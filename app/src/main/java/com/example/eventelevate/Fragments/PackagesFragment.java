@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.eventelevate.Adapter.EventsListAdapter;
 import com.example.eventelevate.Adapter.PackagesListAdapter;
@@ -34,6 +35,16 @@ FragmentPackagesBinding binding;
                              Bundle savedInstanceState) {
       binding = FragmentPackagesBinding.inflate(getLayoutInflater());
       View view = binding.getRoot();
+
+        binding.referesh.setRefreshing(true);
+        binding.recyclerview.setVisibility(View.INVISIBLE);
+        binding.referesh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                binding.recyclerview.setVisibility(View.INVISIBLE);
+                init();
+            }
+        });
       init();
       return view;
     }
@@ -52,15 +63,16 @@ FragmentPackagesBinding binding;
 
                 AppManager.hideProgress();
                 if(response.body().getStatusCode()==200){
-                    List<PackageModel.EventType> eventtypeModels = response.body().getEventTypes();
+                    List<PackageModel.Servicetype> eventtypeModels = response.body().getServicetype();
                     binding.recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
                     PackagesListAdapter packagesFragment = new PackagesListAdapter(getActivity(),eventtypeModels);
                     binding.recyclerview.setAdapter(packagesFragment);
+                    binding.referesh.setRefreshing(false);
+                    binding.recyclerview.setVisibility(View.VISIBLE);
 
                 }else if(response.body().getStatusCode()==201){
                     Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
                 }
-
             }
 
             @Override

@@ -64,9 +64,15 @@
 
         </androidx.appcompat.widget.Toolbar>
 
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:layout_width="match_parent"
+            android:id="@+id/referesh"
+            android:layout_below="@id/toolbar_main"
+            android:layout_height="match_parent">
+
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_below="@id/toolbar_main"
+            android:id="@+id/container"
             android:layout_height="match_parent">
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -116,24 +122,10 @@
                     android:layout_below="@id/editTextSearch"
                     android:layout_marginStart="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:text="Top Organiser"
+                    android:text="Categories"
                     android:textSize="@dimen/_14sdp"
                     android:fontFamily="@font/robotobold"
                     android:textColor="@color/start_color"
-                    android:layout_height="wrap_content"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:id="@+id/txt_categories_see_all"
-                    android:layout_below="@id/editTextSearch"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_alignParentRight="true"
-                    android:text="See all"
-                    android:layout_marginEnd="@dimen/_10sdp"
-                    android:textSize="@dimen/_10sdp"
-                    android:fontFamily="@font/robotobold"
-                    android:textColor="#7C7C7C"
                     android:layout_height="wrap_content"/>
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -153,9 +145,11 @@
 
             </RelativeLayout>
 
+
+
         </androidx.core.widget.NestedScrollView>
 
-
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     </RelativeLayout>
 

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +37,15 @@ public class EventFragment extends Fragment {
         View view = binding.getRoot();
 
         AppManager.showProgress(getActivity());
+        binding.referesh.setRefreshing(true);
+        binding.recyclerview.setVisibility(View.INVISIBLE);
+        binding.referesh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                binding.recyclerview.setVisibility(View.INVISIBLE);
+                getEventType();
+            }
+        });
         getEventType();
 
         return view;
@@ -55,6 +65,8 @@ public class EventFragment extends Fragment {
                     binding.recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
                     EventsListAdapter eventsListAdapter = new EventsListAdapter(eventtypeModels,getContext());
                     binding.recyclerview.setAdapter(eventsListAdapter);
+                    binding.referesh.setRefreshing(false);
+                    binding.recyclerview.setVisibility(View.VISIBLE);
 
                 }else if(response.body().getStatusCode()==201){
                     Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();

@@ -58,7 +58,7 @@ public class IntroActivity extends AppCompatActivity {
                 R.layout.item_intro_card,
                 R.layout.item_intro_card_2,
                 R.layout.item_intro_card_3,
-                R.layout.item_intro_card_3,
+                R.layout.item_intro_card_4,
         };
 
         addBottomDots(0);

@@ -26,10 +26,6 @@
                     android:id="@+id/contactus"
                     android:icon="@drawable/ic_help"
                     android:title="Contact Us" />
-                <item
-                    android:id="@+id/feedback"
-                    android:icon="@drawable/ic_feedback_24"
-                    android:title="Feedback" />
 
             </menu>
 

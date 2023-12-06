@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.eventelevate.Activity.ProfileActivity;
 import com.example.eventelevate.Interfaces.APIInterface;
 import com.example.eventelevate.Manager.AppManager;
 import com.example.eventelevate.Model.MyServiceModel;
@@ -60,6 +62,16 @@ public class MyEventListAdapter extends RecyclerView.Adapter<MyEventListAdapter.
             @Override
             public void onClick(View v) {
                 ShowOptionBottomDialog(position);
+            }
+        });
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(activity, ProfileActivity.class);
+                intent.putExtra("user_id",events.get(position).getUserid().toString());
+                intent.putExtra("service_id",events.get(position).getId().toString());
+                activity.startActivity(intent);
             }
         });
     }
@@ -126,7 +138,7 @@ public class MyEventListAdapter extends RecyclerView.Adapter<MyEventListAdapter.
 
     private void DeleteService(int position) {
         APIInterface apiInterface = RetrofitClient.getRetrofitInstance().create(APIInterface.class);
-        Call<SignupModel> call = apiInterface.DeletePost(AppManager.user.getUserId().toString(),events.get(position).getId().toString());
+        Call<SignupModel> call = apiInterface.DeletePost(AppManager.user.getUserid().toString(),events.get(position).getId().toString());
         call.enqueue(new Callback<SignupModel>() {
             @Override
             public void onResponse(Call<SignupModel> call, Response<SignupModel> response) {

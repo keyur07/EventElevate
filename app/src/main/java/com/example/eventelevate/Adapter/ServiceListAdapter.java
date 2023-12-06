@@ -51,6 +51,7 @@ public class ServiceListAdapter extends RecyclerView.Adapter<ServiceListAdapter.
             public void onClick(View view) {
                 Intent intent = new Intent(context, ListOfItems.class);
                 intent.putExtra("tablename",servicetypes.get(position).getServiceId().toString());
+                intent.putExtra("name",servicetypes.get(position).getServiceName().toString());
                 try{
                     context.startActivity(intent);
                 }catch (Exception e){

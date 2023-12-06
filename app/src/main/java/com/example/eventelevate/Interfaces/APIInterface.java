@@ -125,7 +125,22 @@ public interface APIInterface {
             @Part("terms") RequestBody terms,
             @Part("location") RequestBody location,
             @Part("service_id") RequestBody servicename,
+            @Part("type") RequestBody type,
             @Part List<MultipartBody.Part> images
+    );
+    @Multipart
+    @POST("event/service/additem")
+    Call<SignupModel> CreatePackage(
+            @Part("userid") RequestBody userID,
+            @Part("title") RequestBody title,
+            @Part("paymenttype") RequestBody paymentType,
+            @Part("price") RequestBody price,
+            @Part("description") RequestBody description,
+            @Part("terms") RequestBody terms,
+            @Part("location") RequestBody location,
+            @Part("service_id") RequestBody servicename,
+            @Part List<MultipartBody.Part> images,
+            @Part("type") RequestBody type
     );
 
     @Multipart
@@ -160,21 +175,6 @@ public interface APIInterface {
     @POST("user/status")
     Call<DocumentsModel> GetStatusofDocuments(
             @Field("user_id") String userID
-    );
-
-
-    @Multipart
-    @POST("event/eventtype/addnewpackage")
-    Call<SignupModel> CreatePackage(
-            @Part("userid") RequestBody userID,
-            @Part("title") RequestBody title,
-            @Part("paymenttype") RequestBody paymentType,
-            @Part("price") RequestBody price,
-            @Part("description") RequestBody description,
-            @Part("terms") RequestBody terms,
-            @Part("location") RequestBody location,
-            @Part("eventtype") RequestBody servicename,
-            @Part List<MultipartBody.Part> images
     );
 
 

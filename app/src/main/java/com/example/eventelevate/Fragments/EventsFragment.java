@@ -14,6 +14,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -71,7 +72,6 @@ public class EventsFragment extends Fragment {
         binding.drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        AppManager.showProgress(getActivity());
         binding.locationName.setText(AppManager.SelectedLocation);
         binding.location.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,6 +79,8 @@ public class EventsFragment extends Fragment {
                 AppManager.changeActivity(getActivity(), Location.class);
             }
         });
+        binding.referesh.setRefreshing(true);
+
 
         ((AppCompatActivity) getActivity()).setSupportActionBar(binding.toolbarMain);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Event Peak");
@@ -131,12 +133,24 @@ public class EventsFragment extends Fragment {
                 startActivity(new Intent(getActivity(), SearchActivity.class));
             }
         });
+        binding.referesh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                finalI=0;
+                if(servicetypes!=null){
+                    servicetypes = null;
+                    servicetypes  = new ArrayList<>();
+                }
+                init();
+            }
+        });
         init();
         return binding.getRoot();
 
     }
 
     public void init(){
+        binding.container.setVisibility(View.INVISIBLE);
         LoadCategories();
     }
 
@@ -201,7 +215,8 @@ public class EventsFragment extends Fragment {
                 if((finalI+1)==response.body().getServicetype().size()){
                     eventsListAdapter  = new CategoriesListAdapter(EventsFragment.this,servicetypes);
                     binding.categoriesListItems.setAdapter(eventsListAdapter);
-                    Log.e("successsss","Calll"+servicetypes.get(0));
+                    binding.referesh.setRefreshing(false);
+                    binding.container.setVisibility(View.VISIBLE);
                 }
                 finalI++;
                 if(finalI<response.body().getServicetype().size()){

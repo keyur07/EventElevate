@@ -1,6 +1,7 @@
 package com.example.eventelevate.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -30,6 +31,14 @@ public class DocumentsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityDocumentsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        binding.referesh.setRefreshing(true);
+        binding.parent.setVisibility(View.INVISIBLE);
+        binding.referesh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                init();
+            }
+        });
         init();
     }
 
@@ -45,6 +54,13 @@ public class DocumentsActivity extends AppCompatActivity {
                 intent.putExtra("header", "Take a selfie");
                 intent.putExtra("position", "1");
                 startActivity(intent);
+            }
+        });
+
+        binding.back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
 
@@ -68,7 +84,8 @@ public class DocumentsActivity extends AppCompatActivity {
             public void onResponse(Call<DocumentsModel> call, Response<DocumentsModel> response) {
                 AppManager.hideProgress();
                 if (response.body().getStatusCode() == 200) {
-                    Log.e("responsese",""+response.body().getDocumentStatus().get(0).getPhotoStatus());
+                    binding.parent.setVisibility(View.VISIBLE);
+                    binding.referesh.setRefreshing(false);
                     if (response.body().getDocumentStatus().get(0).getPhotoStatus().equals(2)) {
                         binding.photo.setBackgroundResource(R.color.verified);
                         binding.comments.setText("Verified");
@@ -96,8 +113,15 @@ public class DocumentsActivity extends AppCompatActivity {
                         binding.photoId.setBackgroundResource(R.color.not_submited);
                         binding.comments2.setText("Need a attention");
                     }
+                    if(response.body().getDocumentStatus().get(0).getComments()!=null){
+                        binding.comment.setText("Note: "+response.body().getDocumentStatus().get(0).getComments());
+                    }else {
+                        binding.comment.setText("");
+                    }
                 } else {
                     if (response.body().getStatusCode() == 201) {
+                        binding.parent.setVisibility(View.VISIBLE);
+                        binding.referesh.setRefreshing(false);
                         binding.photo.setBackgroundResource(R.color.not_submited);
                         binding.photoId.setBackgroundResource(R.color.not_submited);
                     }

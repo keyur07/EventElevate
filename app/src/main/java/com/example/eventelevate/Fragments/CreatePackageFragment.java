@@ -10,6 +10,7 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
@@ -23,7 +24,9 @@ import com.example.eventelevate.Adapter.ImageAdapter;
 import com.example.eventelevate.Interfaces.APIInterface;
 import com.example.eventelevate.Manager.AppManager;
 import com.example.eventelevate.Model.EventtypeModel;
+import com.example.eventelevate.Model.ServiceModel;
 import com.example.eventelevate.Model.SignupModel;
+import com.example.eventelevate.R;
 import com.example.eventelevate.Service.RetrofitClient;
 import com.example.eventelevate.Utils.RealPathUtil;
 import com.example.eventelevate.databinding.FragmentCreatePackageBinding;
@@ -52,6 +55,7 @@ public class CreatePackageFragment extends Fragment {
     private List<Uri> selectedImageUris = new ArrayList<>();
     String[] paymentTypes = new String[]{"Select Payment Type","Hourly", "Per day"};
     ArrayList<String> eventtype = new ArrayList<>();
+    private EventtypeModel serviceList;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -105,26 +109,28 @@ public class CreatePackageFragment extends Fragment {
             imageParts.add(imagePart);
         }
 
-        RequestBody userID = RequestBody.create(MediaType.parse("multipart/form-data"), AppManager.user.getUserId().toString());
+        RequestBody userID = RequestBody.create(MediaType.parse("multipart/form-data"), AppManager.user.getUserid().toString());
         RequestBody titleRB = RequestBody.create(MediaType.parse("multipart/form-data"), title);
+        RequestBody type = RequestBody.create(MediaType.parse("multipart/form-data"), "package");
         RequestBody paymentTypeRB = RequestBody.create(MediaType.parse("multipart/form-data"), binding.editPaymentType.getSelectedItem().toString());
         RequestBody priceRB = RequestBody.create(MediaType.parse("multipart/form-data"), price);
         RequestBody descriptionRB = RequestBody.create(MediaType.parse("multipart/form-data"), decription);
         RequestBody termsRB = RequestBody.create(MediaType.parse("multipart/form-data"), terms);
         RequestBody locationRB = RequestBody.create(MediaType.parse("multipart/form-data"), location);
-        RequestBody servicenameRB = RequestBody.create(MediaType.parse("multipart/form-data"), binding.editCategory.getSelectedItem().toString());
+        RequestBody servicenameRB = RequestBody.create(MediaType.parse("multipart/form-data"), getSelectedServiceId());
 
         AppManager.showProgress(getActivity());
 
         APIInterface apiInterface = RetrofitClient.getRetrofitInstance().create(APIInterface.class);
-        Call<SignupModel> call = apiInterface.CreatePackage(userID, titleRB, paymentTypeRB, priceRB, descriptionRB, termsRB, locationRB, servicenameRB, imageParts);
+        Call<SignupModel> call = apiInterface.CreatePackage(userID, titleRB, paymentTypeRB, priceRB, descriptionRB, termsRB, locationRB, servicenameRB, imageParts, type);
         call.enqueue(new Callback<SignupModel>() {
             @Override
             public void onResponse(Call<SignupModel> call, Response<SignupModel> response) {
                 if (response.body() != null && response.body().getStatusCode() == 200) {
                     AppManager.hideProgress();
-                    Log.e("success", response.body().getMessage());
-
+                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.container,new CreatePackageFragment()).commit();
+                    AppManager.StatusDialog(getActivity(),true,"successfully service created");
                 }else {
                     Log.e("success", ""+response.body().getStatusCode());
                 }
@@ -137,8 +143,17 @@ public class CreatePackageFragment extends Fragment {
                 Log.e("failure", t.getMessage());
             }
         });
-    }
 
+
+    }
+    private String getSelectedServiceId() {
+        for(int i=0;i<=eventtype.size();i++){
+            if(serviceList.getEventTypes().get(i).getEventTypeName().equals(binding.editCategory.getSelectedItem().toString())){
+                return String.valueOf(serviceList.getEventTypes().get(i).getEventTypeId());
+            }
+        }
+        return "1";
+    }
 
     private void getListOfeventCategory() {
         APIInterface apiInterface = RetrofitClient.getRetrofitInstance().create(APIInterface.class);
@@ -150,6 +165,7 @@ public class CreatePackageFragment extends Fragment {
                 AppManager.hideProgress();
                 eventtype.add("Select event");
                 if(response.body().getStatusCode()==200){
+                    serviceList = response.body();
                    for(int i=0;i<response.body().getEventTypes().size();i++){
                        eventtype.add(response.body().getEventTypes().get(i).getEventTypeName());
                    }

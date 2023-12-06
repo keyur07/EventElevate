@@ -8,7 +8,37 @@
     android:background="#1005445E"
     tools:context=".Activity.Location">
 
-    <include layout="@layout/actionbar"></include>
+    <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:titleTextColor="@color/white"
+        android:id="@+id/actionbar"
+        android:orientation="horizontal"
+        app:titleMarginStart="80dp"
+        android:background="@color/start_color">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:foregroundGravity="right"
+            android:id="@+id/backbtn"
+            android:src="@drawable/back_btn">
+
+        </ImageView>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Categories"
+            android:id="@+id/name"
+            android:textSize="20dp"
+            android:gravity="center_vertical"
+            android:fontFamily="@font/robotobold"
+            android:textColor="@color/white"
+            android:layout_marginStart="30sp"></TextView>
+
+    </androidx.appcompat.widget.Toolbar>
+
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -18,17 +48,6 @@
             android:layout_width="match_parent"
             android:id="@+id/service_list"
             android:layout_height="match_parent"/>
-
-        <Button
-            android:layout_width="match_parent"
-            android:background="@drawable/button_round"
-            android:text="CONTINUE"
-            android:textColor="@color/white"
-            android:id="@+id/btncontinue"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="@dimen/_25sdp"
-            android:layout_marginHorizontal="@dimen/_30sdp"
-            android:layout_height="@dimen/_35sdp"/>
 
     </FrameLayout>
 

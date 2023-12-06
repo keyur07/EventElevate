@@ -56,11 +56,11 @@ public class ProfileActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(ProfileActivity.this, FirebaseActivity.class);
 
-                String message = "Hello, Second Activity!";
+                String message = "Hello";
                 intent.putExtra("msg", message);
                 intent.putExtra("status", "User");
-                intent.putExtra("userId", AppManager.user.getUserid().toString());
-                intent.putExtra("clientId",String.valueOf(ClientID));
+                intent.putExtra("clientId", AppManager.user.getUserid().toString());
+                intent.putExtra("userId",String.valueOf(ClientID));
                 startActivity(intent);
             }
         });
@@ -89,6 +89,14 @@ public class ProfileActivity extends AppCompatActivity {
 
         Log.e("datacatata",user_id);
         Log.e("datacatata",service_id);
+
+        if(Integer.parseInt(user_id) == AppManager.user.getUserid()){
+            binding.parentSend.setVisibility(View.GONE);
+        }else {
+            binding.parentSend.setVisibility(View.VISIBLE);
+        }
+
+
         APIInterface apiInterface = RetrofitClient.getRetrofitInstance().create(APIInterface.class);
 
         Call<ProviderProfileModel> call = apiInterface.GetAllDetailsOfProvider(user_id,service_id);
@@ -125,12 +133,9 @@ public class ProfileActivity extends AppCompatActivity {
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
-
                     binding.name.setText(response.body().getUserData().get(0).getFirstName()+" "+response.body().getUserData().get(0).getLastName());
                     binding.date.setText("Join "+getString(R.string.app_name)+" in "+year);
                     binding.txtTerms.setText(response.body().getServiceData().get(0).getTerms());
-
-
                 }
             }
             @Override

@@ -12,9 +12,9 @@ public class PackageModel {
     @SerializedName("message")
     @Expose
     private String message;
-    @SerializedName("EventTypes")
+    @SerializedName("servicetype")
     @Expose
-    private List<EventType> eventTypes;
+    private List<Servicetype> servicetype;
 
     public Integer getStatusCode() {
         return statusCode;
@@ -32,19 +32,21 @@ public class PackageModel {
         this.message = message;
     }
 
-    public List<EventType> getEventTypes() {
-        return eventTypes;
+    public List<Servicetype> getServicetype() {
+        return servicetype;
     }
 
-    public void setEventTypes(List<EventType> eventTypes) {
-        this.eventTypes = eventTypes;
+    public void setServicetype(List<Servicetype> servicetype) {
+        this.servicetype = servicetype;
     }
-
-    public class EventType {
+    public class Servicetype {
 
         @SerializedName("id")
         @Expose
         private Integer id;
+        @SerializedName("userid")
+        @Expose
+        private Integer userid;
         @SerializedName("title")
         @Expose
         private String title;
@@ -66,12 +68,12 @@ public class PackageModel {
         @SerializedName("status")
         @Expose
         private Integer status;
-        @SerializedName("userid")
+        @SerializedName("service_id")
         @Expose
-        private Integer userid;
-        @SerializedName("eventype")
+        private Integer serviceId;
+        @SerializedName("type")
         @Expose
-        private String eventype;
+        private String type;
         @SerializedName("images")
         @Expose
         private List<Image> images;
@@ -82,6 +84,14 @@ public class PackageModel {
 
         public void setId(Integer id) {
             this.id = id;
+        }
+
+        public Integer getUserid() {
+            return userid;
+        }
+
+        public void setUserid(Integer userid) {
+            this.userid = userid;
         }
 
         public String getTitle() {
@@ -140,20 +150,20 @@ public class PackageModel {
             this.status = status;
         }
 
-        public Integer getUserid() {
-            return userid;
+        public Integer getServiceId() {
+            return serviceId;
         }
 
-        public void setUserid(Integer userid) {
-            this.userid = userid;
+        public void setServiceId(Integer serviceId) {
+            this.serviceId = serviceId;
         }
 
-        public String getEventype() {
-            return eventype;
+        public String getType() {
+            return type;
         }
 
-        public void setEventype(String eventype) {
-            this.eventype = eventype;
+        public void setType(String type) {
+            this.type = type;
         }
 
         public List<Image> getImages() {
@@ -163,77 +173,44 @@ public class PackageModel {
         public void setImages(List<Image> images) {
             this.images = images;
         }
-        public class Image {
 
-            @SerializedName("id")
-            @Expose
-            private Integer id;
-            @SerializedName("images")
-            @Expose
-            private String images;
-            @SerializedName("photographer_id")
-            @Expose
-            private Object photographerId;
-            @SerializedName("food_id")
-            @Expose
-            private Object foodId;
-            @SerializedName("music_id")
-            @Expose
-            private Object musicId;
-            @SerializedName("package_id")
-            @Expose
-            private Integer packageId;
+    }
 
-            public Integer getId() {
-                return id;
-            }
+    public class Image {
 
-            public void setId(Integer id) {
-                this.id = id;
-            }
+        @SerializedName("id")
+        @Expose
+        private Integer id;
+        @SerializedName("images")
+        @Expose
+        private String images;
+        @SerializedName("service_id")
+        @Expose
+        private Integer serviceId;
 
-            public String getImages() {
-                return images;
-            }
-
-            public void setImages(String images) {
-                this.images = images;
-            }
-
-            public Object getPhotographerId() {
-                return photographerId;
-            }
-
-            public void setPhotographerId(Object photographerId) {
-                this.photographerId = photographerId;
-            }
-
-            public Object getFoodId() {
-                return foodId;
-            }
-
-            public void setFoodId(Object foodId) {
-                this.foodId = foodId;
-            }
-
-            public Object getMusicId() {
-                return musicId;
-            }
-
-            public void setMusicId(Object musicId) {
-                this.musicId = musicId;
-            }
-
-            public Integer getPackageId() {
-                return packageId;
-            }
-
-            public void setPackageId(Integer packageId) {
-                this.packageId = packageId;
-            }
-
+        public Integer getId() {
+            return id;
         }
 
+        public void setId(Integer id) {
+            this.id = id;
+        }
+
+        public String getImages() {
+            return images;
+        }
+
+        public void setImages(String images) {
+            this.images = images;
+        }
+
+        public Integer getServiceId() {
+            return serviceId;
+        }
+
+        public void setServiceId(Integer serviceId) {
+            this.serviceId = serviceId;
+        }
 
     }
 

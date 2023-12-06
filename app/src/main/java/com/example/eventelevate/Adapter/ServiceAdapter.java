@@ -33,7 +33,7 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceV
     @NonNull
     @Override
     public ServiceViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.service_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.service_layout_view, parent, false);
         return new ServiceViewHolder(view);
     }
 
@@ -50,13 +50,10 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceV
         holder.locationTextView.setText(serviceList.get(position).getLocation());
 
 
-        holder.serviceItemLayout.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Log.e("datacatata",serviceList.get(position).getUserid().toString());
-                Log.e("datacatata",serviceList.get(position).getId().toString());
-                Log.e("datacatata",AppManager.selectedService);
                 Intent intent = new Intent(context, ProfileActivity.class);
                 intent.putExtra("user_id",serviceList.get(position).getUserid().toString());
                 intent.putExtra("service_id",serviceList.get(position).getId().toString());
@@ -77,15 +74,13 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceV
         TextView titleTextView;
         TextView priceTextView;
         TextView locationTextView;
-        LinearLayout serviceItemLayout;
 
         public ServiceViewHolder(View itemView) {
             super(itemView);
-            thumbnailImageView = itemView.findViewById(R.id.serviceThumbnail);
-            titleTextView = itemView.findViewById(R.id.serviceTitle);
-            priceTextView = itemView.findViewById(R.id.servicePrice);
-            locationTextView = itemView.findViewById(R.id.serviceLocation);
-            serviceItemLayout = itemView.findViewById(R.id.serviceItemLayout);
+            thumbnailImageView = itemView.findViewById(R.id.thumbnail);
+            titleTextView = itemView.findViewById(R.id.heading);
+            priceTextView = itemView.findViewById(R.id.price);
+            locationTextView = itemView.findViewById(R.id.location_name);
         }
     }
 }

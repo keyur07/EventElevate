@@ -33,7 +33,6 @@ public class SearchActivity extends AppCompatActivity {
         binding = ActivitySearchBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         AppManager.changeStatusBarandBottomColor(this);
-
         init();
     }
 

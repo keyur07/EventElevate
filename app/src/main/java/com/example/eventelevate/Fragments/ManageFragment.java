@@ -10,6 +10,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -42,6 +43,16 @@ public class ManageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentManageBinding.inflate(getLayoutInflater());
+
+        binding.referesh.setRefreshing(true);
+        binding.myeventlist.setVisibility(View.INVISIBLE);
+        binding.referesh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                binding.myeventlist.setVisibility(View.INVISIBLE);
+                init();
+            }
+        });
         // Inflate the layout for this fragment
         init();
         return binding.getRoot();
@@ -94,16 +105,25 @@ public class ManageFragment extends Fragment {
         call.enqueue(new Callback<MyServiceModel>() {
             @Override
             public void onResponse(Call<MyServiceModel> call, Response<MyServiceModel> response) {
+                binding.referesh.setRefreshing(false);
+
                 if (response.body().getStatusCode().equals(200)){
                     binding.myeventlist.setLayoutManager(new LinearLayoutManager(getActivity()));
                     MyEventListAdapter adapter = new MyEventListAdapter(getActivity(),response.body().getEvents());
                     binding.myeventlist.setAdapter(adapter);
+                    if(response.body().getEvents().size()==0){
+                        binding.myeventlist.setVisibility(View.GONE);
+                        binding.noFound.setVisibility(View.VISIBLE);
+                    }else {
+                        binding.myeventlist.setVisibility(View.VISIBLE);
+                        binding.noFound.setVisibility(View.GONE);
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<MyServiceModel> call, Throwable t) {
-
+                binding.referesh.setRefreshing(false);
             }
         });
     }

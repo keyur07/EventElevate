@@ -61,6 +61,13 @@ public class Location extends AppCompatActivity {
         findViewById(R.id.backbtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                finish();
+            }
+        });
+
+        findViewById(R.id.backbtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
                 AppManager.changeActivity(Location.this,MainActivity.class);
             }

@@ -22,6 +22,7 @@ import com.example.eventelevate.Model.ServiceModel;
 import com.example.eventelevate.Model.ServiceProviderModel;
 import com.example.eventelevate.R;
 import com.example.eventelevate.Service.RetrofitClient;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,7 +76,6 @@ public class CategoriesListAdapter extends RecyclerView.Adapter<CategoriesListAd
     }
 
     private void getDatabyTable(String serviceName, ViewHolder holder) {
-        AppManager.showProgress((Activity) holder.itemView.getContext());
         try{
             APIInterface apiInterface = RetrofitClient.getRetrofitInstance().create(APIInterface.class);
             Call<ServiceProviderModel> call = apiInterface.GetServicelistbytable(serviceName);
@@ -85,7 +85,6 @@ public class CategoriesListAdapter extends RecyclerView.Adapter<CategoriesListAd
 
                     AppManager.hideProgress();
                     if(response.body().getStatusCode()==200){
-                        AppManager.hideProgress();
                         ServiceProviderModel servicetype =  response.body();
                         LinearLayoutManager layoutManager = new LinearLayoutManager(eventsFragment.getActivity());
                         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -98,9 +97,8 @@ public class CategoriesListAdapter extends RecyclerView.Adapter<CategoriesListAd
 
                 @Override
                 public void onFailure(Call<ServiceProviderModel> call, Throwable t) {
-                    AppManager.hideProgress();
-                    // Snackbar snackbar = Snackbar.make(binding.container, "Something Went Wrong", 0);
-                    //snackbar.show();
+                     Snackbar snackbar = Snackbar.make(holder.itemView, "Something Went Wrong", 0);
+                    snackbar.show();
                 }
             });
         }catch (Exception e){
